@@ -1,2 +1,2 @@
-# template for new projects
+Time Tracker 
 

@@ -172,6 +172,22 @@ body {
   background-color: rgba(255, 255, 255, 0.158);
 }
 
+/* calendar */
+
 #calendar {
   margin-top: 100px;
+}
+
+.vc-date__popup div {
+  display: flex;
+  justify-content: start;
+  min-width: fit-content !important;
+  text-wrap: nowrap;
+}
+
+.vc-date__popup {
+  display: flex;
+  left: 0 !important;
+  min-width: fit-content !important;
+  font-size: 1rem !important;
 }

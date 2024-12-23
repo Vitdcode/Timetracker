@@ -12,6 +12,15 @@ function getTodayDateInUsFormat() {
   return `${year}-${month}-${day}`;
 }
 
+function getTodayDateInMetricFormat() {
+  const today = new Date();
+  const day = String(today.getDate()).padStart(2, '0');
+  const month = String(today.getMonth() + 1).padStart(2, '0'); // Add 1 because months are 0-indexed
+  const year = today.getFullYear();
+
+  return `${day}.${month}.${year}`;
+}
+
 export class CalendarMethods {
   constructor() {
     this.calendar = {};
@@ -49,11 +58,11 @@ export class CalendarMethods {
   }
 
   logTime() {
-    const example = stopwatch.secondsCount;
+    const popUpText = `${getTodayDateInMetricFormat()}: <br> ${stopwatch.hoursCount} Hours ${stopwatch.minutesCount} Minutes ${stopwatch.secondsCount} Seconds`;
     this.calendar.destroy();
     this.updatePopup(`
         <div>
-          ${example}
+          ${popUpText}
         </div>
       `);
     this.updateSelectedDates();

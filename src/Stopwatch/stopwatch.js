@@ -5,7 +5,7 @@ export function initializeStopWatch() {
 function startStopwatch() {
   let hoursNum = document.querySelector('#hours-number');
   let minutesNum = document.querySelector('#minutes-number');
-  let secondsNum = document.querySelector('#seconds-number');
+
   let millisecondsSelector = document.querySelector('#milliseconds-number');
 
   const startBtn = document.querySelector('#start-pause-stopwatch');
@@ -23,6 +23,22 @@ function milliSecondsCounter(millisecondsSelector) {
 
     if (count > 99) {
       clearInterval(interval);
+      milliSecondsCounter(millisecondsSelector);
+      secondsCounter(millisecondsSelector);
     }
-  }, 10);
+  }, 10); //one count happens every 10ms
 }
+
+let countSeconds = 0;
+function secondsCounter(millisecondsSelector) {
+  let secondsSelector = document.querySelector('#seconds-number');
+
+  countSeconds++;
+  secondsSelector.textContent = countSeconds;
+
+  if (countSeconds > 58) {
+    countSeconds = 0;
+  }
+}
+
+function intervalSetup(timeSelector, functionCall) {}

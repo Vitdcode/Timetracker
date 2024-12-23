@@ -11,15 +11,22 @@ export class Stopwatch {
     this.hoursSelector = document.querySelector('#hours-number');
     this.startBtnSelector = document.querySelector('#start-pause-stopwatch');
     this.resetBtnSelector = document.querySelector('#reset-stopwatch');
+    this.stopwatchRunning = false;
   }
 
   startStopwatchBtn() {
     this.startBtnSelector.addEventListener('click', () => {
-      this.start();
+      if (!this.stopwatchRunning) {
+        this.start();
+      } else {
+        this.pause();
+      }
     });
   }
 
   start() {
+    this.stopwatchRunning = true;
+    this.startBtnSelector.textContent = 'Pause';
     if (this.interval) {
       this.clearInterval();
     }
@@ -76,6 +83,8 @@ export class Stopwatch {
   }
 
   reset() {
+    this.stopwatchRunning = false;
+    this.startBtnSelector.textContent = 'Start';
     this.clearInterval();
     this.millisecondsSelector.textContent = '00';
     this.secondsSelector.textContent = '00.';
@@ -85,5 +94,11 @@ export class Stopwatch {
     this.secondsCount = 0;
     this.minutesCount = 0;
     this.hoursCount = 0;
+  }
+
+  pause() {
+    this.stopwatchRunning = false;
+    this.startBtnSelector.textContent = 'Resume';
+    this.clearInterval();
   }
 }

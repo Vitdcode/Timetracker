@@ -171,3 +171,7 @@ body {
 .image:active {
   background-color: rgba(255, 255, 255, 0.158);
 }
+
+#calendar {
+  margin-top: 100px;
+}

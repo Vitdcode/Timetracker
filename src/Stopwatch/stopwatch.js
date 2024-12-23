@@ -1,44 +1,89 @@
-export function initializeStopWatch() {
-  startStopwatch();
-}
+export class Stopwatch {
+  constructor() {
+    this.interval = null;
+    this.millisecondsCount = 0;
+    this.secondsCount = 0;
+    this.minutesCount = 0;
+    this.hoursCount = 0;
+    this.millisecondsSelector = document.querySelector('#milliseconds-number');
+    this.secondsSelector = document.querySelector('#seconds-number');
+    this.minutesSelector = document.querySelector('#minutes-number');
+    this.hoursSelector = document.querySelector('#hours-number');
+    this.startBtnSelector = document.querySelector('#start-pause-stopwatch');
+    this.resetBtnSelector = document.querySelector('#reset-stopwatch');
+  }
 
-function startStopwatch() {
-  let hoursNum = document.querySelector('#hours-number');
-  let minutesNum = document.querySelector('#minutes-number');
+  startStopwatchBtn() {
+    this.startBtnSelector.addEventListener('click', () => {
+      this.start();
+    });
+  }
 
-  let millisecondsSelector = document.querySelector('#milliseconds-number');
-
-  const startBtn = document.querySelector('#start-pause-stopwatch');
-  startBtn.addEventListener('click', () => {
-    milliSecondsCounter(millisecondsSelector);
-  });
-}
-
-function milliSecondsCounter(millisecondsSelector) {
-  let count = 0;
-
-  const interval = setInterval(() => {
-    millisecondsSelector.textContent = count.toString().padStart(2, '0');
-    count++;
-
-    if (count > 99) {
-      clearInterval(interval);
-      milliSecondsCounter(millisecondsSelector);
-      secondsCounter(millisecondsSelector);
+  start() {
+    if (this.interval) {
+      this.clearInterval();
     }
-  }, 10); //one count happens every 10ms
-}
 
-let countSeconds = 0;
-function secondsCounter(millisecondsSelector) {
-  let secondsSelector = document.querySelector('#seconds-number');
+    this.interval = setInterval(() => {
+      this.millisecondsSelector.textContent = this.millisecondsCount.toString().padStart(2, '0');
+      this.millisecondsCount++;
 
-  countSeconds++;
-  secondsSelector.textContent = countSeconds;
+      if (this.millisecondsCount > 99) {
+        this.millisecondsCount = 0;
+        this.clearInterval();
+        this.start();
+        this.secondsCounter();
+      }
+    }, 10);
+  }
 
-  if (countSeconds > 58) {
-    countSeconds = 0;
+  secondsCounter() {
+    this.secondsCount++;
+    this.secondsSelector.textContent = `${this.secondsCount.toString().padStart(2, '0')}.`;
+
+    if (this.secondsCount == 60) {
+      this.secondsCount = 0;
+      this.secondsSelector.textContent = `${this.secondsCount.toString().padStart(2, '0')}.`;
+      this.minutesCounter();
+    }
+  }
+
+  minutesCounter() {
+    this.minutesCount++;
+    this.minutesSelector.textContent = `${this.minutesCount.toString().padStart(2, '0')}:`;
+
+    if (this.minutesCount == 60) {
+      this.minutesCount = 0;
+      this.minutesSelector.textContent = `${this.minutesCount.toString().padStart(2, '0')}:`;
+      this.hoursCounter();
+    }
+  }
+
+  hoursCounter() {
+    this.hoursCount++;
+    this.hoursSelector.textContent = `${this.hoursCount.toString().padStart(2, '0')}`;
+  }
+
+  clearInterval() {
+    clearInterval(this.interval);
+    this.interval = null;
+  }
+
+  resetStopWatchBtn() {
+    this.resetBtnSelector.addEventListener('click', () => {
+      this.reset();
+    });
+  }
+
+  reset() {
+    this.clearInterval();
+    this.millisecondsSelector.textContent = '00';
+    this.secondsSelector.textContent = '00.';
+    this.minutesSelector.textContent = '00:';
+    this.hoursSelector.textContent = '00:';
+    this.millisecondsCount = 0;
+    this.secondsCount = 0;
+    this.minutesCount = 0;
+    this.hoursCount = 0;
   }
 }
-
-function intervalSetup(timeSelector, functionCall) {}

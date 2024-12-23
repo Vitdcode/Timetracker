@@ -1,5 +1,10 @@
 import './style.css';
 import { getDataFromLocalStorage } from './local-storage-handling.js';
-import { initializeStopWatch } from './Stopwatch/stopwatch.js';
+import { Stopwatch } from './Stopwatch/stopwatch.js';
 
-initializeStopWatch();
+/* startStopwatch();
+resetStopwatch(); */
+const stopwatch = new Stopwatch();
+
+stopwatch.startStopwatchBtn();
+stopwatch.resetStopWatchBtn();

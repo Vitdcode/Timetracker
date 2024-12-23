@@ -17,27 +17,32 @@
   </head>
   <body>
     <div class="main-wrapper">
+      <div id="app-header-settings-wrapper">
+        <h1 id="app-header">Timetracker</h1>
+      </div>
+
       <div class="stopwatch-wrapper">
         <div class="stopwatch-time-elements-wrapper">
           <div id="hours-wrapper">
             <span id="hours-header">hh</span>
-            <span id="hours-number">00:</span>
+            <span id="hours-number" class="stopwatch-number">00:</span>
           </div>
           <div id="minutes-wrapper">
             <span id="minutes-header">min</span>
-            <span id="minutes-number">00:</span>
+            <span id="minutes-number" class="stopwatch-number">00:</span>
           </div>
           <div id="seconds-wrapper">
             <span id="seconds-header">sec</span>
-            <span id="seconds-number">00.</span>
+            <span id="seconds-number" class="stopwatch-number">00.</span>
           </div>
           <div id="miliseconds-wrapper">
-            <span id="milliseconds-number">00</span>
+            <span id="milliseconds-header">ms</span>
+            <span id="milliseconds-number" class="stopwatch-number">00</span>
           </div>
         </div>
         <div class="start-pause-reset-stopwatch-buttons-wrapper">
-          <button id="start-pause-stopwatch">Start</button>
-          <button id="reset-stopwatch">Reset</button>
+          <button id="start-pause-stopwatch" class="button">Start</button>
+          <button id="reset-stopwatch" class="button">Reset</button>
         </div>
       </div>
     </div>

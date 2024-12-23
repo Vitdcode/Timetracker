@@ -2,24 +2,7 @@ import { Calendar } from 'vanilla-calendar-pro';
 import { createDiv } from '../create-elements-functions/create-div';
 import 'vanilla-calendar-pro/styles/index.css';
 import { stopwatch } from '../main';
-
-function getTodayDateInUsFormat() {
-  const today = new Date();
-  const year = today.getFullYear();
-  const month = String(today.getMonth() + 1).padStart(2, '0'); // Add 1 because months are 0-indexed
-  const day = String(today.getDate()).padStart(2, '0');
-
-  return `${year}-${month}-${day}`;
-}
-
-function getTodayDateInMetricFormat() {
-  const today = new Date();
-  const day = String(today.getDate()).padStart(2, '0');
-  const month = String(today.getMonth() + 1).padStart(2, '0'); // Add 1 because months are 0-indexed
-  const year = today.getFullYear();
-
-  return `${day}.${month}.${year}`;
-}
+import { getTodayDateInMetricFormat, getTodayDateInUsFormat } from './date-functions';
 
 export class CalendarMethods {
   constructor() {
@@ -33,6 +16,7 @@ export class CalendarMethods {
     };
     this.calendar = null;
     this.date = new Date().getDate();
+    this.timeEntries = { [getTodayDateInMetricFormat()]: [] };
   }
 
   markExistingDatesInCalendar() {
@@ -58,13 +42,17 @@ export class CalendarMethods {
   }
 
   logTime() {
-    const popUpText = `${getTodayDateInMetricFormat()}: <br> ${stopwatch.hoursCount} Hours ${stopwatch.minutesCount} Minutes ${stopwatch.secondsCount} Seconds`;
+    this.timeEntries[getTodayDateInMetricFormat()].push(
+      `<h3>${getTodayDateInMetricFormat()} <br> <br> ${stopwatch.hoursCount} Hours ${stopwatch.minutesCount} Minutes ${stopwatch.secondsCount} Seconds </h3><br>`
+    );
+
+    console.log(this.timeEntries[getTodayDateInMetricFormat()]);
     this.calendar.destroy();
     this.updatePopup(`
-        <div>
-          ${popUpText}
+        <div class="timelog-popup">
+          ${this.timeEntries[getTodayDateInMetricFormat()].join('')} 
         </div>
-      `);
+      `); //joining every entry and returning it as a String without a ",". This creates a h3 element for every entry
     this.updateSelectedDates();
     this.createCalendar();
   }
@@ -80,16 +68,3 @@ export class CalendarMethods {
     this.options['selectedDates'] = this.markExistingDatesInCalendar();
   }
 }
-
-/* export function createCalendar() {
-  const mainWrapper = document.querySelector('.main-wrapper');
-  const calendarWrapper = createDiv('calendar');
-  mainWrapper.appendChild(calendarWrapper);
-
-  const options = {
-    firstWeekday: 1,
-  };
-
-  const calendar = new Calendar(calendarWrapper, options);
-  calendar.init();
-} */

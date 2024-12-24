@@ -42,11 +42,12 @@ export class CalendarMethods {
   }
 
   logTime() {
+    if (!this.timeEntries[getTodayDateInMetricFormat()]) {
+      this.timeEntries[getTodayDateInMetricFormat()] = [];
+    }
     this.timeEntries[getTodayDateInMetricFormat()].push(
       `<h3>${getTodayDateInMetricFormat()} <br> <br> ${stopwatch.hoursCount} Hours ${stopwatch.minutesCount} Minutes ${stopwatch.secondsCount} Seconds </h3><br>`
     );
-
-    console.log(this.timeEntries[getTodayDateInMetricFormat()]);
     this.calendar.destroy();
     this.updatePopup(`
         <div class="timelog-popup">

@@ -15,3 +15,14 @@ stopwatch.resetStopWatchBtn();
 settings.settingsImgButton();
 calendar.createCalendar();
 timeLog.logTimeBtnEventListener();
+
+window.addEventListener('beforeunload', (event) => {
+  // Cancel the event and show confirmation dialog
+  event.preventDefault();
+
+  // Chrome requires returnValue to be set
+  event.returnValue = '';
+
+  // Custom message (Note: Modern browsers show their own generic message instead)
+  return 'Are you sure you want to leave?';
+});

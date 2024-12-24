@@ -45,7 +45,7 @@ function printEvaluationInApp(hoursLeftUntilGoal, sumHours) {
     );
   } else {
     const spanGoalComplete = createSpan(
-      `0 hours left until goal. You completed this weeks goal `,
+      `0 hours left until goal. You completed this weeks goal! `,
       'goal-evaluation-text',
       'in-app-text',
       goalInAppWrapper

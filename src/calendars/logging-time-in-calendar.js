@@ -20,7 +20,6 @@ export class TimeLogging {
 
   logTimeBtnEventListener() {
     this.logTimeButtonSelector.addEventListener('click', () => {
-      console.log(stopwatch.stopwatchPaused);
       if (stopwatch.stopwatchRunning || stopwatch.stopwatchPaused) {
         const today = getTodayAsNumberEuroFormat(); //returns today-number in Europe format, ex. 0 = Monday;
         this.loggedHoursWholeWeek[today].push(stopwatch.secondsCount);

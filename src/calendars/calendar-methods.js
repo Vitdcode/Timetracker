@@ -10,6 +10,7 @@ export class CalendarMethods {
     this.mainWrapperSelector = document.querySelector('.main-wrapper');
     this.calendarWrapper = createDiv('calendar');
     this.options = {
+      enableWeekNumbers: true,
       firstWeekday: 1,
       popups: {},
       selectedDates: [],
@@ -55,6 +56,7 @@ export class CalendarMethods {
       `); //joining every entry and returning it as a String without a ",". This creates a h3 element for every entry
     this.updateSelectedDates();
     this.createCalendar();
+    stopwatch.reset();
   }
 
   updatePopup(content) {

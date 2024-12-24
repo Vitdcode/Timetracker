@@ -3,4 +3,5 @@ export function createSpan(textContent, idName, className) {
   span.textContent = textContent;
   span.id = idName;
   span.className = className;
+  return span;
 }

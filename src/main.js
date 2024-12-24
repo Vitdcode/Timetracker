@@ -2,7 +2,7 @@ import './style.css';
 import { getDataFromLocalStorage } from './local-storage-handling.js';
 import { Stopwatch } from './Stopwatch/stopwatch.js';
 import { settingsImgEventListener } from './settings/settings.js';
-import { CalendarMethods, createCalendar } from './calendars/create-calendar.js';
+import { CalendarMethods } from './calendars/calendar-methods.js';
 import { logTimeBtnEventListener } from './calendars/logging-time-in-calendar.js';
 
 export const stopwatch = new Stopwatch();

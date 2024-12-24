@@ -1,33 +1,57 @@
 import { createSpan } from '../create-elements-functions/create-span';
 import { calendar, stopwatch } from '../main';
-export function logTimeBtnEventListener() {
-  const logTimeBtn = document.querySelector('#log-time-button');
+import { evaluateGoal } from '../settings/evaluations/goal-evaluation';
+import { getTodayAsNumberEuroFormat } from './date-functions';
 
-  logTimeBtn.addEventListener('click', () => {
-    calendar.logTime();
-    loggedTextPopup();
-  });
-}
+export class TimeLogging {
+  constructor() {
+    this.logTimeButtonSelector = document.querySelector('#log-time-button');
+    this.mainWrapperSelector = document.querySelector('.main-wrapper');
+    this.loggedHoursWholeWeek = {
+      0: [],
+      1: [],
+      2: [],
+      3: [],
+      4: [],
+      5: [],
+      6: [],
+    };
+  }
 
-function loggedTextPopup() {
-  const mainWrapper = document.querySelector('.main-wrapper');
-  const loggedText = createSpan(
-    `${stopwatch.hoursCount} hours ${stopwatch.minutesCount} minutes logged`,
-    'logged-time-popup',
-    'popup-text'
-  );
+  logTimeBtnEventListener() {
+    this.logTimeButtonSelector.addEventListener('click', () => {
+      console.log(stopwatch.stopwatchPaused);
+      if (stopwatch.stopwatchRunning || stopwatch.stopwatchPaused) {
+        const today = getTodayAsNumberEuroFormat(); //returns today-number in Europe format, ex. 0 = Monday;
+        this.loggedHoursWholeWeek[today].push(stopwatch.secondsCount);
+        calendar.logTime();
+        evaluateGoal();
+        this.loggedTextPopup();
+      } else {
+        return;
+      }
+    });
+  }
 
-  mainWrapper.appendChild(loggedText);
+  loggedTextPopup() {
+    const loggedText = createSpan(
+      `${stopwatch.hoursCount} hours ${stopwatch.minutesCount} minutes logged`,
+      'logged-time-popup',
+      'popup-text'
+    );
 
-  // Add animationend listener for cleanup
-  loggedText.addEventListener('animationend', (e) => {
-    if (e.animationName === 'fadeOut') {
-      loggedText.remove();
-    }
-  });
+    this.mainWrapperSelector.appendChild(loggedText);
 
-  // Start fade out after 2 seconds
-  setTimeout(() => {
-    loggedText.style.animation = 'fadeOut 300ms ease-in forwards';
-  }, 2000);
+    // Add animationend listener for cleanup
+    loggedText.addEventListener('animationend', (e) => {
+      if (e.animationName === 'fadeOut') {
+        loggedText.remove();
+      }
+    });
+
+    // Start fade out after 2 seconds
+    setTimeout(() => {
+      loggedText.style.animation = 'fadeOut 300ms ease-in forwards';
+    }, 2000);
+  }
 }

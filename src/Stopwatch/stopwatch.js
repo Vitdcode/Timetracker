@@ -12,6 +12,7 @@ export class Stopwatch {
     this.startBtnSelector = document.querySelector('#start-pause-stopwatch');
     this.resetBtnSelector = document.querySelector('#reset-stopwatch');
     this.stopwatchRunning = false;
+    this.stopwatchPaused = false;
   }
 
   startStopwatchBtn() {
@@ -25,6 +26,7 @@ export class Stopwatch {
   }
 
   start() {
+    this.stopwatchPaused = false;
     this.stopwatchRunning = true;
     this.startBtnSelector.textContent = 'Pause';
     if (this.interval) {
@@ -84,6 +86,7 @@ export class Stopwatch {
 
   reset() {
     this.stopwatchRunning = false;
+    this.stopwatchPaused = false;
     this.startBtnSelector.textContent = 'Start';
     this.clearInterval();
     this.millisecondsSelector.textContent = '00';
@@ -98,6 +101,7 @@ export class Stopwatch {
 
   pause() {
     this.stopwatchRunning = false;
+    this.stopwatchPaused = true;
     this.startBtnSelector.textContent = 'Resume';
     this.clearInterval();
   }

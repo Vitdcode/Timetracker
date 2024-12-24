@@ -33,7 +33,6 @@ export class CalendarMethods {
 
   createCalendar() {
     if (document.querySelector('#calendar')) {
-      console.log('removed');
       document.querySelector('#calendar').remove();
     }
     this.mainWrapperSelector.appendChild(this.calendarWrapper);

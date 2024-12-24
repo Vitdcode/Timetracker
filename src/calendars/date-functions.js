@@ -15,3 +15,17 @@ export function getTodayDateInMetricFormat() {
 
   return `${day}.${month}.${year}`;
 }
+
+export function getTodayAsNumberEuroFormat() {
+  const today = new Date();
+  let day = today.getDay(); // Sunday = 0, Monday = 1, etc.
+
+  // Convert to Monday = 0, Sunday = 6
+  if (day === 0) {
+    day = 6;
+  } else {
+    day = day - 1;
+  }
+
+  return day;
+}

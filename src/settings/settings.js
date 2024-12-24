@@ -3,6 +3,7 @@ import { createDiv } from '../create-elements-functions/create-div';
 import { createH1, createH2 } from '../create-elements-functions/create-h-elements';
 import { createImg } from '../create-elements-functions/create-img';
 import { createInput } from '../create-elements-functions/create-input';
+import { createSpan } from '../create-elements-functions/create-span';
 import { createSubmitButton } from '../create-elements-functions/create-submit-button';
 import settingsImage from '../images/settings.png';
 
@@ -11,6 +12,7 @@ export class Settings {
     this.mainWrapperSelector = document.querySelector('.main-wrapper');
     this.appHeaderWrapperSelector = document.querySelector('#app-header-settings-wrapper');
     this.settingsImg = createImg('settings-img', settingsImage, 'Settings Icon');
+    this.goalsHoursPerWeek = null;
     this.cleanupSettingsWindow = this.cleanupSettingsWindow.bind(this); //ensure this refers to the Settings instance
   }
 
@@ -44,13 +46,49 @@ export class Settings {
       'settings-options-header',
       this.goalHoursPerWeekWrapper
     );
-    createInput('goal-hours-per-week', 'Goal hours/week', this.goalHoursPerWeekWrapper, 'number');
-    createSubmitButton(
+    const goalsInput = createInput(
+      'goal-hours-per-week',
+      'Goal hours/week',
+      this.goalHoursPerWeekWrapper,
+      'number'
+    );
+    const submitBtn = createSubmitButton(
       'Save',
       'save-goals-per-week-button',
       'button',
       this.goalHoursPerWeekWrapper
     );
+    this.saveGoalPerWeekInput(goalsInput, submitBtn);
+  }
+
+  saveGoalPerWeekInput(input, submitButton) {
+    submitButton.addEventListener('click', () => {
+      this.goalsHoursPerWeek = input.value;
+      const saveText = createSpan(
+        `Saved goal ${this.goalsHoursPerWeek} hours/week`,
+        'hours-per-week-popup-settings',
+        'popup-text'
+      );
+      this.savePopupText(saveText);
+      this.insertGoalIntoApp();
+    });
+  }
+
+  insertGoalIntoApp() {
+    const goalInAppWrapper = createDiv('goal-in-app-wrapper', 'info-text-in-app-wrapper');
+    createSpan(
+      `Goal: ${this.goalsHoursPerWeek} hours/week`,
+      'goal-in-app-text',
+      'in-app-text',
+      goalInAppWrapper
+    );
+    const appHeaderWrapper = document.querySelector('#app-header-settings-wrapper');
+    if (document.querySelector('#goal-in-app-wrapper')) {
+      document.querySelector('#goal-in-app-wrapper').remove();
+    }
+    if (appHeaderWrapper) {
+      appHeaderWrapper.after(goalInAppWrapper);
+    }
   }
 
   trackProject() {
@@ -69,12 +107,23 @@ export class Settings {
     createSubmitButton('Save', 'save-track-project-button', 'button', this.trackProjectWrapper);
   }
 
+  savePopupText(text) {
+    this.settingsWindow.appendChild(text);
+
+    text.addEventListener('animationend', (e) => {
+      if (e.animationName === 'fadeOut') {
+        text.remove();
+      }
+      setTimeout(() => {
+        if (text) {
+          text.style.animation = 'fadeOut 200ms ease-out';
+        }
+      }, 2000);
+    });
+  }
+
   cleanupSettingsWindow() {
-    // Remove event listeners
-    this.settingsImg.removeEventListener('click', this.openSettings);
-
     // Clear references
-
     this.settingsWindow = null;
     this.settingsHeader = null;
     this.trackProjectWrapper = null;

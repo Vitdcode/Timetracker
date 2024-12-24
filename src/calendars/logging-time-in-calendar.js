@@ -13,7 +13,8 @@ function loggedTextPopup() {
   const mainWrapper = document.querySelector('.main-wrapper');
   const loggedText = createSpan(
     `${stopwatch.hoursCount} hours ${stopwatch.minutesCount} minutes logged`,
-    'logged-time-popup'
+    'logged-time-popup',
+    'popup-text'
   );
 
   mainWrapper.appendChild(loggedText);

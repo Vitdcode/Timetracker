@@ -84,7 +84,7 @@ body {
 .stopwatch-wrapper {
   display: flex;
   flex-direction: column;
-  margin-top: 100px;
+  margin-top: 50px;
   gap: 20px;
   align-items: center;
 }
@@ -221,7 +221,7 @@ body {
   height: 100%;
 }
 
-#logged-time-popup {
+.popup-text {
   animation: fadeIn 200ms ease-in;
   margin-top: 40px;
   font-size: 1.3rem;
@@ -316,4 +316,20 @@ input::-webkit-inner-spin-button {
 #save-goals-per-week-button {
   padding-block: 10px;
   width: 120px;
+}
+
+.save-popup-text {
+  margin-top: 40px;
+  animation: fadeIn 200ms ease-in;
+}
+
+/* goal / tracking project in app text */
+
+.info-text-in-app-wrapper {
+  margin-top: 20px;
+  border-radius: 10px;
+  color: var(--header-white);
+  font-size: 1.2rem;
+  padding: 10px;
+  background-color: rgba(255, 255, 255, 0.171);
 }

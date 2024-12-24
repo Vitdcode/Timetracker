@@ -1,6 +1,7 @@
 :root {
   --font-poppins: 'Poppins', sans-serif;
   --box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.08);
+  --header-white: rgb(231, 231, 231);
 }
 
 body {
@@ -75,7 +76,7 @@ body {
 .header {
   font-size: 2rem;
   font-weight: 500;
-  color: rgb(231, 231, 231);
+  color: var(--header-white);
   text-align: center;
   width: 340px;
 }
@@ -112,9 +113,6 @@ body {
   align-items: center;
   font-size: 1.6rem;
   width: 40px;
-}
-
-#milliseconds-number {
 }
 
 #hours-header,
@@ -239,6 +237,9 @@ body {
 
 #settings-window {
   position: absolute;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
   width: 100%;
   height: 100%;
   background-color: rgb(39, 75, 119);
@@ -250,7 +251,7 @@ body {
 }
 
 #settings-header {
-  margin-top: 40px;
+  margin-block: 40px;
 }
 
 #close-window-button-img {
@@ -259,4 +260,60 @@ body {
   top: 2%;
   height: 30px;
   width: 30px;
+}
+
+.settings-options-header {
+  font-size: 1.4rem;
+  color: var(--header-white);
+}
+
+.hide-label-text {
+  display: none;
+}
+
+.settings-property-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 90%;
+  background-color: rgba(255, 255, 255, 0.13);
+  border-radius: 16px;
+  box-shadow: var(--box-shadow);
+  padding-block: 10px;
+  gap: 20px;
+}
+
+#track-project-settings-wrapper {
+  margin-top: 30px;
+}
+
+input {
+  border-radius: 10px;
+  padding: 10px;
+  background-color: rgba(255, 255, 255, 0.171);
+  color: var(--header-white);
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+input:focus {
+  outline: 1px solid rgba(255, 255, 255, 0.11);
+  box-shadow: var(--box-shadow);
+}
+
+::-webkit-input-placeholder {
+  /* Chrome/Safari/Opera */
+  color: #ffffff57;
+}
+
+input::-webkit-inner-spin-button {
+  /* removes up and down arrows for input type "number" */
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+#save-track-project-button,
+#save-goals-per-week-button {
+  padding-block: 10px;
+  width: 120px;
 }

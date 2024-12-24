@@ -1,6 +1,6 @@
 import { createDiv } from './create-div';
 
-export function createInput(inputId, placeholder, wrapper, type = 'text') {
+export function createInput(inputId, placeholder, wrapper, ariaRequired = false, type = 'text') {
   const label = document.createElement('label');
   label.htmlFor = inputId;
   label.textContent = placeholder;
@@ -12,6 +12,10 @@ export function createInput(inputId, placeholder, wrapper, type = 'text') {
   input.setAttribute('autocomplete', 'off');
   input.setAttribute('aria-label', placeholder);
   input.setAttribute('name', inputId);
+  input.required = ariaRequired;
+  if (ariaRequired) {
+    input.setAttribute('aria-required', 'true');
+  }
   input.placeholder = placeholder;
 
   // Append elements

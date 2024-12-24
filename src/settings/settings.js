@@ -1,5 +1,6 @@
 import { closeWindow } from '../create-elements-functions/close-window';
 import { createDiv } from '../create-elements-functions/create-div';
+import { createForm } from '../create-elements-functions/create-form';
 import { createH1, createH2 } from '../create-elements-functions/create-h-elements';
 import { createImg } from '../create-elements-functions/create-img';
 import { createInput } from '../create-elements-functions/create-input';
@@ -46,32 +47,23 @@ export class Settings {
       'settings-options-header',
       this.goalHoursPerWeekWrapper
     );
-    const goalsInput = createInput(
-      'goal-hours-per-week',
-      'Goal hours/week',
-      this.goalHoursPerWeekWrapper,
-      'number'
+    const form = createForm('goals-form', 'form-class', () =>
+      this.saveGoalPerWeekInput(goalsInput)
     );
-    const submitBtn = createSubmitButton(
-      'Save',
-      'save-goals-per-week-button',
-      'button',
-      this.goalHoursPerWeekWrapper
-    );
-    this.saveGoalPerWeekInput(goalsInput, submitBtn);
+    const goalsInput = createInput('goal-hours-per-week', 'Goal hours/week', form, true, 'number');
+    createSubmitButton('Save', 'save-goals-per-week-button', 'button', form);
+    this.goalHoursPerWeekWrapper.appendChild(form);
   }
 
-  saveGoalPerWeekInput(input, submitButton) {
-    submitButton.addEventListener('click', () => {
-      this.goalsHoursPerWeek = input.value;
-      const saveText = createSpan(
-        `Saved goal ${this.goalsHoursPerWeek} hours/week`,
-        'hours-per-week-popup-settings',
-        'popup-text'
-      );
-      this.savePopupText(saveText);
-      this.insertGoalIntoApp();
-    });
+  saveGoalPerWeekInput(input) {
+    this.goalsHoursPerWeek = input.value;
+    const saveText = createSpan(
+      `Saved goal ${this.goalsHoursPerWeek} hours/week`,
+      'hours-per-week-popup-settings',
+      'popup-text'
+    );
+    this.savePopupText(saveText);
+    this.insertGoalIntoApp();
   }
 
   insertGoalIntoApp() {

@@ -241,7 +241,7 @@ body {
   align-items: center;
   flex-direction: column;
   width: 100%;
-  height: 100%;
+  height: 900px;
   background-color: rgb(39, 75, 119);
   backdrop-filter: blur(60px);
   top: 10px;
@@ -285,6 +285,13 @@ body {
 
 #track-project-settings-wrapper {
   margin-top: 30px;
+}
+
+.form-class {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
 }
 
 input {

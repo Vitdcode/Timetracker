@@ -32,7 +32,7 @@ async function initializeApp() {
     });
     await gdriveStorage.loadData();
     calendar.options['selectedDates'] = pushSelectedDatesDataFromGdrive();
-
+    calendar.createPopupsOnInit();
     calendar.createCalendar();
   } catch (error) {
     console.error('Error during app initialization:', error);

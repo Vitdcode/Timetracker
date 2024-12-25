@@ -2,8 +2,12 @@ import { Calendar } from 'vanilla-calendar-pro';
 import { createDiv } from '../create-elements-functions/create-div';
 import 'vanilla-calendar-pro/styles/index.css';
 import { stopwatch } from '../main';
-import { getTodayDateInMetricFormat, getTodayDateInUsFormat } from './date-functions';
-import { gdriveStorage } from '../google-drive/gdrive-storage-functions';
+import {
+  convertMetricDateToUs,
+  getTodayDateInMetricFormat,
+  getTodayDateInUsFormat,
+} from './date-functions';
+import { gdriveStorage, loadedData } from '../google-drive/gdrive-storage-functions';
 
 export class CalendarMethods {
   constructor() {
@@ -58,6 +62,21 @@ export class CalendarMethods {
     this.updateSelectedDates();
     this.createCalendar();
     stopwatch.reset();
+  }
+
+  createPopupsOnInit() {
+    for (const date in loadedData.calendarData) {
+      if (!this.options.popups[convertMetricDateToUs(date)]) {
+        this.options.popups[convertMetricDateToUs(date)] = {
+          modifier: 'bg-sponsor',
+          html: `
+        <div class="timelog-popup">
+          ${loadedData.calendarData[date].join('')} 
+        </div>
+      `,
+        };
+      }
+    }
   }
 
   updatePopup(content) {

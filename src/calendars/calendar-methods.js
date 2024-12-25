@@ -3,6 +3,7 @@ import { createDiv } from '../create-elements-functions/create-div';
 import 'vanilla-calendar-pro/styles/index.css';
 import { stopwatch } from '../main';
 import { getTodayDateInMetricFormat, getTodayDateInUsFormat } from './date-functions';
+import { gdriveStorage } from '../google-drive/gdrive-storage-functions';
 
 export class CalendarMethods {
   constructor() {
@@ -42,12 +43,12 @@ export class CalendarMethods {
   }
 
   logTime() {
+    const logEntry = `<h3>${getTodayDateInMetricFormat()} <br> <br> ${stopwatch.hoursCount} Hours ${stopwatch.minutesCount} Minutes ${stopwatch.secondsCount} Seconds </h3><br>`;
     if (!this.timeEntries[getTodayDateInMetricFormat()]) {
       this.timeEntries[getTodayDateInMetricFormat()] = [];
     }
-    this.timeEntries[getTodayDateInMetricFormat()].push(
-      `<h3>${getTodayDateInMetricFormat()} <br> <br> ${stopwatch.hoursCount} Hours ${stopwatch.minutesCount} Minutes ${stopwatch.secondsCount} Seconds </h3><br>`
-    );
+    this.timeEntries[getTodayDateInMetricFormat()].push(logEntry);
+    gdriveStorage.updateTodayDateEuroEntries(logEntry);
     this.calendar.destroy();
     this.updatePopup(`
         <div class="timelog-popup">

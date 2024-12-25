@@ -1,4 +1,5 @@
 import { createSpan } from '../create-elements-functions/create-span';
+import { gdriveStorage } from '../google-drive/gdrive-storage-functions';
 import { calendar, stopwatch } from '../main';
 import { evaluateGoal } from '../settings/evaluations/goal-evaluation';
 import { getTodayAsNumberEuroFormat } from './date-functions';

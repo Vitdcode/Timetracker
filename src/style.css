@@ -73,6 +73,19 @@ body {
   align-items: center;
 }
 
+#popup-mouseover {
+  top: 120%;
+  left: 100%;
+  width: 150px;
+  background-color: rgba(68, 68, 68, 0.123);
+  color: rgb(228, 228, 228);
+  border-radius: 16px;
+  font-size: 1rem;
+  font-weight: 500;
+  box-shadow: var(--box-shadow);
+  animation: fadeIn 200ms ease-in-out;
+}
+
 .header {
   font-size: 2rem;
   font-weight: 500;
@@ -334,6 +347,7 @@ input::-webkit-inner-spin-button {
 /* goal / tracking project in app text */
 
 .info-text-in-app-wrapper {
+  position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -343,8 +357,32 @@ input::-webkit-inner-spin-button {
   color: var(--header-white);
   font-size: 1.2rem;
   padding: 10px;
+  padding-inline: 60px;
   background-color: rgba(117, 201, 197, 0.103);
   box-shadow: var(--box-shadow);
+}
+
+#delete-goal-button {
+  position: absolute;
+  top: 10%;
+  right: 2%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 30px;
+  width: 30px;
+  border-radius: 100%;
+  color: rgb(156, 201, 189);
+  font-size: 1.5rem;
+  background-color: rgba(27, 161, 117, 0.137);
+  border: 1px solid rgba(255, 255, 255, 0.137);
+  font-weight: 400;
+  box-shadow: var(--box-shadow);
+}
+
+#delete-goal-button:hover {
+  cursor: pointer;
+  background-color: rgba(133, 54, 54, 0.699);
 }
 
 /* Statistics Menu */

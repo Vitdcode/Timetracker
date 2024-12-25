@@ -5,8 +5,10 @@ import { createForm } from '../create-elements-functions/create-form';
 import { createH1, createH2 } from '../create-elements-functions/create-h-elements';
 import { createImg } from '../create-elements-functions/create-img';
 import { createInput } from '../create-elements-functions/create-input';
+import { popupMouseOver } from '../create-elements-functions/create-popup-mouseover';
 import { createSpan } from '../create-elements-functions/create-span';
 import { createSubmitButton } from '../create-elements-functions/create-submit-button';
+import { gdriveStorage } from '../google-drive/gdrive-storage-functions';
 import settingsImage from '../images/settings.png';
 
 export class Settings {
@@ -56,23 +58,26 @@ export class Settings {
 
   saveGoalPerWeekInput(input) {
     this.goalsHoursPerWeek = input.value;
+    gdriveStorage.updateGoalHoursPerWeek(this.goalsHoursPerWeek);
     const saveText = createSpan(
       `Saved goal ${this.goalsHoursPerWeek} hours/week`,
       'hours-per-week-popup-settings',
       'popup-text'
     );
     this.savePopupText(saveText);
-    this.insertGoalIntoApp();
+    this.insertGoalIntoApp(this.goalsHoursPerWeek);
   }
 
-  insertGoalIntoApp() {
+  insertGoalIntoApp(hoursPerWeek) {
     const goalInAppWrapper = createDiv('goal-in-app-wrapper', 'info-text-in-app-wrapper');
     createSpan(
-      `Goal: ${this.goalsHoursPerWeek} hours/week`,
+      `Goal: ${hoursPerWeek} hours/week`,
       'goal-in-app-text',
       'in-app-text',
       goalInAppWrapper
     );
+    const deleteGoalBtn = createButton('X', 'delete-goal-button', 'button', goalInAppWrapper);
+    popupMouseOver('Delete Goal', deleteGoalBtn);
     const appHeaderWrapper = document.querySelector('#app-header-settings-wrapper');
     if (document.querySelector('#goal-in-app-wrapper')) {
       document.querySelector('#goal-in-app-wrapper').remove();

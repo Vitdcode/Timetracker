@@ -47,12 +47,20 @@ export const gdriveStorage = {
     }
     if (!loadedData['timeData']['totalHours']) {
       loadedData['timeData']['totalHours'] = stopwatch.secondsCount;
-      console.log('test1');
       console.log(loadedData);
     } else {
       loadedData['timeData']['totalHours'] += stopwatch.secondsCount;
-      console.log('test2');
     }
+  },
+
+  async updateGoalHoursPerWeek(hours) {
+    if (!loadedData['goalHoursPerWeek']) {
+      loadedData['goalHoursPerWeek'] = hours;
+    } else {
+      loadedData['goalHoursPerWeek'] = hours;
+    }
+    console.log(loadedData);
+    saveToGDrive(loadedData);
   },
 
   async emptyObject() {

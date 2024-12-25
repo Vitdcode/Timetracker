@@ -29,24 +29,12 @@ async function initializeApp() {
     calendar.options['selectedDates'] = pushSelectedDatesDataFromGdrive();
     calendar.createPopupsOnInit();
     calendar.createCalendar();
+    if (loadedData['goalHoursPerWeek'] != '0') {
+      settings.insertGoalIntoApp(loadedData['goalHoursPerWeek']);
+    }
   } catch (error) {
     console.error('Error during app initialization:', error);
   }
 }
 
 initializeApp();
-
-/* // Load data
-try {
-  const data = await loadFromGDrive();
-  console.log('Loaded data:', data);
-} catch (error) {
-  console.log('No existing data found or error loading');
-} */
-
-/* window.addEventListener('beforeunload', (event) => {
-  event.preventDefault();
-  event.returnValue = '';
-  return 'Are you sure you want to leave?';
-});
- */

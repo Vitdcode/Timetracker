@@ -18,18 +18,11 @@ export const timeLog = new TimeLogging();
 stopwatch.startStopwatchBtn();
 stopwatch.resetStopWatchBtn();
 settings.settingsImgButton();
-/* calendar.createCalendar(); */
 timeLog.logTimeBtnEventListener();
 
 async function initializeApp() {
   try {
     await initializeDriveStorage();
-    const deleteButton = document.querySelector('#delete-storage-btn');
-    deleteButton.addEventListener('click', () => {
-      if (confirm('This will delete the Storage on Google Drive!')) {
-        gdriveStorage.emptyObject();
-      }
-    });
     await gdriveStorage.loadData();
     calendar.options['selectedDates'] = pushSelectedDatesDataFromGdrive();
     calendar.createPopupsOnInit();

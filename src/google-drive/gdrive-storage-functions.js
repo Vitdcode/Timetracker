@@ -2,6 +2,7 @@ import {
   getTodayAsNumberEuroFormat,
   getTodayDateInMetricFormat,
 } from '../calendars/date-functions';
+import { stopwatch } from '../main';
 import { saveToGDrive, loadFromGDrive } from './gdrive-service';
 export let loadedData;
 export const gdriveStorage = {
@@ -29,17 +30,28 @@ export const gdriveStorage = {
   },
 
   async updateTodayDateEuroEntries(entry) {
-    loadedData = await loadFromGDrive();
     if (!loadedData['calendarData']) {
       loadedData['calendarData'] = {};
     }
     if (!loadedData['calendarData'][getTodayDateInMetricFormat()]) {
       loadedData['calendarData'][getTodayDateInMetricFormat()] = [];
       loadedData['calendarData'][getTodayDateInMetricFormat()].push(entry);
-      await saveToGDrive(loadedData);
     } else {
       loadedData['calendarData'][getTodayDateInMetricFormat()].push(entry);
-      await saveToGDrive(loadedData);
+    }
+  },
+
+  async updateTotalHours() {
+    if (!loadedData['timeData']) {
+      loadedData['timeData'] = {};
+    }
+    if (!loadedData['timeData']['totalHours']) {
+      loadedData['timeData']['totalHours'] = stopwatch.secondsCount;
+      console.log('test1');
+      console.log(loadedData);
+    } else {
+      loadedData['timeData']['totalHours'] += stopwatch.secondsCount;
+      console.log('test2');
     }
   },
 

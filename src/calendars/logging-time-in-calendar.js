@@ -1,5 +1,6 @@
 import { createSpan } from '../create-elements-functions/create-span';
-import { gdriveStorage } from '../google-drive/gdrive-storage-functions';
+import { saveToGDrive } from '../google-drive/gdrive-service';
+import { gdriveStorage, loadedData } from '../google-drive/gdrive-storage-functions';
 import { calendar, stopwatch } from '../main';
 import { evaluateGoal } from '../settings/evaluations/goal-evaluation';
 import { getTodayAsNumberEuroFormat } from './date-functions';
@@ -8,6 +9,7 @@ export class TimeLogging {
   constructor() {
     this.logTimeButtonSelector = document.querySelector('#log-time-button');
     this.mainWrapperSelector = document.querySelector('.main-wrapper');
+    this.totalHours = 0;
     this.loggedHoursWholeWeek = {
       0: [],
       1: [],
@@ -24,9 +26,12 @@ export class TimeLogging {
       if (stopwatch.stopwatchRunning || stopwatch.stopwatchPaused) {
         const today = getTodayAsNumberEuroFormat(); //returns today-number in Europe format, ex. 0 = Monday;
         this.loggedHoursWholeWeek[today].push(stopwatch.secondsCount);
+        this.totalHours += stopwatch.secondsCount;
+        gdriveStorage.updateTotalHours();
         calendar.logTime();
         evaluateGoal();
         this.loggedTextPopup();
+        saveToGDrive(loadedData);
       } else {
         return;
       }

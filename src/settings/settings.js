@@ -1,4 +1,5 @@
 import { closeWindow } from '../create-elements-functions/close-window';
+import { createButton } from '../create-elements-functions/create-button';
 import { createDiv } from '../create-elements-functions/create-div';
 import { createForm } from '../create-elements-functions/create-form';
 import { createH1, createH2 } from '../create-elements-functions/create-h-elements';
@@ -23,6 +24,7 @@ export class Settings {
       this.openSettings();
       this.goalPerWeek();
       this.trackProject();
+      this.deleteStoragebtn();
     });
   }
 
@@ -111,6 +113,21 @@ export class Settings {
           text.style.animation = 'fadeOut 200ms ease-out';
         }
       }, 2000);
+    });
+  }
+
+  deleteStoragebtn() {
+    const settingsWrapper = document.querySelector('#settings-window');
+    const deleteButton = createButton(
+      'Delete Storage',
+      'delete-storage-btn',
+      'button',
+      settingsWrapper
+    );
+    deleteButton.addEventListener('click', () => {
+      if (confirm('This will delete the Storage on Google Drive!')) {
+        gdriveStorage.emptyObject();
+      }
     });
   }
 

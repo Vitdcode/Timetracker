@@ -8,7 +8,8 @@ import { createInput } from '../create-elements-functions/create-input';
 import { popupMouseOver } from '../create-elements-functions/create-popup-mouseover';
 import { createSpan } from '../create-elements-functions/create-span';
 import { createSubmitButton } from '../create-elements-functions/create-submit-button';
-import { gdriveStorage } from '../google-drive/gdrive-storage-functions';
+import { saveToGDrive } from '../google-drive/gdrive-service';
+import { gdriveStorage, loadedData } from '../google-drive/gdrive-storage-functions';
 import settingsImage from '../images/settings.png';
 
 export class Settings {
@@ -76,8 +77,7 @@ export class Settings {
       'in-app-text',
       goalInAppWrapper
     );
-    const deleteGoalBtn = createButton('X', 'delete-goal-button', 'button', goalInAppWrapper);
-    popupMouseOver('Delete Goal', deleteGoalBtn);
+    this.deleteGoal(goalInAppWrapper);
     const appHeaderWrapper = document.querySelector('#app-header-settings-wrapper');
     if (document.querySelector('#goal-in-app-wrapper')) {
       document.querySelector('#goal-in-app-wrapper').remove();
@@ -85,6 +85,22 @@ export class Settings {
     if (appHeaderWrapper) {
       appHeaderWrapper.after(goalInAppWrapper);
     }
+  }
+
+  deleteGoal(goalInAppWrapper) {
+    const deleteGoalBtn = createButton('X', 'delete-goal-button', 'button', goalInAppWrapper);
+    popupMouseOver('Delete Goal', deleteGoalBtn);
+    deleteGoalBtn.addEventListener('click', () => {
+      this.goalsHoursPerWeek = null;
+      const gdriveHoursPerWeek = loadedData['goalHoursPerWeek'];
+      if (gdriveHoursPerWeek) {
+        loadedData['goalHoursPerWeek'] = 0;
+      }
+      if (goalInAppWrapper) {
+        goalInAppWrapper.remove();
+      }
+      saveToGDrive(loadedData);
+    });
   }
 
   trackProject() {

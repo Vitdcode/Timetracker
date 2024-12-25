@@ -66,6 +66,70 @@ body {
   }
 }
 
+/* loading window */
+#loading-window {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  width: 100%;
+  top: 0;
+  z-index: 100;
+  backdrop-filter: blur(100px);
+  background-color: rgba(255, 255, 255, 0.349);
+}
+
+#loading-wrapper {
+  background-color: rgba(255, 255, 255, 0.5);
+  border-radius: 40px;
+  padding: 60px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 80px;
+}
+
+#loading-wrapper h2 {
+  font-size: 2rem;
+  color: #111111d0;
+}
+
+#loader {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  display: inline-block;
+  border-top: 3px solid #ffffffe5;
+  border-right: 3px solid transparent;
+  box-sizing: border-box;
+  animation: rotation 1s linear infinite;
+}
+
+.fade-out-loading-animation {
+  animation: fadeOut 0.8s;
+}
+
+@keyframes rotation {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+/* cloud images */
+
+#cloud-upload-finished {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+}
+
 .main-wrapper {
   position: relative;
   display: flex;
@@ -171,6 +235,7 @@ body {
 }
 
 #app-header-settings-wrapper {
+  position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;

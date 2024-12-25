@@ -29,3 +29,12 @@ export function getTodayAsNumberEuroFormat() {
 
   return day;
 }
+
+export function convertMetricDateToUs(metricDate) {
+  //metric date: 25.12.2024
+  //us date: 2024.12.25
+  let metricSplit = metricDate.split('.');
+  let usDate = '';
+  usDate = `${metricSplit[2]}-${metricSplit[1]}-${metricSplit[0]}`;
+  return usDate;
+}

@@ -37,7 +37,7 @@ export class CalendarMethods {
       document.querySelector('#calendar').remove();
     }
     this.mainWrapperSelector.appendChild(this.calendarWrapper);
-
+    console.log(this.options['selectedDates']);
     this.calendar = new Calendar(this.calendarWrapper, this.options);
     this.calendar.init();
   }

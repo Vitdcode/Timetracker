@@ -5,7 +5,7 @@ import {
 import { saveToGDrive, loadFromGDrive } from './gdrive-service';
 export let loadedData;
 export const gdriveStorage = {
-  async saveTestData() {
+  async saveData() {
     try {
       const testData = {
         [getTodayDateInMetricFormat()]: ['entry1'],
@@ -18,7 +18,7 @@ export const gdriveStorage = {
     }
   },
 
-  async loadTestData() {
+  async loadData() {
     try {
       // Then try to load it
       loadedData = await loadFromGDrive();
@@ -30,12 +30,15 @@ export const gdriveStorage = {
 
   async updateTodayDateEuroEntries(entry) {
     loadedData = await loadFromGDrive();
-    if (!loadedData[getTodayDateInMetricFormat()]) {
-      loadedData[getTodayDateInMetricFormat()] = [];
-      loadedData[getTodayDateInMetricFormat()].push(entry);
+    if (!loadedData['calendarData']) {
+      loadedData['calendarData'] = {};
+    }
+    if (!loadedData['calendarData'][getTodayDateInMetricFormat()]) {
+      loadedData['calendarData'][getTodayDateInMetricFormat()] = [];
+      loadedData['calendarData'][getTodayDateInMetricFormat()].push(entry);
       await saveToGDrive(loadedData);
     } else {
-      loadedData[getTodayDateInMetricFormat()].push(entry);
+      loadedData['calendarData'][getTodayDateInMetricFormat()].push(entry);
       await saveToGDrive(loadedData);
     }
   },

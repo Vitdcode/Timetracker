@@ -9,6 +9,7 @@ import {
   pushCalendarDataFromGdrive,
   pushSelectedDatesDataFromGdrive,
 } from './calendars/calendar-data-from-gdrive.js';
+import { statisticsMenuBtnListener } from './statistics-menu/create-statistics-menu.js';
 
 export const stopwatch = new Stopwatch();
 export const calendar = new CalendarMethods();
@@ -19,6 +20,7 @@ stopwatch.startStopwatchBtn();
 stopwatch.resetStopWatchBtn();
 settings.settingsImgButton();
 timeLog.logTimeBtnEventListener();
+statisticsMenuBtnListener();
 
 async function initializeApp() {
   try {

@@ -235,7 +235,7 @@ body {
 
 /* settings-window */
 
-#settings-window {
+.window {
   position: absolute;
   display: flex;
   align-items: center;
@@ -263,7 +263,7 @@ body {
   width: 30px;
 }
 
-.settings-options-header {
+.wrapper-in-menus-header {
   font-size: 1.4rem;
   color: var(--header-white);
 }
@@ -272,7 +272,7 @@ body {
   display: none;
 }
 
-.settings-property-wrapper {
+.wrapper-in-menus {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -345,4 +345,10 @@ input::-webkit-inner-spin-button {
   padding: 10px;
   background-color: rgba(117, 201, 197, 0.103);
   box-shadow: var(--box-shadow);
+}
+
+/* Statistics Menu */
+
+#statistics-header {
+  margin-top: 30px;
 }

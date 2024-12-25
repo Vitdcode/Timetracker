@@ -29,7 +29,7 @@ export class Settings {
   }
 
   openSettings() {
-    this.settingsWindow = createDiv('settings-window');
+    this.settingsWindow = createDiv('settings-window', 'window');
     this.mainWrapperSelector.appendChild(this.settingsWindow);
     this.settingsHeader = createH1('Settings', 'settings-header', 'header');
 
@@ -38,15 +38,12 @@ export class Settings {
   }
 
   goalPerWeek() {
-    this.goalHoursPerWeekWrapper = createDiv(
-      'hours-per-week-settings-wrapper',
-      'settings-property-wrapper'
-    );
+    this.goalHoursPerWeekWrapper = createDiv('hours-per-week-settings-wrapper', 'wrapper-in-menus');
     this.settingsWindow.appendChild(this.goalHoursPerWeekWrapper);
     createH2(
       'Goals',
       'goals-settings-header',
-      'settings-options-header',
+      'wrapper-in-menus-header',
       this.goalHoursPerWeekWrapper
     );
     const form = createForm('goals-form', 'form-class', () =>
@@ -86,15 +83,12 @@ export class Settings {
   }
 
   trackProject() {
-    this.trackProjectWrapper = createDiv(
-      'track-project-settings-wrapper',
-      'settings-property-wrapper'
-    );
+    this.trackProjectWrapper = createDiv('track-project-settings-wrapper', 'wrapper-in-menus');
     this.settingsWindow.appendChild(this.trackProjectWrapper);
     createH2(
       'Track Project',
       'track-project-settings-header',
-      'settings-options-header',
+      'wrapper-in-menus-header',
       this.trackProjectWrapper
     );
     createInput('track-project-input', 'Project Name', this.trackProjectWrapper);

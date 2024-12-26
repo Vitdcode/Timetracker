@@ -30,9 +30,15 @@ async function initializeApp() {
   try {
     await initializeDriveStorage();
     await gdriveStorage.loadData();
-    calendar.options['selectedDates'] = pushSelectedDatesDataFromGdrive();
-    calendar.createPopupsOnInit();
-    calendar.createCalendar();
+    gdriveStorage.checkIfDataExistsInGdrive();
+    if (Object.keys(loadedData).length != 0) {
+      gdriveStorage.checkIfCurrentYearExistsInGdrive();
+      gdriveStorage.checkIfCurrentWeekExistsInGrive();
+      gdriveStorage.checkIfTotalTimedataExistsInGrive();
+      calendar.options['selectedDates'] = pushSelectedDatesDataFromGdrive();
+      calendar.createPopupsOnInit();
+      calendar.createCalendar();
+    }
     if (loadedData['goalHoursPerWeek'] != '0') {
       settings.insertGoalIntoApp(loadedData['goalHoursPerWeek']);
       evaluateGoal();

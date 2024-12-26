@@ -6,6 +6,7 @@ export function evaluateGoal() {
   if (document.querySelector('#goal-in-app-text')) {
     let hoursLeftUntilGoal = loadedData['goalHoursPerWeek'];
     let sumHours = 0;
+    /*  const timeLogObject = timeLog.loggedHoursWholeWeek; */
     const timeLogObject = timeLog.loggedHoursWholeWeek;
 
     for (const day in timeLogObject) {

@@ -4,11 +4,14 @@ import { convertMetricDateToUs, getWeekNumber } from './date-functions';
 export function pushSelectedDatesDataFromGdrive() {
   // Calendar expects dates in US format
   let selectedDates = [];
-
-  for (let week in loadedData['calendarData'][new Date().getFullYear()]) {
-    for (let date in loadedData['calendarData'][new Date().getFullYear()][week]) {
-      selectedDates.push(convertMetricDateToUs(date));
+  const gdriveData = loadedData['calendarData'][new Date().getFullYear()];
+  if (gdriveData) {
+    for (let week in gdriveData) {
+      for (let date in loadedData['calendarData'][new Date().getFullYear()][week]) {
+        selectedDates.push(convertMetricDateToUs(date));
+      }
     }
+
+    return selectedDates;
   }
-  return selectedDates;
 }

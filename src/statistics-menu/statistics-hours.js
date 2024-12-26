@@ -9,7 +9,7 @@ export function totalHours(settingsWindow) {
     settingsWindow
   );
   createH2(
-    `Total Hours: ${loadedData['timeData']['totalHours']}`,
+    `Total Time: ${loadedData['totalTime']['hours']} Hours ${loadedData['totalTime']['minutes']} Minutes`, //prettier-ignore
     'total-hours-text',
     'wrapper-in-menus-header',
     hoursWrapper

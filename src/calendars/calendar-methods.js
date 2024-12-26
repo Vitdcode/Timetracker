@@ -6,6 +6,7 @@ import {
   convertMetricDateToUs,
   getTodayDateInMetricFormat,
   getTodayDateInUsFormat,
+  getWeekNumber,
 } from './date-functions';
 import { gdriveStorage, loadedData } from '../google-drive/gdrive-storage-functions';
 
@@ -64,18 +65,26 @@ export class CalendarMethods {
   }
 
   createPopupsOnInit() {
-    for (const week in loadedData['calendarData'][new Date().getFullYear()]) {
-      for (const date in loadedData['calendarData'][new Date().getFullYear()][week])
-        if (!this.options.popups[convertMetricDateToUs(date)]) {
-          this.options.popups[convertMetricDateToUs(date)] = {
-            modifier: 'bg-sponsor',
-            html: `
+    const sessionData =
+      loadedData['calendarData'][new Date().getFullYear()][getWeekNumber()][getTodayDateInMetricFormat()]['sessions']; //prettier-ignore
+
+    if (Object.keys(sessionData).length != 0) {
+      for (const week in loadedData['calendarData'][new Date().getFullYear()]) {
+        for (const date in loadedData['calendarData'][new Date().getFullYear()][week]) {
+          if (date != 'weeklyTime') {
+            if (!this.options.popups[convertMetricDateToUs(date)]) {
+              this.options.popups[convertMetricDateToUs(date)] = {
+                modifier: 'bg-sponsor',
+                html: `
         <div class="timelog-popup">
           ${loadedData['calendarData'][new Date().getFullYear()][week][date]['sessions'].join('')} 
         </div>
       `,
-          };
+              };
+            }
+          }
         }
+      }
     }
   }
 

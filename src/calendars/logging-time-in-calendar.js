@@ -9,27 +9,13 @@ export class TimeLogging {
   constructor() {
     this.logTimeButtonSelector = document.querySelector('#log-time-button');
     this.mainWrapperSelector = document.querySelector('.main-wrapper');
-    /* this.totalHours = 0;
-    this.loggedHoursWholeWeek = {
-      0: [],
-      1: [],
-      2: [],
-      3: [],
-      4: [],
-      5: [],
-      6: [],
-    }; */
   }
 
   logTimeBtnEventListener() {
     this.logTimeButtonSelector.addEventListener('click', () => {
       if (stopwatch.stopwatchRunning || stopwatch.stopwatchPaused) {
-        const today = getTodayAsNumberEuroFormat(); //returns today-number in Europe format, ex. 0 = Monday;
-        /* this.loggedHoursWholeWeek[today].push(stopwatch.secondsCount); */
-        /* this.totalHours += stopwatch.secondsCount; */
-        gdriveStorage.updateTotalHours();
-        gdriveStorage.updateWeeklyHours();
         calendar.logTime();
+        gdriveStorage.updateHoursInGdriveObject();
         evaluateGoal();
         this.loggedTextPopup();
         saveToGDrive(loadedData);

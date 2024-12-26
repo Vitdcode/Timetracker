@@ -14,7 +14,7 @@ import {
 import { UploadStatus } from './google-drive/upload-status.js';
 import { evaluateGoal } from './settings/evaluations/goal-evaluation.js';
 import { getWeekNumber } from './calendars/date-functions.js';
-/* createLoadingAnimation(); */
+createLoadingAnimation();
 export const stopwatch = new Stopwatch();
 export const calendar = new CalendarMethods();
 export const settings = new Settings();
@@ -38,7 +38,7 @@ async function initializeApp() {
       evaluateGoal();
     }
 
-    /*     fadeoutAnimation(); //remove loading animation once data is available */
+    fadeoutAnimation(); //remove loading animation once data is available
   } catch (error) {
     console.error('Error during app initialization:', error);
   }

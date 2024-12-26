@@ -59,7 +59,7 @@ export class Settings {
 
   saveGoalPerWeekInput(input) {
     this.goalsHoursPerWeek = input.value;
-    gdriveStorage.updateGoalHoursPerWeek(this.goalsHoursPerWeek);
+    gdriveStorage.updateGoalHoursPerWeek(parseInt(this.goalsHoursPerWeek));
     const saveText = createSpan(
       `Saved goal ${this.goalsHoursPerWeek} hours/week`,
       'hours-per-week-popup-settings',

@@ -38,3 +38,11 @@ export function convertMetricDateToUs(metricDate) {
   usDate = `${metricSplit[2]}-${metricSplit[1]}-${metricSplit[0]}`;
   return usDate;
 }
+
+export function getWeekNumber() {
+  const now = new Date();
+  const firstDayOfYear = new Date(now.getFullYear(), 0, 1);
+  const days = Math.floor((now - firstDayOfYear) / (24 * 60 * 60 * 1000));
+
+  return Math.ceil((days + firstDayOfYear.getDay() + 1) / 7);
+}

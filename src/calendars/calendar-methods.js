@@ -46,18 +46,16 @@ export class CalendarMethods {
   }
 
   logTime() {
-    console.log(this.timeEntries[getTodayDateInMetricFormat()]);
     const logEntry = `<h3>${getTodayDateInMetricFormat()} <br> <br> ${stopwatch.hoursCount} Hours ${stopwatch.minutesCount} Minutes ${stopwatch.secondsCount} Seconds </h3><br>`;
     if (!this.timeEntries[getTodayDateInMetricFormat()]) {
       this.timeEntries[getTodayDateInMetricFormat()] = [];
     }
     this.timeEntries[getTodayDateInMetricFormat()].push(logEntry);
-    gdriveStorage.updateTodayDateEuroEntries(logEntry);
+    const gdriveEntryData = gdriveStorage.updateTodayDateEuroEntries(logEntry);
     this.calendar.destroy();
-    /*     ${this.timeEntries[getTodayDateInMetricFormat()].join('')}
-     */ this.updatePopup(`
+    this.updatePopup(`
         <div class="timelog-popup">
-          ${loadedData.calendarData[getTodayDateInMetricFormat()].join('')} 
+          ${gdriveEntryData.join('')} 
         </div>
       `); //joining every entry and returning it as a String without a ",". This creates a h3 element for every entry
     this.updateSelectedDates();
@@ -66,17 +64,18 @@ export class CalendarMethods {
   }
 
   createPopupsOnInit() {
-    for (const date in loadedData.calendarData) {
-      if (!this.options.popups[convertMetricDateToUs(date)]) {
-        this.options.popups[convertMetricDateToUs(date)] = {
-          modifier: 'bg-sponsor',
-          html: `
+    for (const week in loadedData['calendarData'][new Date().getFullYear()]) {
+      for (const date in loadedData['calendarData'][new Date().getFullYear()][week])
+        if (!this.options.popups[convertMetricDateToUs(date)]) {
+          this.options.popups[convertMetricDateToUs(date)] = {
+            modifier: 'bg-sponsor',
+            html: `
         <div class="timelog-popup">
-          ${loadedData.calendarData[date].join('')} 
+          ${loadedData['calendarData'][new Date().getFullYear()][week][date]['sessions'].join('')} 
         </div>
       `,
-        };
-      }
+          };
+        }
     }
   }
 

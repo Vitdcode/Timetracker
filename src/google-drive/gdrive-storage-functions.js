@@ -1,24 +1,12 @@
 import {
   getTodayAsNumberEuroFormat,
   getTodayDateInMetricFormat,
+  getWeekNumber,
 } from '../calendars/date-functions';
 import { stopwatch } from '../main';
 import { saveToGDrive, loadFromGDrive } from './gdrive-service';
 export let loadedData;
 export const gdriveStorage = {
-  async saveData() {
-    try {
-      const testData = {
-        [getTodayDateInMetricFormat()]: ['entry1'],
-        [getTodayAsNumberEuroFormat()]: ['entry1'],
-      };
-      await saveToGDrive(testData);
-      console.log('Test data saved');
-    } catch (error) {
-      console.error('Error saving Data to Google Drive');
-    }
-  },
-
   async loadData() {
     try {
       // Then try to load it
@@ -29,19 +17,25 @@ export const gdriveStorage = {
     }
   },
 
-  async updateTodayDateEuroEntries(entry) {
+  updateTodayDateEuroEntries(entry) {
     if (!loadedData['calendarData']) {
-      loadedData['calendarData'] = {};
+      loadedData['calendarData'] = {
+        [new Date().getFullYear()]: {
+          [getWeekNumber()]: {
+            [getTodayDateInMetricFormat()]: {
+              hours: 0,
+              sessions: [],
+              project: [],
+            },
+          },
+        },
+      };
     }
-    if (!loadedData['calendarData'][getTodayDateInMetricFormat()]) {
-      loadedData['calendarData'][getTodayDateInMetricFormat()] = [];
-      loadedData['calendarData'][getTodayDateInMetricFormat()].push(entry);
-    } else {
-      loadedData['calendarData'][getTodayDateInMetricFormat()].push(entry);
-    }
+    loadedData['calendarData'][new Date().getFullYear()][[getWeekNumber()]][getTodayDateInMetricFormat()]['sessions'].push(entry); //prettier-ignore
+    return loadedData['calendarData'][new Date().getFullYear()][[getWeekNumber()]][getTodayDateInMetricFormat()]['sessions']; //prettier-ignore
   },
 
-  async updateTotalHours() {
+  updateTotalHours() {
     if (!loadedData['timeData']) {
       loadedData['timeData'] = {};
     }
@@ -51,6 +45,10 @@ export const gdriveStorage = {
     } else {
       loadedData['timeData']['totalHours'] += stopwatch.secondsCount;
     }
+  },
+
+  updateWeeklyHours() {
+    loadedData['calendarData'][new Date().getFullYear()][[getWeekNumber()]][getTodayDateInMetricFormat()]['hours'] += stopwatch.secondsCount; //prettier-ignore
   },
 
   async updateGoalHoursPerWeek(hours) {

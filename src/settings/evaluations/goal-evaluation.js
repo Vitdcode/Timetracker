@@ -1,9 +1,10 @@
 import { createSpan } from '../../create-elements-functions/create-span';
+import { loadedData } from '../../google-drive/gdrive-storage-functions';
 import { settings, timeLog } from '../../main';
 
 export function evaluateGoal() {
   if (document.querySelector('#goal-in-app-text')) {
-    let hoursLeftUntilGoal = settings.goalsHoursPerWeek;
+    let hoursLeftUntilGoal = loadedData['goalHoursPerWeek'];
     let sumHours = 0;
     const timeLogObject = timeLog.loggedHoursWholeWeek;
 

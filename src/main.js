@@ -12,13 +12,14 @@ import {
   fadeoutAnimation,
 } from './create-elements-functions/create-loading-screen.js';
 import { UploadStatus } from './google-drive/upload-status.js';
-createLoadingAnimation();
+import { evaluateGoal } from './settings/evaluations/goal-evaluation.js';
+import { getWeekNumber } from './calendars/date-functions.js';
+/* createLoadingAnimation(); */
 export const stopwatch = new Stopwatch();
 export const calendar = new CalendarMethods();
 export const settings = new Settings();
 export const timeLog = new TimeLogging();
 export const uploadStatus = new UploadStatus();
-
 stopwatch.startStopwatchBtn();
 stopwatch.resetStopWatchBtn();
 settings.settingsImgButton();
@@ -34,8 +35,10 @@ async function initializeApp() {
     calendar.createCalendar();
     if (loadedData['goalHoursPerWeek'] != '0') {
       settings.insertGoalIntoApp(loadedData['goalHoursPerWeek']);
+      evaluateGoal();
     }
-    fadeoutAnimation(); //remove loading animation once data is available
+
+    /*     fadeoutAnimation(); //remove loading animation once data is available */
   } catch (error) {
     console.error('Error during app initialization:', error);
   }

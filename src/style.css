@@ -123,11 +123,12 @@ body {
 }
 
 /* cloud images */
-
-#cloud-upload-finished {
+.cloud-image {
   position: absolute;
-  right: 0;
-  bottom: 0;
+  right: 2%;
+  bottom: 5%;
+  height: 40px;
+  width: 40px;
 }
 
 .main-wrapper {

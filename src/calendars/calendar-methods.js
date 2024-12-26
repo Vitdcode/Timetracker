@@ -41,12 +41,12 @@ export class CalendarMethods {
       document.querySelector('#calendar').remove();
     }
     this.mainWrapperSelector.appendChild(this.calendarWrapper);
-    console.log(this.options['selectedDates']);
     this.calendar = new Calendar(this.calendarWrapper, this.options);
     this.calendar.init();
   }
 
   logTime() {
+    console.log(this.timeEntries[getTodayDateInMetricFormat()]);
     const logEntry = `<h3>${getTodayDateInMetricFormat()} <br> <br> ${stopwatch.hoursCount} Hours ${stopwatch.minutesCount} Minutes ${stopwatch.secondsCount} Seconds </h3><br>`;
     if (!this.timeEntries[getTodayDateInMetricFormat()]) {
       this.timeEntries[getTodayDateInMetricFormat()] = [];
@@ -54,9 +54,10 @@ export class CalendarMethods {
     this.timeEntries[getTodayDateInMetricFormat()].push(logEntry);
     gdriveStorage.updateTodayDateEuroEntries(logEntry);
     this.calendar.destroy();
-    this.updatePopup(`
+    /*     ${this.timeEntries[getTodayDateInMetricFormat()].join('')}
+     */ this.updatePopup(`
         <div class="timelog-popup">
-          ${this.timeEntries[getTodayDateInMetricFormat()].join('')} 
+          ${loadedData.calendarData[getTodayDateInMetricFormat()].join('')} 
         </div>
       `); //joining every entry and returning it as a String without a ",". This creates a h3 element for every entry
     this.updateSelectedDates();

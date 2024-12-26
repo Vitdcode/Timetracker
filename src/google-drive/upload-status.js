@@ -7,7 +7,7 @@ export class UploadStatus {
   constructor() {
     this.uploadToCloudImg = this.createUploadingCloudImg();
     this.uploadToCloudFinished = this.createCloudFinishedImg();
-    this.hideCloudUploadImg();
+    this.showCloudUploadFinishedimg();
   }
 
   createUploadingCloudImg() {
@@ -16,7 +16,7 @@ export class UploadStatus {
       'uploading-cloud-img',
       cloudUploudImage,
       'Icon showing a cloud with an upload arrow',
-      'image',
+      'cloud-image',
       appHeaderWrapper
     );
     return img;
@@ -28,7 +28,7 @@ export class UploadStatus {
       'cloud-upload-finished',
       cloudFinishedImage,
       'Icon showing a cloud with a finished mark',
-      'image',
+      'cloud-image',
       appHeaderWrapper
     );
     return img;
@@ -36,17 +36,11 @@ export class UploadStatus {
 
   showCloudUploadImg() {
     this.uploadToCloudImg.style.display = 'block';
+    this.uploadToCloudFinished.style.display = 'none';
   }
 
   showCloudUploadFinishedimg() {
     this.uploadToCloudFinished.style.display = 'block';
-  }
-
-  hideCloudUploadImg() {
     this.uploadToCloudImg.style.display = 'none';
-  }
-
-  hideCloudUploadFinishedImg() {
-    this.uploadToCloudFinished.style.display = 'none';
   }
 }

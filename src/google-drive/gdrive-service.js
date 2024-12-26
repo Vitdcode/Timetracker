@@ -1,3 +1,5 @@
+import { uploadStatus } from '../main';
+
 const CLIENT_ID = '489039392520-lb206rsmn1vtmc4ilio87gsa6ei32m9o.apps.googleusercontent.com';
 const SCOPES = ['https://www.googleapis.com/auth/drive.file'];
 const FOLDER_NAME = 'Timetracker-App';
@@ -157,6 +159,7 @@ async function findOrCreateFile(folderId) {
 
 async function saveToGDrive(data) {
   try {
+    uploadStatus.showCloudUploadImg();
     await authenticate();
     const folderId = await findOrCreateFolder();
     const fileId = await findOrCreateFile(folderId);
@@ -170,7 +173,7 @@ async function saveToGDrive(data) {
       },
       body: JSON.stringify(data),
     });
-
+    uploadStatus.showCloudUploadFinishedimg();
     console.log('Data saved successfully');
   } catch (error) {
     console.error('Error saving data:', error);

@@ -43,8 +43,8 @@ async function initializeApp() {
       calendar.createPopupsOnInit();
       calendar.createCalendar();
     }
-    if (loadedData['goalHoursPerWeek'] != '0') {
-      settings.insertGoalIntoApp(loadedData['goalHoursPerWeek']);
+    if (loadedData['goalHoursPerWeekData']['hoursHighest'] != 0) {
+      settings.insertGoalIntoApp(loadedData['goalHoursPerWeekData']['hoursHighest']);
       evaluateGoal(loadedData['calendarData'][new Date().getFullYear()][[getWeekNumber()]]['weeklyTime']['hours']); //prettier-ignore
     }
     colorizeDatesOnHoursWorked();

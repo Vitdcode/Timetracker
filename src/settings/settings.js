@@ -64,12 +64,12 @@ export class Settings {
   saveGoalPerWeekInput(input) {
     gdriveStorage.updateGoalHoursPerWeek(parseInt(input.value));
     const saveText = createSpan(
-      `Saved goal ${loadedData['goalHoursPerWeek']} hours/week`,
+      `Saved goal ${loadedData['goalHoursPerWeekData']['hoursHighest']} hours/week`,
       'hours-per-week-popup-settings',
       'popup-text'
     );
     this.savePopupText(saveText);
-    this.insertGoalIntoApp(loadedData['goalHoursPerWeek']);
+    this.insertGoalIntoApp(loadedData['goalHoursPerWeekData']['hoursHighest']);
   }
 
   insertGoalIntoApp(hoursPerWeek) {
@@ -98,9 +98,9 @@ export class Settings {
     popupMouseOver('Delete Goal', deleteGoalBtn);
     deleteGoalBtn.addEventListener('click', () => {
       this.goalsHoursPerWeek = null;
-      const gdriveHoursPerWeek = loadedData['goalHoursPerWeek'];
+      const gdriveHoursPerWeek = loadedData['goalHoursPerWeekData']['hoursHighest'];
       if (gdriveHoursPerWeek) {
-        loadedData['goalHoursPerWeek'] = 0;
+        loadedData['goalHoursPerWeekData']['hoursHighest'] = 0;
       }
       if (goalInAppWrapper) {
         goalInAppWrapper.remove();
@@ -153,6 +153,8 @@ export class Settings {
       'wrapper-in-menus',
       this.chooseGoalRanges
     );
+
+    const highestGoalForm = createForm('goal-range-highest-form', 'form-class');
     createSpan(
       `Goal: ${loadedData['goalHoursPerWeek']} hours/week`,
       'goal-range-highest-settings',
@@ -161,7 +163,7 @@ export class Settings {
     );
     createColorPicker('color-picker-highest-goal-range', highestGoalRangeWrapper);
 
-    const GoalRangeWrapper = createDiv(
+    const middleGoalRangeWrapper = createDiv(
       'goal-range-highest-wrapper',
       'wrapper-in-menus',
       this.chooseGoalRanges
@@ -169,11 +171,26 @@ export class Settings {
     createInput(
       'choose-goal-ranges-middle',
       'Goal range middle',
-      GoalRangeWrapper,
+      middleGoalRangeWrapper,
       false,
       'number'
     );
-    createColorPicker('color-picker-middle-goal-range', GoalRangeWrapper);
+    createColorPicker('color-picker-middle-goal-range', middleGoalRangeWrapper);
+
+    const lowGoalRangeWrapper = createDiv(
+      'goal-range-low-wrapper',
+      'wrapper-in-menus',
+      this.chooseGoalRanges
+    );
+    createInput('choose-goal-ranges-low', 'Goal range low', lowGoalRangeWrapper, false, 'number');
+    createColorPicker('color-picker-low-goal-range', lowGoalRangeWrapper);
+
+    createSubmitButton(
+      'Save',
+      'submit-goal-hour-ranges-and-colors',
+      'button',
+      this.chooseGoalRanges
+    );
   }
 
   savePopupText(text) {

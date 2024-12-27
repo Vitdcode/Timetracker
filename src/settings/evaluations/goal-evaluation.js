@@ -7,7 +7,8 @@ let sumHours = 0;
 export function evaluateGoal() {
   if (document.querySelector('#goal-in-app-text')) {
     const weeklyHoursCompleted = loadedData['calendarData'][new Date().getFullYear()][[getWeekNumber()]]['weeklyTime']['hours']; //prettier-ignore
-    const hoursLeftUntilGoal = loadedData['goalHoursPerWeek'] - weeklyHoursCompleted;
+    const hoursLeftUntilGoal =
+      loadedData['goalHoursPerWeekData']['hoursHighest'] - weeklyHoursCompleted;
     /*     sumHours += hoursCompleted; */
     printEvaluationInApp(hoursLeftUntilGoal, weeklyHoursCompleted);
   }

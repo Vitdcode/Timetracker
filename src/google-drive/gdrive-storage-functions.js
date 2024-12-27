@@ -139,10 +139,17 @@ export const gdriveStorage = {
   },
 
   async updateGoalHoursPerWeek(hours) {
-    if (!loadedData['goalHoursPerWeek']) {
-      loadedData['goalHoursPerWeek'] = hours;
+    if (!loadedData['goalHoursPerWeekData']) {
+      loadedData['goalHoursPerWeekData'] = {
+        hoursHighest: 0,
+        hoursMiddle: 0,
+        hoursLowest: 0,
+        highestColor: '',
+        middleColor: '',
+        lowestColor: '',
+      };
     } else {
-      loadedData['goalHoursPerWeek'] = hours;
+      loadedData['goalHoursPerWeekData']['hoursHighest'] = hours;
     }
     saveToGDrive(loadedData);
   },

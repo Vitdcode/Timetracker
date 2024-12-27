@@ -3,7 +3,7 @@ import {
   getTodayDateInMetricFormat,
   getWeekNumber,
 } from '../calendars/date-functions';
-import { stopwatch } from '../main';
+import { settings, stopwatch } from '../main';
 import { saveToGDrive, loadFromGDrive } from './gdrive-service';
 export let loadedData;
 export const gdriveStorage = {
@@ -108,6 +108,19 @@ export const gdriveStorage = {
     }
   },
 
+  checkIfGoalHoursExistInGdrive() {
+    if (!loadedData['goalHoursPerWeekData']) {
+      loadedData['goalHoursPerWeekData'] = {
+        hoursHighest: 0,
+        hoursMiddle: 0,
+        hoursLowest: 0,
+        highestColor: '',
+        middleColor: '',
+        lowestColor: '',
+      };
+    }
+  },
+
   updateTodayDateEuroEntries(entry) {
     this.checkIfCurrentYearExistsInGdrive();
     this.checkIfCurrentWeekExistsInGrive();
@@ -139,18 +152,57 @@ export const gdriveStorage = {
   },
 
   async updateGoalHoursPerWeek(hours) {
+    this.checkIfGoalHoursExistInGdrive();
+    loadedData['goalHoursPerWeekData']['hoursHighest'] = hours;
+    document.querySelector('#goal-range-highest-settings').textContent =
+      `Goal: ${loadedData['goalHoursPerWeekData']['hoursHighest']} hours/week`;
+
+    saveToGDrive(loadedData);
+  },
+
+  async updateGoalHoursPerWeekRangesAndColors(
+    hoursHighest = loadedData['goalHoursPerWeekData']['hoursHighest']
+  ) {
+    const highestColor = document.querySelector('#color-picker-highest-goal-range').value;
+    const middleColor = document.querySelector('#color-picker-middle-goal-range').value;
+    const lowestColor = document.querySelector('#color-picker-low-goal-range').value;
+    const hoursMiddle = parseInt(document.querySelector('#choose-goal-ranges-middle').value);
+    const hoursLowest = parseInt(document.querySelector('#choose-goal-ranges-low').value);
+
+    if (hoursHighest === 0) {
+      settings.savePopupText('Goal cannot be 0, create a goal first');
+      return;
+    } else if (hoursMiddle >= hoursHighest || hoursMiddle == 0) {
+      settings.savePopupText(
+        'Middle hour range cannot be equal or bigger than the goal hours and cannot be 0'
+      );
+      return;
+    } else if (hoursLowest >= hoursMiddle || hoursLowest == 0) {
+      settings.savePopupText(
+        'Lowest hour range cannot be equal or bigger than the middle hour range and cannot be 0'
+      );
+      return;
+    }
+
     if (!loadedData['goalHoursPerWeekData']) {
       loadedData['goalHoursPerWeekData'] = {
-        hoursHighest: 0,
+        hoursHighest: hoursHighest,
         hoursMiddle: 0,
         hoursLowest: 0,
         highestColor: '',
         middleColor: '',
         lowestColor: '',
       };
-    } else {
-      loadedData['goalHoursPerWeekData']['hoursHighest'] = hours;
     }
+    loadedData['goalHoursPerWeekData'] = {
+      hoursHighest: hoursHighest,
+      hoursMiddle: hoursMiddle,
+      hoursLowest: hoursLowest,
+      highestColor: highestColor,
+      middleColor: middleColor,
+      lowestColor: lowestColor,
+    };
+    settings.savePopupText('Data saved');
     saveToGDrive(loadedData);
   },
 

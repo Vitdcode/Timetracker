@@ -1,4 +1,6 @@
-export function createColorPicker(inputId, wrapper) {
+import { loadedData } from '../google-drive/gdrive-storage-functions';
+
+export function createColorPicker(inputId, wrapper, value = '') {
   const label = document.createElement('label');
   label.htmlFor = inputId;
   label.textContent = 'Color Picker';
@@ -8,6 +10,7 @@ export function createColorPicker(inputId, wrapper) {
   input.id = inputId;
   input.className = 'color-picker';
   input.type = 'color';
+  input.value = value;
 
   wrapper.appendChild(label);
   wrapper.appendChild(input);

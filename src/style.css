@@ -422,7 +422,7 @@ input::-webkit-inner-spin-button {
   background-color: rgba(71, 187, 139, 0.548);
 }
 
-#choose-goal-ranges-wrapper {
+#goal-ranges-and-colors-form {
   position: relative;
 }
 

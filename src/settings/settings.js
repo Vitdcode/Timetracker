@@ -13,6 +13,7 @@ import { createSubmitButton } from '../create-elements-functions/create-submit-b
 import { saveToGDrive } from '../google-drive/gdrive-service';
 import { gdriveStorage, loadedData } from '../google-drive/gdrive-storage-functions';
 import settingsImage from '../images/settings.png';
+import { settings } from '../main';
 import { evaluateGoal } from './evaluations/goal-evaluation';
 
 export class Settings {
@@ -63,12 +64,10 @@ export class Settings {
 
   saveGoalPerWeekInput(input) {
     gdriveStorage.updateGoalHoursPerWeek(parseInt(input.value));
-    const saveText = createSpan(
-      `Saved goal ${loadedData['goalHoursPerWeekData']['hoursHighest']} hours/week`,
-      'hours-per-week-popup-settings',
-      'popup-text'
+
+    this.savePopupText(
+      `Saved goal ${loadedData['goalHoursPerWeekData']['hoursHighest']} hours/week`
     );
-    this.savePopupText(saveText);
     this.insertGoalIntoApp(loadedData['goalHoursPerWeekData']['hoursHighest']);
   }
 
@@ -123,9 +122,16 @@ export class Settings {
   }
 
   chooseGoalHourRange() {
-    this.chooseGoalRanges = createDiv(
+    /*     this.chooseGoalRanges = createDiv(
       'choose-goal-ranges-wrapper',
       'wrapper-in-menus',
+      this.settingsWindow
+    ); */
+
+    const chooseGoalrangesAndColorsForm = createForm(
+      'goal-ranges-and-colors-form',
+      'wrapper-in-menus',
+      () => gdriveStorage.updateGoalHoursPerWeekRangesAndColors(),
       this.settingsWindow
     );
 
@@ -133,7 +139,7 @@ export class Settings {
       'Choose Colors for goal hour ranges',
       'choose-goal-ranges-header',
       'wrapper-in-menus-header',
-      this.chooseGoalRanges
+      chooseGoalrangesAndColorsForm
     );
 
     const informationPopup = createSpan(
@@ -151,58 +157,78 @@ export class Settings {
     const highestGoalRangeWrapper = createDiv(
       'goal-range-highest-wrapper',
       'wrapper-in-menus',
-      this.chooseGoalRanges
+      chooseGoalrangesAndColorsForm
     );
 
-    const highestGoalForm = createForm('goal-range-highest-form', 'form-class');
     createSpan(
-      `Goal: ${loadedData['goalHoursPerWeek']} hours/week`,
+      `Goal: ${loadedData['goalHoursPerWeekData']['hoursHighest']} hours/week`,
       'goal-range-highest-settings',
       'wrapper-in-menus-text',
       highestGoalRangeWrapper
     );
-    createColorPicker('color-picker-highest-goal-range', highestGoalRangeWrapper);
+    createColorPicker(
+      'color-picker-highest-goal-range',
+      highestGoalRangeWrapper,
+      loadedData['goalHoursPerWeekData']['highestColor']
+    );
+    /*     this.chooseGoalRanges.appendChild(highestGoalForm); */
 
     const middleGoalRangeWrapper = createDiv(
       'goal-range-highest-wrapper',
       'wrapper-in-menus',
-      this.chooseGoalRanges
+      chooseGoalrangesAndColorsForm
     );
     createInput(
       'choose-goal-ranges-middle',
-      'Goal range middle',
+      `${loadedData['goalHoursPerWeekData']['hoursMiddle']} hours range middle`,
       middleGoalRangeWrapper,
       false,
       'number'
     );
-    createColorPicker('color-picker-middle-goal-range', middleGoalRangeWrapper);
+    createColorPicker(
+      'color-picker-middle-goal-range',
+      middleGoalRangeWrapper,
+      loadedData['goalHoursPerWeekData']['middleColor']
+    );
 
     const lowGoalRangeWrapper = createDiv(
       'goal-range-low-wrapper',
       'wrapper-in-menus',
-      this.chooseGoalRanges
+      chooseGoalrangesAndColorsForm
     );
-    createInput('choose-goal-ranges-low', 'Goal range low', lowGoalRangeWrapper, false, 'number');
-    createColorPicker('color-picker-low-goal-range', lowGoalRangeWrapper);
+    createInput(
+      'choose-goal-ranges-low',
+      `${loadedData['goalHoursPerWeekData']['hoursLowest']} hours range lowest`,
+      lowGoalRangeWrapper,
+      false,
+      'number'
+    );
+    createColorPicker(
+      'color-picker-low-goal-range',
+      lowGoalRangeWrapper,
+      loadedData['goalHoursPerWeekData']['lowestColor']
+    );
 
     createSubmitButton(
       'Save',
       'submit-goal-hour-ranges-and-colors',
       'button',
-      this.chooseGoalRanges
+      chooseGoalrangesAndColorsForm
     );
   }
 
   savePopupText(text) {
-    this.settingsWindow.appendChild(text);
+    const saveText = createSpan(text, 'hours-per-week-popup-settings', 'popup-text');
 
-    text.addEventListener('animationend', (e) => {
+    this.settingsWindow.appendChild(saveText);
+
+    saveText.addEventListener('animationend', (e) => {
       if (e.animationName === 'fadeOut') {
-        text.remove();
+        saveText.remove();
       }
       setTimeout(() => {
-        if (text) {
-          text.style.animation = 'fadeOut 200ms ease-out';
+        if (saveText) {
+          saveText.style.animation = 'fadeOut 200ms ease-out';
         }
       }, 2000);
     });

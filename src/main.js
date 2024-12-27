@@ -39,6 +39,7 @@ async function initializeApp() {
       gdriveStorage.checkIfCurrentYearExistsInGdrive();
       gdriveStorage.checkIfCurrentWeekExistsInGrive();
       gdriveStorage.checkIfTotalTimedataExistsInGrive();
+      gdriveStorage.checkIfGoalHoursExistInGdrive();
       calendar.options['selectedDates'] = pushSelectedDatesDataFromGdrive();
       calendar.createPopupsOnInit();
       calendar.createCalendar();

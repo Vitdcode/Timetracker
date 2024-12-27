@@ -1,4 +1,4 @@
-export function createForm(formId, className, onSuccessFunctionCall) {
+export function createForm(formId, className, onSuccessFunctionCall, elementToAppend) {
   const form = document.createElement('form');
   form.id = formId;
   form.className = className;
@@ -12,6 +12,10 @@ export function createForm(formId, className, onSuccessFunctionCall) {
       return;
     }
   });
+
+  if (elementToAppend) {
+    elementToAppend.appendChild(form);
+  }
 
   return form;
 }

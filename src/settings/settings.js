@@ -1,6 +1,7 @@
 import { getWeekNumber } from '../calendars/date-functions';
 import { closeWindow } from '../create-elements-functions/close-window';
 import { createButton } from '../create-elements-functions/create-button';
+import { createColorPicker } from '../create-elements-functions/create-color-picker';
 import { createDiv } from '../create-elements-functions/create-div';
 import { createForm } from '../create-elements-functions/create-form';
 import { createH1, createH2 } from '../create-elements-functions/create-h-elements';
@@ -29,6 +30,7 @@ export class Settings {
       this.openSettings();
       this.goalPerWeek();
       this.trackProject();
+      this.chooseGoalHourRange();
       this.deleteStoragebtn();
     });
   }
@@ -118,6 +120,60 @@ export class Settings {
     );
     createInput('track-project-input', 'Project Name', this.trackProjectWrapper);
     createSubmitButton('Save', 'save-track-project-button', 'button', this.trackProjectWrapper);
+  }
+
+  chooseGoalHourRange() {
+    this.chooseGoalRanges = createDiv(
+      'choose-goal-ranges-wrapper',
+      'wrapper-in-menus',
+      this.settingsWindow
+    );
+
+    const header = createH2(
+      'Choose Colors for goal hour ranges',
+      'choose-goal-ranges-header',
+      'wrapper-in-menus-header',
+      this.chooseGoalRanges
+    );
+
+    const informationPopup = createSpan(
+      'i',
+      'information-popup-hour-ranges',
+      'information-text-element',
+      header
+    );
+    popupMouseOver(
+      'Choose a color and a hours for each goal range and this color will be displayed at each calendar week indicating your performance for that week',
+      informationPopup,
+      'relative'
+    );
+
+    const highestGoalRangeWrapper = createDiv(
+      'goal-range-highest-wrapper',
+      'wrapper-in-menus',
+      this.chooseGoalRanges
+    );
+    createSpan(
+      `Goal: ${loadedData['goalHoursPerWeek']} hours/week`,
+      'goal-range-highest-settings',
+      'wrapper-in-menus-text',
+      highestGoalRangeWrapper
+    );
+    createColorPicker('color-picker-highest-goal-range', highestGoalRangeWrapper);
+
+    const GoalRangeWrapper = createDiv(
+      'goal-range-highest-wrapper',
+      'wrapper-in-menus',
+      this.chooseGoalRanges
+    );
+    createInput(
+      'choose-goal-ranges-middle',
+      'Goal range middle',
+      GoalRangeWrapper,
+      false,
+      'number'
+    );
+    createColorPicker('color-picker-middle-goal-range', GoalRangeWrapper);
   }
 
   savePopupText(text) {

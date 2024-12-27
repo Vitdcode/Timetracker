@@ -142,7 +142,8 @@ body {
   top: 120%;
   left: 100%;
   width: 150px;
-  background-color: rgba(68, 68, 68, 0.123);
+  background-color: rgb(27, 52, 82);
+  padding: 10px;
   color: rgb(228, 228, 228);
   border-radius: 16px;
   font-size: 1rem;
@@ -400,6 +401,39 @@ input::-webkit-inner-spin-button {
   /* removes up and down arrows for input type "number" */
   -webkit-appearance: none;
   margin: 0;
+}
+
+#information-popup-hour-ranges {
+  margin-left: 21px;
+  padding: 3px 12px;
+  border-radius: 20px;
+  background-color: rgba(0, 255, 136, 0.233);
+}
+
+#information-popup-hour-ranges:hover {
+  cursor: pointer;
+  background-color: rgba(71, 187, 139, 0.548);
+}
+
+#choose-goal-ranges-header {
+  max-width: 90%;
+}
+
+#goal-range-highest-wrapper {
+  flex-direction: row;
+  justify-content: center;
+}
+
+.color-picker {
+  height: 37px;
+  width: 35px;
+  padding: 0;
+  background-color: transparent;
+}
+
+.color-picker::-webkit-color-swatch {
+  border: none;
+  border-radius: 50%; /* Makes the color swatch circular */
 }
 
 #save-track-project-button,

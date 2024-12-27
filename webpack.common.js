@@ -21,6 +21,7 @@ module.exports = {
         'frame-src https://accounts.google.com https://content.googleapis.com; ' + // Added content.googleapis.com
         "img-src 'self' data: https:; " +
         "connect-src 'self' https://accounts.google.com https://www.googleapis.com",
+        "cross-origin-opener-policy 'unsafe-none'"
     },
   },
   module: {

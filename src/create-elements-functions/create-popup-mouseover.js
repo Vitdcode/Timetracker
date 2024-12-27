@@ -1,7 +1,10 @@
 import { createH2 } from './create-h-elements';
 
 let timeOutId;
-export function popupMouseOver(textContent, relativeElement, position = 'absolute') {
+export function popupMouseOver(textContent, relativeElement, position, imageElement = false) {
+  if (imageElement) {
+    relativeElement = relativeElement.parentElement;
+  }
   relativeElement.addEventListener('mouseenter', () => {
     timeOutId = setTimeout(() => {
       const popup = document.querySelector('#popup-mouseover');

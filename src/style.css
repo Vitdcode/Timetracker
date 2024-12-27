@@ -407,19 +407,18 @@ input::-webkit-inner-spin-button {
 #information-popup-hour-ranges {
   position: absolute !important;
   top: 0;
-  right: 2%;
-  height: 40px;
+  right: -10%;
+  height: 35px;
   font-size: 1.7rem;
   margin-left: 21px;
   margin-top: 10px;
-  padding: 0px 11px;
+  padding: 5px 5px;
   border-radius: 10px;
-  background-color: rgba(0, 255, 136, 0.233);
 }
 
 #information-popup-hour-ranges:hover {
   cursor: pointer;
-  background-color: rgba(71, 187, 139, 0.548);
+  background-color: rgba(255, 255, 255, 0.075);
 }
 
 #goal-ranges-and-colors-form {
@@ -427,6 +426,7 @@ input::-webkit-inner-spin-button {
 }
 
 #choose-goal-ranges-header {
+  position: relative;
   text-align: center;
   width: 80%;
 }
@@ -446,10 +446,15 @@ input::-webkit-inner-spin-button {
 }
 
 .color-picker {
-  height: 37px;
-  width: 35px;
-  padding: 0;
+  height: 47px;
+  width: 45px;
+  padding: 5px;
   background-color: transparent;
+}
+
+.color-picker:hover {
+  cursor: pointer;
+  background-color: rgba(255, 255, 255, 0.075);
 }
 
 .color-picker::-webkit-color-swatch {

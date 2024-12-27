@@ -47,7 +47,7 @@ async function initGoogleDrive() {
 let accessToken = null;
 let tokenExpiry = null;
 
-async function authenticate() {
+/* async function authenticate() {
   // If we have a valid token, use it
   if (accessToken && tokenExpiry && Date.now() < tokenExpiry) {
     return;
@@ -73,6 +73,36 @@ async function authenticate() {
       // If silent refresh fails, then request with consent prompt
       tokenClient.requestAccessToken({ prompt: 'consent' });
       reject(err);
+    }
+  });
+} */
+
+async function authenticate() {
+  return new Promise((resolve, reject) => {
+    try {
+      tokenClient.callback = async (response) => {
+        if (response.error !== undefined) {
+          // Force interactive sign-in for Edge
+          if (response.error === 'interaction_required') {
+            tokenClient.requestAccessToken({ prompt: 'consent' });
+            return;
+          }
+          reject(response);
+          return;
+        }
+        await gapi.client.setToken(response);
+        resolve(response);
+      };
+
+      // Try silent token request first
+      tokenClient.requestAccessToken({ prompt: '' });
+    } catch (err) {
+      // If silent fails, request with consent prompt
+      try {
+        tokenClient.requestAccessToken({ prompt: 'consent' });
+      } catch (promptErr) {
+        reject(promptErr);
+      }
     }
   });
 }

@@ -15,6 +15,7 @@ import { gdriveStorage, loadedData } from '../google-drive/gdrive-storage-functi
 import settingsImage from '../images/settings.png';
 import { settings } from '../main';
 import { evaluateGoal } from './evaluations/goal-evaluation';
+import infoImage from '../images/info.png';
 
 export class Settings {
   constructor() {
@@ -94,12 +95,14 @@ export class Settings {
 
   deleteGoal(goalInAppWrapper) {
     const deleteGoalBtn = createButton('X', 'delete-goal-button', 'button', goalInAppWrapper);
-    popupMouseOver('Delete Goal', deleteGoalBtn);
+    popupMouseOver('Delete Goal', deleteGoalBtn, 'absolute');
     deleteGoalBtn.addEventListener('click', () => {
       this.goalsHoursPerWeek = null;
       const gdriveHoursPerWeek = loadedData['goalHoursPerWeekData']['hoursHighest'];
       if (gdriveHoursPerWeek) {
         loadedData['goalHoursPerWeekData']['hoursHighest'] = 0;
+        loadedData['goalHoursPerWeekData']['hoursMiddle'] = 0;
+        loadedData['goalHoursPerWeekData']['hoursLowest'] = 0;
       }
       if (goalInAppWrapper) {
         goalInAppWrapper.remove();
@@ -122,12 +125,6 @@ export class Settings {
   }
 
   chooseGoalHourRange() {
-    /*     this.chooseGoalRanges = createDiv(
-      'choose-goal-ranges-wrapper',
-      'wrapper-in-menus',
-      this.settingsWindow
-    ); */
-
     const chooseGoalrangesAndColorsForm = createForm(
       'goal-ranges-and-colors-form',
       'wrapper-in-menus',
@@ -142,16 +139,26 @@ export class Settings {
       chooseGoalrangesAndColorsForm
     );
 
-    const informationPopup = createSpan(
+    /*     const informationPopup = createImg(
       'ℹ️',
       'information-popup-hour-ranges',
       'information-text-element',
       header
+    ); */
+
+    const informationPopup = createImg(
+      'information-popup-hour-ranges',
+      infoImage,
+      'information icon',
+      'information-text-element',
+      header
     );
+
     popupMouseOver(
       'Choose a color and a hours for each goal range and this color will be displayed at each calendar week indicating your performance for that week',
       informationPopup,
-      'relative'
+      'relative',
+      true
     );
 
     const highestGoalRangeWrapper = createDiv(

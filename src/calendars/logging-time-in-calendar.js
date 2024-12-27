@@ -5,6 +5,7 @@ import { calendar, settings, stopwatch } from '../main';
 import { evaluateGoal } from '../settings/evaluations/goal-evaluation';
 import { colorizeWeekNumsOnHoursWorked } from './colorize-dates';
 import { getTodayAsNumberEuroFormat } from './date-functions';
+import { showHoursUnderCalendarWeeks } from './show-hours-under-calendar-weeks';
 
 export class TimeLogging {
   constructor() {
@@ -17,10 +18,11 @@ export class TimeLogging {
       if (stopwatch.stopwatchRunning || stopwatch.stopwatchPaused) {
         calendar.logTime();
         gdriveStorage.updateHoursInGdriveObject();
-        settings.goalsHoursPerWeek += stopwatch.secondsCount;
+        /* settings.goalsHoursPerWeek += stopwatch.hoursCount; */
         evaluateGoal();
         this.loggedTextPopup();
         colorizeWeekNumsOnHoursWorked();
+        showHoursUnderCalendarWeeks();
         saveToGDrive(loadedData);
       } else {
         return;

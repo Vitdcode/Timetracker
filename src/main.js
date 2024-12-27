@@ -15,6 +15,7 @@ import { UploadStatus } from './google-drive/upload-status.js';
 import { evaluateGoal } from './settings/evaluations/goal-evaluation.js';
 import { getWeekNumber } from './calendars/date-functions.js';
 import { colorizeWeekNumsOnHoursWorked } from './calendars/colorize-dates.js';
+import { showHoursUnderCalendarWeeks } from './calendars/show-hours-under-calendar-weeks.js';
 createLoadingAnimation();
 export const stopwatch = new Stopwatch();
 export const calendar = new CalendarMethods();
@@ -46,6 +47,7 @@ async function initializeApp() {
       evaluateGoal(loadedData['calendarData'][new Date().getFullYear()][[getWeekNumber()]]['weeklyTime']['hours']); //prettier-ignore
     }
     colorizeWeekNumsOnHoursWorked();
+    showHoursUnderCalendarWeeks();
     fadeoutAnimation(); //remove loading animation once data is available
   } catch (error) {
     console.error('Error during app initialization:', error);

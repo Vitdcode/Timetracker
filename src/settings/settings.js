@@ -22,7 +22,7 @@ export class Settings {
     this.mainWrapperSelector = document.querySelector('.main-wrapper');
     this.appHeaderWrapperSelector = document.querySelector('#app-header-settings-wrapper');
     this.settingsImg = createImg('settings-img', settingsImage, 'Settings Icon');
-    this.goalsHoursPerWeek = 0; //prettier-ignore
+    /*     this.goalsHoursPerWeek = 0; //prettier-ignore */
     this.cleanupSettingsWindow = this.cleanupSettingsWindow.bind(this); //ensure this refers to the Settings instance
   }
 
@@ -97,7 +97,7 @@ export class Settings {
     const deleteGoalBtn = createButton('X', 'delete-goal-button', 'button', goalInAppWrapper);
     popupMouseOver('Delete Goal', deleteGoalBtn, 'absolute');
     deleteGoalBtn.addEventListener('click', () => {
-      this.goalsHoursPerWeek = null;
+      /*      this.goalsHoursPerWeek = null; */
       const gdriveHoursPerWeek = loadedData['goalHoursPerWeekData']['hoursHighest'];
       if (gdriveHoursPerWeek) {
         loadedData['goalHoursPerWeekData']['hoursHighest'] = 0;
@@ -171,7 +171,6 @@ export class Settings {
       highestGoalRangeWrapper,
       loadedData['goalHoursPerWeekData']['highestColor']
     );
-    /*     this.chooseGoalRanges.appendChild(highestGoalForm); */
 
     const middleGoalRangeWrapper = createDiv(
       'goal-range-highest-wrapper',

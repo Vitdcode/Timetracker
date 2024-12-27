@@ -329,7 +329,13 @@ body {
 }
 
 .vc-week-number {
-  border-radius: 16px;
+  display: flex;
+  flex-direction: column;
+  border-radius: 6px;
+}
+
+#hours-under-week {
+  font-size: 0.7rem;
 }
 
 .popup-text {

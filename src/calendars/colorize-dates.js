@@ -43,12 +43,17 @@ export function colorizeWeekNumsOnHoursWorked() {
   const lowestColor = loadedData['goalHoursPerWeekData']['lowestColor'];
 
   const weekNumsInCalendar = document.querySelectorAll('.vc-week-number');
+
   weekNumsInCalendar.forEach((week) => {
-    const weekToNum = parseInt(week.textContent);
-    const weekNumInGdrive = loadedData['calendarData'][new Date().getFullYear()][weekToNum];
+    let weekText = week.textContent;
+    if (weekText.length > 2) {
+      weekText = week.firstChild.textContent;
+    }
+
+    const weekNumInGdrive = loadedData['calendarData'][new Date().getFullYear()][weekText];
     if (weekNumInGdrive) {
       const weeklyHours =
-        loadedData['calendarData'][new Date().getFullYear()][weekToNum]['weeklyTime']['hours'];
+        loadedData['calendarData'][new Date().getFullYear()][weekText]['weeklyTime']['hours'];
       if (weeklyHours >= hoursHighest) {
         week.style.cssText += `background-color: ${highestColor} !important;`;
       } else if (weeklyHours >= hoursMiddle) {

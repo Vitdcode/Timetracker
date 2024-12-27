@@ -47,7 +47,7 @@ async function initGoogleDrive() {
 let accessToken = null;
 let tokenExpiry = null;
 
-/* async function authenticate() {
+async function authenticate() {
   // If we have a valid token, use it
   if (accessToken && tokenExpiry && Date.now() < tokenExpiry) {
     return;
@@ -75,36 +75,12 @@ let tokenExpiry = null;
       reject(err);
     }
   });
-} */
+}
 
-async function authenticate() {
-  return new Promise((resolve, reject) => {
-    try {
-      tokenClient.callback = async (response) => {
-        if (response.error !== undefined) {
-          // Force interactive sign-in for Edge
-          if (response.error === 'interaction_required') {
-            tokenClient.requestAccessToken({ prompt: 'consent' });
-            return;
-          }
-          reject(response);
-          return;
-        }
-        await gapi.client.setToken(response);
-        resolve(response);
-      };
-
-      // Try silent token request first
-      tokenClient.requestAccessToken({ prompt: '' });
-    } catch (err) {
-      // If silent fails, request with consent prompt
-      try {
-        tokenClient.requestAccessToken({ prompt: 'consent' });
-      } catch (promptErr) {
-        reject(promptErr);
-      }
-    }
-  });
+async function ensureValidToken() {
+  if (!accessToken || !tokenExpiry || Date.now() >= tokenExpiry - 60000) {
+    await authenticate();
+  }
 }
 
 function waitForGapi() {
@@ -189,6 +165,7 @@ async function findOrCreateFile(folderId) {
 
 async function saveToGDrive(data) {
   try {
+    await ensureValidToken();
     uploadStatus.showCloudUploadImg();
     await authenticate();
     const folderId = await findOrCreateFolder();
@@ -213,6 +190,7 @@ async function saveToGDrive(data) {
 
 async function loadFromGDrive() {
   try {
+    await ensureValidToken();
     await authenticate();
     const folderId = await findOrCreateFolder();
     const fileId = await findOrCreateFile(folderId);

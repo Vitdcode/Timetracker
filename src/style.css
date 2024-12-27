@@ -289,7 +289,7 @@ body {
 }
 
 .vc-date__popup {
-  height: 400px;
+  max-height: 400px;
   overflow: auto;
   padding: 10px !important;
   display: flex;
@@ -299,9 +299,37 @@ body {
   font-size: 1rem !important;
 }
 
+#calendar {
+  background-color: rgba(167, 245, 255, 0.089);
+  box-shadow: var(--box-shadow);
+}
+
+.vc-dates {
+  gap: 5px;
+}
+
+.vc-date__btn {
+  padding: 5px !important;
+  border-radius: 16px !important;
+  background-color: rgba(255, 255, 255, 0.116) !important;
+  color: white !important;
+}
+
+.vc-date__btn[aria-selected='true'] {
+  background-color: rgba(28, 147, 216, 0.788) !important;
+}
+
 .vc-week-numbers__content {
   /* setting height to 100% fixes calender weeks being slightly misplaced */
   height: 100%;
+}
+
+.vc-week-numbers {
+  margin-right: 5px;
+}
+
+.vc-week-number {
+  border-radius: 16px;
 }
 
 .popup-text {

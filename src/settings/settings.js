@@ -139,13 +139,6 @@ export class Settings {
       chooseGoalrangesAndColorsForm
     );
 
-    /*     const informationPopup = createImg(
-      'ℹ️',
-      'information-popup-hour-ranges',
-      'information-text-element',
-      header
-    ); */
-
     const informationPopup = createImg(
       'information-popup-hour-ranges',
       infoImage,

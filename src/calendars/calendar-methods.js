@@ -20,6 +20,7 @@ export class CalendarMethods {
       firstWeekday: 1,
       popups: {},
       selectedDates: [],
+      disableToday: true,
     };
     this.calendar = null;
     this.date = new Date().getDate();

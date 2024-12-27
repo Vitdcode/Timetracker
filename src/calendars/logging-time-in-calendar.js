@@ -3,6 +3,7 @@ import { saveToGDrive } from '../google-drive/gdrive-service';
 import { gdriveStorage, loadedData } from '../google-drive/gdrive-storage-functions';
 import { calendar, settings, stopwatch } from '../main';
 import { evaluateGoal } from '../settings/evaluations/goal-evaluation';
+import { colorizeWeekNumsOnHoursWorked } from './colorize-dates';
 import { getTodayAsNumberEuroFormat } from './date-functions';
 
 export class TimeLogging {
@@ -19,7 +20,7 @@ export class TimeLogging {
         settings.goalsHoursPerWeek += stopwatch.secondsCount;
         evaluateGoal();
         this.loggedTextPopup();
-
+        colorizeWeekNumsOnHoursWorked();
         saveToGDrive(loadedData);
       } else {
         return;

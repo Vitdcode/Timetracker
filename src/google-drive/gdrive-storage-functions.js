@@ -1,3 +1,4 @@
+import { colorizeWeekNumsOnHoursWorked } from '../calendars/colorize-dates';
 import {
   getTodayAsNumberEuroFormat,
   getTodayDateInMetricFormat,
@@ -203,6 +204,7 @@ export const gdriveStorage = {
       lowestColor: lowestColor,
     };
     settings.savePopupText('Data saved');
+    colorizeWeekNumsOnHoursWorked();
     saveToGDrive(loadedData);
   },
 

@@ -1,3 +1,4 @@
+import { getWeekNumber } from '../calendars/date-functions';
 import { closeWindow } from '../create-elements-functions/close-window';
 import { createButton } from '../create-elements-functions/create-button';
 import { createDiv } from '../create-elements-functions/create-div';
@@ -11,13 +12,14 @@ import { createSubmitButton } from '../create-elements-functions/create-submit-b
 import { saveToGDrive } from '../google-drive/gdrive-service';
 import { gdriveStorage, loadedData } from '../google-drive/gdrive-storage-functions';
 import settingsImage from '../images/settings.png';
+import { evaluateGoal } from './evaluations/goal-evaluation';
 
 export class Settings {
   constructor() {
     this.mainWrapperSelector = document.querySelector('.main-wrapper');
     this.appHeaderWrapperSelector = document.querySelector('#app-header-settings-wrapper');
     this.settingsImg = createImg('settings-img', settingsImage, 'Settings Icon');
-    this.goalsHoursPerWeek = null;
+    this.goalsHoursPerWeek = 0; //prettier-ignore
     this.cleanupSettingsWindow = this.cleanupSettingsWindow.bind(this); //ensure this refers to the Settings instance
   }
 
@@ -58,32 +60,34 @@ export class Settings {
   }
 
   saveGoalPerWeekInput(input) {
-    this.goalsHoursPerWeek = input.value;
-    gdriveStorage.updateGoalHoursPerWeek(parseInt(this.goalsHoursPerWeek));
+    gdriveStorage.updateGoalHoursPerWeek(parseInt(input.value));
     const saveText = createSpan(
-      `Saved goal ${this.goalsHoursPerWeek} hours/week`,
+      `Saved goal ${loadedData['goalHoursPerWeek']} hours/week`,
       'hours-per-week-popup-settings',
       'popup-text'
     );
     this.savePopupText(saveText);
-    this.insertGoalIntoApp(this.goalsHoursPerWeek);
+    this.insertGoalIntoApp(loadedData['goalHoursPerWeek']);
   }
 
   insertGoalIntoApp(hoursPerWeek) {
-    const goalInAppWrapper = createDiv('goal-in-app-wrapper', 'info-text-in-app-wrapper');
-    createSpan(
-      `Goal: ${hoursPerWeek} hours/week`,
-      'goal-in-app-text',
-      'in-app-text',
-      goalInAppWrapper
-    );
-    this.deleteGoal(goalInAppWrapper);
-    const appHeaderWrapper = document.querySelector('#app-header-settings-wrapper');
-    if (document.querySelector('#goal-in-app-wrapper')) {
-      document.querySelector('#goal-in-app-wrapper').remove();
-    }
-    if (appHeaderWrapper) {
-      appHeaderWrapper.after(goalInAppWrapper);
+    if (hoursPerWeek) {
+      const goalInAppWrapper = createDiv('goal-in-app-wrapper', 'info-text-in-app-wrapper');
+      createSpan(
+        `Goal: ${hoursPerWeek} hours/week`,
+        'goal-in-app-text',
+        'in-app-text',
+        goalInAppWrapper
+      );
+      this.deleteGoal(goalInAppWrapper);
+      const appHeaderWrapper = document.querySelector('#app-header-settings-wrapper');
+      if (document.querySelector('#goal-in-app-wrapper')) {
+        document.querySelector('#goal-in-app-wrapper').remove();
+      }
+      if (appHeaderWrapper) {
+        appHeaderWrapper.after(goalInAppWrapper);
+      }
+      evaluateGoal();
     }
   }
 

@@ -41,7 +41,7 @@ async function initializeApp() {
     }
     if (loadedData['goalHoursPerWeek'] != '0') {
       settings.insertGoalIntoApp(loadedData['goalHoursPerWeek']);
-      evaluateGoal();
+      evaluateGoal(loadedData['calendarData'][new Date().getFullYear()][[getWeekNumber()]]['weeklyTime']['hours']); //prettier-ignore
     }
 
     fadeoutAnimation(); //remove loading animation once data is available

@@ -1,7 +1,7 @@
 import { createSpan } from '../create-elements-functions/create-span';
 import { saveToGDrive } from '../google-drive/gdrive-service';
 import { gdriveStorage, loadedData } from '../google-drive/gdrive-storage-functions';
-import { calendar, stopwatch } from '../main';
+import { calendar, settings, stopwatch } from '../main';
 import { evaluateGoal } from '../settings/evaluations/goal-evaluation';
 import { getTodayAsNumberEuroFormat } from './date-functions';
 
@@ -16,8 +16,10 @@ export class TimeLogging {
       if (stopwatch.stopwatchRunning || stopwatch.stopwatchPaused) {
         calendar.logTime();
         gdriveStorage.updateHoursInGdriveObject();
+        settings.goalsHoursPerWeek += stopwatch.secondsCount;
         evaluateGoal();
         this.loggedTextPopup();
+
         saveToGDrive(loadedData);
       } else {
         return;

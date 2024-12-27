@@ -137,7 +137,7 @@ export class Settings {
     );
 
     const informationPopup = createSpan(
-      'i',
+      'ℹ️',
       'information-popup-hour-ranges',
       'information-text-element',
       header

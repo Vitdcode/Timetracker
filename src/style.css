@@ -404,9 +404,12 @@ input::-webkit-inner-spin-button {
 }
 
 #information-popup-hour-ranges {
+  height: 40px;
+  font-size: 1.7rem;
   margin-left: 21px;
-  padding: 3px 12px;
-  border-radius: 20px;
+  margin-top: 10px;
+  padding: 1px 12px;
+  border-radius: 10px;
   background-color: rgba(0, 255, 136, 0.233);
 }
 
@@ -416,7 +419,7 @@ input::-webkit-inner-spin-button {
 }
 
 #choose-goal-ranges-header {
-  max-width: 90%;
+  text-align: center;
 }
 
 #goal-range-highest-wrapper {

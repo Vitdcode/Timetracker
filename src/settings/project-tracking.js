@@ -7,6 +7,7 @@ import { createH2 } from '../create-elements-functions/create-h-elements';
 import { createImg } from '../create-elements-functions/create-img';
 import { createInput } from '../create-elements-functions/create-input';
 import { createSubmitButton } from '../create-elements-functions/create-submit-button';
+import { saveToGDrive } from '../google-drive/gdrive-service';
 import { gdriveStorage, loadedData } from '../google-drive/gdrive-storage-functions';
 import deleteImage from '../images/delete.png';
 import { settings } from '../main';
@@ -49,8 +50,15 @@ function createProjectNameTextAndDeleteImg(form, input) {
       true
     );
 
-    createImg('delete-image', deleteImage, 'Icon of a trashcan', 'img', currentProjectWrapper);
+    const createDeleteImg = createImg(
+      'delete-image',
+      deleteImage,
+      'Icon of a trashcan',
+      'image',
+      currentProjectWrapper
+    );
     input.after(currentProjectWrapper);
+    deleteProject(createDeleteImg);
   }
 }
 
@@ -116,4 +124,13 @@ function calculateProjectHours(data, searchString) {
   traverse(data);
   console.log(totalHours);
   return totalHours;
+}
+
+function deleteProject(deleteImg) {
+  deleteImg.addEventListener('click', () => {
+    loadedData['currentProject'] = '';
+    document.querySelector('#current-project-tracking-in-app-wrapper')?.remove();
+    document.querySelector('#current-project-wrapper')?.remove();
+    saveToGDrive(loadedData);
+  });
 }

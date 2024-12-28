@@ -15,19 +15,31 @@ import { gdriveStorage, loadedData } from '../google-drive/gdrive-storage-functi
 import settingsImage from '../images/settings.png';
 import { evaluateGoal } from './evaluations/goal-evaluation';
 import infoImage from '../images/info.png';
+import appIconImage from '../images/app-icon/app-icon-512.png';
 import { trackProject } from './project-tracking';
 
 export class Settings {
   constructor() {
     this.mainWrapperSelector = document.querySelector('.main-wrapper');
     this.appHeaderWrapperSelector = document.querySelector('#app-header-settings-wrapper');
-    this.settingsImg = createImg('settings-img', settingsImage, 'Settings Icon');
-    /*     this.goalsHoursPerWeek = 0; //prettier-ignore */
+    this.appIcon = createImg(
+      'app-icon',
+      appIconImage,
+      'Stop Watch Icon which is the App Icon',
+      'image',
+      this.appHeaderWrapperSelector
+    );
+    this.settingsImg = createImg(
+      'settings-img',
+      settingsImage,
+      'Settings Icon',
+      'image',
+      this.appHeaderWrapperSelector
+    );
     this.cleanupSettingsWindow = this.cleanupSettingsWindow.bind(this); //ensure this refers to the Settings instance
   }
 
   settingsImgButton() {
-    this.appHeaderWrapperSelector.appendChild(this.settingsImg);
     this.settingsImg.addEventListener('click', () => {
       this.openSettings();
       this.goalPerWeek();

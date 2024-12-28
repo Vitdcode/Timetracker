@@ -3,6 +3,7 @@ import { saveToGDrive } from '../google-drive/gdrive-service';
 import { gdriveStorage, loadedData } from '../google-drive/gdrive-storage-functions';
 import { calendar, settings, stopwatch } from '../main';
 import { evaluateGoal } from '../settings/evaluations/goal-evaluation';
+import { trackingProjectInAppInfoWindow } from '../settings/project-tracking';
 import { colorizeWeekNumsOnHoursWorked } from './colorize-dates';
 import { getTodayAsNumberEuroFormat } from './date-functions';
 import { showHoursUnderCalendarWeeks } from './show-hours-under-calendar-weeks';
@@ -23,6 +24,7 @@ export class TimeLogging {
         this.loggedTextPopup();
         colorizeWeekNumsOnHoursWorked();
         showHoursUnderCalendarWeeks();
+        trackingProjectInAppInfoWindow();
         saveToGDrive(loadedData);
       } else {
         return;

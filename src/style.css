@@ -93,6 +93,14 @@ body {
   }
 }
 
+#app-icon {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 40px;
+  width: 40px;
+}
+
 /* cloud images */
 .cloud-image {
   position: absolute;
@@ -147,7 +155,7 @@ body {
   align-items: center;
   gap: 5px;
   color: white;
-  background-color: rgba(117, 201, 197, 0.103);
+  background-color: rgba(84, 95, 125, 0.233);
   border: 1px solid rgba(255, 255, 255, 0.055);
   border-radius: 16px;
   padding: 10px;
@@ -212,7 +220,7 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  background-color: rgba(255, 255, 255, 0.089);
+  background-color: rgba(84, 95, 125, 0.233);
   border-radius: 16px;
   margin-top: 10px;
   padding: 10px;
@@ -242,6 +250,9 @@ body {
 #calendar {
   margin-top: 100px;
   width: 340px;
+  background-color: rgba(84, 95, 125, 0.233);
+  /*   background-color: rgba(167, 245, 255, 0.089); */
+  box-shadow: var(--box-shadow);
 }
 
 .timelog-popup {
@@ -268,11 +279,6 @@ body {
   top: 100% !important;
   min-width: fit-content !important;
   font-size: 1rem !important;
-}
-
-#calendar {
-  background-color: rgba(167, 245, 255, 0.089);
-  box-shadow: var(--box-shadow);
 }
 
 .vc-dates {
@@ -501,16 +507,20 @@ input::-webkit-inner-spin-button {
   margin-top: 20px;
   border-radius: 10px;
   color: var(--header-white);
-  font-size: 1.2rem;
   padding: 10px;
   padding-inline: 60px;
-  background-color: rgba(117, 201, 197, 0.103);
+  background-color: rgba(84, 95, 125, 0.233);
   box-shadow: var(--box-shadow);
+}
+
+.in-app-text {
+  font-size: 1.3rem;
+  font-weight: 500;
 }
 
 #delete-goal-button {
   position: absolute;
-  top: 10%;
+  top: 5%;
   right: 2%;
   display: flex;
   justify-content: center;
@@ -520,10 +530,10 @@ input::-webkit-inner-spin-button {
   border-radius: 100%;
   color: rgb(156, 201, 189);
   font-size: 1.5rem;
-  background-color: rgba(27, 161, 117, 0.137);
+  background-color: rgba(84, 95, 125, 0.233);
   border: 1px solid rgba(255, 255, 255, 0.137);
   font-weight: 400;
-  box-shadow: var(--box-shadow);
+  /*   box-shadow: var(--box-shadow); */
 }
 
 #delete-goal-button:hover {

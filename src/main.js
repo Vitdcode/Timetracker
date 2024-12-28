@@ -16,6 +16,7 @@ import { evaluateGoal } from './settings/evaluations/goal-evaluation.js';
 import { getWeekNumber } from './calendars/date-functions.js';
 import { colorizeWeekNumsOnHoursWorked } from './calendars/colorize-dates.js';
 import { showHoursUnderCalendarWeeks } from './calendars/show-hours-under-calendar-weeks.js';
+import { trackingProjectInAppInfoWindow } from './settings/project-tracking.js';
 createLoadingAnimation();
 export const stopwatch = new Stopwatch();
 export const calendar = new CalendarMethods();
@@ -38,6 +39,7 @@ async function initializeApp() {
       gdriveStorage.checkIfCurrentWeekExistsInGrive();
       gdriveStorage.checkIfTotalTimedataExistsInGrive();
       gdriveStorage.checkIfGoalHoursExistInGdrive();
+      gdriveStorage.checkIfCurrentProjectExistsInGdrive();
       calendar.options['selectedDates'] = pushSelectedDatesDataFromGdrive();
       calendar.createPopupsOnInit();
       calendar.createCalendar();
@@ -48,6 +50,7 @@ async function initializeApp() {
     }
     colorizeWeekNumsOnHoursWorked();
     showHoursUnderCalendarWeeks();
+    trackingProjectInAppInfoWindow();
     fadeoutAnimation(); //remove loading animation once data is available
   } catch (error) {
     console.error('Error during app initialization:', error);

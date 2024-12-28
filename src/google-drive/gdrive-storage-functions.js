@@ -208,6 +208,12 @@ export const gdriveStorage = {
     saveToGDrive(loadedData);
   },
 
+  async updateProjectNameInGdriveObject(projectName) {
+    loadedData['calendarData'][new Date().getFullYear()][[getWeekNumber()]][getTodayDateInMetricFormat()]['project'] = projectName; //prettier-ignore
+    settings.savePopupText(`Project ${projectName} saved in Google Drive`);
+    saveToGDrive(loadedData);
+  },
+
   checkIfMinutesAreBiggerThan60(objectData) {
     if (objectData.minutes >= 60) {
       objectData.minutes -= 60;

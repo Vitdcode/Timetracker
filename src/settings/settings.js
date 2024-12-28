@@ -13,9 +13,9 @@ import { createSubmitButton } from '../create-elements-functions/create-submit-b
 import { saveToGDrive } from '../google-drive/gdrive-service';
 import { gdriveStorage, loadedData } from '../google-drive/gdrive-storage-functions';
 import settingsImage from '../images/settings.png';
-import { settings } from '../main';
 import { evaluateGoal } from './evaluations/goal-evaluation';
 import infoImage from '../images/info.png';
+import { trackProject } from './project-tracking';
 
 export class Settings {
   constructor() {
@@ -31,7 +31,7 @@ export class Settings {
     this.settingsImg.addEventListener('click', () => {
       this.openSettings();
       this.goalPerWeek();
-      this.trackProject();
+      trackProject(this.settingsWindow);
       this.chooseGoalHourRange();
       this.deleteStoragebtn();
     });
@@ -109,19 +109,6 @@ export class Settings {
       }
       saveToGDrive(loadedData);
     });
-  }
-
-  trackProject() {
-    this.trackProjectWrapper = createDiv('track-project-settings-wrapper', 'wrapper-in-menus');
-    this.settingsWindow.appendChild(this.trackProjectWrapper);
-    createH2(
-      'Track Project',
-      'track-project-settings-header',
-      'wrapper-in-menus-header',
-      this.trackProjectWrapper
-    );
-    createInput('track-project-input', 'Project Name', this.trackProjectWrapper);
-    createSubmitButton('Save', 'save-track-project-button', 'button', this.trackProjectWrapper);
   }
 
   chooseGoalHourRange() {
@@ -252,6 +239,6 @@ export class Settings {
     // Clear references
     this.settingsWindow = null;
     this.settingsHeader = null;
-    this.trackProjectWrapper = null;
+    /*     this.trackProjectWrapper = null; */
   }
 }

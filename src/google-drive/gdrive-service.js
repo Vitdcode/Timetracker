@@ -12,6 +12,7 @@ let fileID = null;
 async function initGoogleDrive() {
   try {
     console.log('Starting Google Drive initialization');
+    await waitForGoogleAPI();
 
     tokenClient = google.accounts.oauth2.initTokenClient({
       client_id: CLIENT_ID,
@@ -83,7 +84,7 @@ async function ensureValidToken() {
   }
 }
 
-function waitForGapi() {
+/* function waitForGapi() {
   return new Promise((resolve, reject) => {
     if (window.gapi) {
       resolve();
@@ -101,6 +102,30 @@ function waitForGapi() {
         }
       });
     }
+  });
+} */
+
+async function waitForGoogleAPI() {
+  return new Promise((resolve, reject) => {
+    // If Google API is already loaded
+    if (window.google && window.gapi) {
+      resolve();
+      return;
+    }
+
+    // Set a timeout to avoid infinite waiting
+    const timeout = setTimeout(() => {
+      reject(new Error('Timeout waiting for Google API to load'));
+    }, 10000);
+
+    // Check periodically if APIs are loaded
+    const checkGoogleAPI = setInterval(() => {
+      if (window.google && window.gapi) {
+        clearInterval(checkGoogleAPI);
+        clearTimeout(timeout);
+        resolve();
+      }
+    }, 100);
   });
 }
 

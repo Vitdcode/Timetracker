@@ -1,17 +1,15 @@
 {
   "name": "Timetracker",
+  "short_name": "Timetracker",
   "icons": [
     {
-      "src": "./src/images/app-icon/app-icon-256.png",
-      "sizes": "256x256",
-      "type": "image/png"
-    },
-    {
-      "src": "./src/images/app-icon/app-icon-512.png",
-      "sizes": "512x512",
-      "type": "image/png"
+      "src": "src/images/app-icon/app-icon-256.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "maskable"
     }
   ],
-  "start_url": "/",
+  "theme_color": "#ffffff",
+  "background_color": "#ffffff",
   "display": "standalone"
 }

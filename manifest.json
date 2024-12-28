@@ -3,7 +3,7 @@
   "short_name": "Timetracker",
   "icons": [
     {
-      "src": "src/images/app-icon/app-icon-256.png",
+      "src": "app-icon/app-icon-256.png",
       "sizes": "256x256",
       "type": "image/png",
       "purpose": "maskable"

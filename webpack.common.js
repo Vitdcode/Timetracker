@@ -1,5 +1,6 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 module.exports = {
   entry: {
@@ -10,6 +11,18 @@ module.exports = {
       title: 'Timetracker',
       template: './src/index.html',
     }),
+    new CopyWebpackPlugin({
+      patterns: [
+        {
+          from: 'manifest.json',
+          to: 'manifest.json',
+        },
+        {
+          from: 'src/images/app-icon',
+          to: 'app-icon',
+        },
+      ],
+    }),
   ],
   devServer: {
     headers: {
@@ -18,11 +31,9 @@ module.exports = {
         "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://apis.google.com https://accounts.google.com https://www.gstatic.com; " +
         "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; " +
         "font-src 'self' https://fonts.gstatic.com; " +
-        'frame-src https://accounts.google.com https://content.googleapis.com; ' + // Added content.googleapis.com
+        'frame-src https://accounts.google.com https://content.googleapis.com; ' +
         "img-src 'self' data: https:; " +
-        "connect-src 'self' https://accounts.google.com https://www.googleapis.com" +
-        "cross-origin-opener-policy 'unsafe-none'" +
-        "connect-src 'self' https://accounts.google.com https://www.googleapis.com https://apis.google.com", // Added apis.google.com
+        "connect-src 'self' https://accounts.google.com https://www.googleapis.com https://apis.google.com",
     },
   },
   module: {
@@ -63,5 +74,6 @@ module.exports = {
     filename: '[name].bundle.js',
     path: path.resolve(__dirname, 'dist'),
     clean: true,
+    publicPath: './',
   },
 };

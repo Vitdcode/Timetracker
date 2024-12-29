@@ -42,7 +42,8 @@ import { colorizeWeekNumsOnHoursWorked } from './colorize-dates';
   });
 } */
 
-export function showHoursUnderCalendarWeeks() {
+export function showHoursUnderCalendarWeeks(additionalStringForWeekNum = 'calendar') {
+  //additionalStringForWeekNum is used if 2 calendars exist twice in the document. The caller can create a different id for the week hour text
   const weekNums = document.querySelectorAll('.vc-week-number');
   const yearInCalendar = document.querySelectorAll('.vc-year');
   yearInCalendar.forEach((year) => {
@@ -54,7 +55,7 @@ export function showHoursUnderCalendarWeeks() {
         checkAndRemoveElement(document.querySelector(`#hours-under-week${weekNumText}`));
         createSpan(
           `${weekHoursInDrive} h`,
-          `hours-under-week${weekNumText}`,
+          `hours-under-week${weekNumText}-${additionalStringForWeekNum}`,
           'text-under-calendar-element',
           weekNum
         );

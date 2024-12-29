@@ -78,7 +78,7 @@ function createYearlyRecapCalendars(window) {
     const calendar = new Calendar(calendars, options);
     calendar.init();
   }
-  showHoursUnderCalendarWeeks();
+  showHoursUnderCalendarWeeks('yearly-recap');
 }
 
 function selectedDates(month) {

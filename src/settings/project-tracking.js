@@ -90,7 +90,7 @@ function createInformationAboutProject(wrapper) {
     true
   );
   createH2(
-    `Hours tracked: ${calculateProjectHours(loadedData['calendarData'], returnProjectName())}`,
+    `${calculateProjectHours(loadedData['calendarData'], returnProjectName())} hours tracked`,
     'hours-tracked-project',
     'in-app-text',
     wrapper

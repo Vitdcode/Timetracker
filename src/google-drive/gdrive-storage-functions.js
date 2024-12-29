@@ -140,21 +140,21 @@ export const gdriveStorage = {
 
   updateHoursInGdriveObject() {
     //updating daily time
-    loadedData['calendarData'][new Date().getFullYear()][[getWeekNumber()]][getTodayDateInMetricFormat()]['dailyTime']['hours'] += stopwatch.secondsCount; //prettier-ignore
+    loadedData['calendarData'][new Date().getFullYear()][[getWeekNumber()]][getTodayDateInMetricFormat()]['dailyTime']['hours'] += stopwatch.hoursCount; //prettier-ignore
     loadedData['calendarData'][new Date().getFullYear()][[getWeekNumber()]][getTodayDateInMetricFormat()]['dailyTime']['minutes'] += stopwatch.minutesCount; //prettier-ignore
     this.checkIfMinutesAreBiggerThan60(
       loadedData['calendarData'][new Date().getFullYear()][[getWeekNumber()]][getTodayDateInMetricFormat()]['dailyTime']
     ) //prettier-ignore
 
     //updating weekly hours
-    loadedData['calendarData'][new Date().getFullYear()][[getWeekNumber()]]['weeklyTime']['hours'] += stopwatch.secondsCount; //prettier-ignore
+    loadedData['calendarData'][new Date().getFullYear()][[getWeekNumber()]]['weeklyTime']['hours'] += stopwatch.hoursCount; //prettier-ignore
     loadedData['calendarData'][new Date().getFullYear()][[getWeekNumber()]]['weeklyTime']['minutes'] += stopwatch.minutesCount; //prettier-ignore
     this.checkIfMinutesAreBiggerThan60(
     loadedData['calendarData'][new Date().getFullYear()][[getWeekNumber()]]['weeklyTime']
     ) //prettier-ignore
 
     //updating total time
-    loadedData['totalTime']['hours'] += stopwatch.secondsSelector;
+    loadedData['totalTime']['hours'] += stopwatch.hoursCount;
     loadedData['totalTime']['minutes'] += stopwatch.minutesCount;
 
     this.checkIfMinutesAreBiggerThan60(loadedData['totalTime']);

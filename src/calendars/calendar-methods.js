@@ -21,6 +21,8 @@ export class CalendarMethods {
       popups: {},
       selectedDates: [],
       disableToday: true,
+      selectionMonthsMode: false,
+      selectionYearsMode: false,
     };
     this.calendar = null;
     this.date = new Date().getDate();

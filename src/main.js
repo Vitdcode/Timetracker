@@ -17,6 +17,7 @@ import { getWeekNumber } from './calendars/date-functions.js';
 import { colorizeWeekNumsOnHoursWorked } from './calendars/colorize-dates.js';
 import { showHoursUnderCalendarWeeks } from './calendars/show-hours-under-calendar-weeks.js';
 import { trackingProjectInAppInfoWindow } from './settings/project-tracking.js';
+import { showYearlyRecapBtn } from './calendars/yearly-recap.js';
 createLoadingAnimation();
 export const stopwatch = new Stopwatch();
 export const calendar = new CalendarMethods();
@@ -51,6 +52,7 @@ async function initializeApp() {
     colorizeWeekNumsOnHoursWorked();
     showHoursUnderCalendarWeeks();
     trackingProjectInAppInfoWindow();
+    showYearlyRecapBtn();
     fadeoutAnimation(); //remove loading animation once data is available
   } catch (error) {
     console.error('Error during app initialization:', error);

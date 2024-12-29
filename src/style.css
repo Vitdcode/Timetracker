@@ -255,6 +255,20 @@ body {
   box-shadow: var(--box-shadow);
 }
 
+#yearly-recap-button {
+  margin-inline: auto;
+  margin-top: 20px;
+  height: 50px;
+  width: 130px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.vc-header__content button {
+  color: white !important;
+}
+
 .timelog-popup {
   display: flex;
   flex-direction: column;
@@ -545,4 +559,22 @@ input::-webkit-inner-spin-button {
 
 #statistics-header {
   margin-top: 30px;
+}
+
+/* yearly recap window */
+
+#yearly-recap-wrapper {
+  height: 100%;
+  background-color: rgb(27, 52, 82);
+}
+
+#calendars-wrapper-yearly-recap {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 30px;
+  margin-top: 50px;
+  justify-content: center;
+  padding-bottom: 30px;
+  width: 100%;
+  border-radius: 16px;
 }

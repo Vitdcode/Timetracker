@@ -30,6 +30,12 @@ export function getTodayAsNumberEuroFormat() {
   return day;
 }
 
+export function convertJsMonthToEuroFormat(month) {
+  //ex.a 0 turns into 1, a 1 turns into 2 etc.
+  let newMonth = month + 1;
+  return newMonth;
+}
+
 export function convertMetricDateToUs(metricDate) {
   //metric date: 25.12.2024
   //us date: 2024.12.25
@@ -39,10 +45,26 @@ export function convertMetricDateToUs(metricDate) {
   return usDate;
 }
 
+export function convertUsDateToMetric(usDate) {
+  let usDateSplit = usDate.split('-');
+  let metricDate = `${usDateSplit[2]}.${usDateSplit[1]}.${usDateSplit[0]}`;
+  return metricDate;
+}
+
 export function getWeekNumber() {
   const now = new Date();
   const firstDayOfYear = new Date(now.getFullYear(), 0, 1);
-  const days = Math.floor((now - firstDayOfYear) / (24 * 60 * 60 * 1000));
 
-  return Math.ceil((days + firstDayOfYear.getDay() + 1) / 7);
+  // Get the day of the week for the first day of the year (0 = Sunday, 6 = Saturday)
+  const firstDayOfWeek = firstDayOfYear.getDay();
+
+  // Adjust for Germany's week starting on Monday (0 = Monday, 6 = Sunday)
+  const adjustedFirstDay = (firstDayOfWeek === 0 ? 7 : firstDayOfWeek) - 1;
+
+  // Calculate the difference in days from the first Monday of the year
+  const daysSinceFirstMonday =
+    Math.floor((now - firstDayOfYear) / (24 * 60 * 60 * 1000)) + adjustedFirstDay;
+
+  // Return the week number
+  return Math.ceil(daysSinceFirstMonday / 7);
 }

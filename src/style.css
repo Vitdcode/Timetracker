@@ -573,6 +573,6 @@ input::-webkit-inner-spin-button {
   margin-top: 50px;
   justify-content: center;
   padding-bottom: 30px;
-  width: 100%;
+  width: 50%;
   border-radius: 16px;
 }

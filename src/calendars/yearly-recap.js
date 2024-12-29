@@ -12,6 +12,7 @@ import {
   convertUsDateToMetric,
 } from './date-functions';
 import { showHoursUnderCalendarWeeks } from './show-hours-under-calendar-weeks';
+import { returnOverallHours } from '../other-functions/return-gdrive-object-values';
 
 export function showYearlyRecapBtn() {
   const calendarWrapper = document.querySelector('#calendar');
@@ -37,6 +38,7 @@ function showYearlyRecap() {
     window
   );
   createYearlyRecapCalendars(window);
+  yearlyRecapTextAndReview(window);
 }
 
 function createYearlyRecapCalendars(window) {
@@ -114,4 +116,59 @@ function sessionsForEachDay(day) {
   }
   traverseObj(yearData);
   return session;
+}
+
+function yearlyRecapTextAndReview(window) {
+  const yearlyTextAndReviewWrapper = createDiv(
+    'yearly-text-and-review-wrapper',
+    'wrapper-in-menus',
+    window
+  );
+  createH2(
+    'Statistics for the year',
+    'yearly-statistics-header',
+    'wrapper-in-menus-header',
+    yearlyTextAndReviewWrapper
+  );
+  createH2(
+    `You have worked ${returnOverallHours()} hours this year. <br> Projects you have worked on this year: <br> ${projectYearlyInfo(yearlyTextAndReviewWrapper)}`,
+    'yearly-statistics-text',
+    'text-in-wrapper',
+    yearlyTextAndReviewWrapper,
+    true
+  );
+}
+
+function projectYearlyInfo(wrapper) {
+  let projectData = {};
+
+  function returnProjectNameHelperFunction(data) {
+    for (const key in data) {
+      if (typeof data[key] === 'object') {
+        returnProjectNameHelperFunction(data[key]);
+      } else if (typeof key === 'string' && key === 'project') {
+        if (!projectData[data[key]]) {
+          projectData[data[key]] = data['dailyTime']['hours'];
+        } else {
+          projectData[data[key]]['hours'] += data['dailyTime']['hours'];
+        }
+      }
+    }
+  }
+
+  returnProjectNameHelperFunction(loadedData['calendarData']);
+  printProjectsAndHours(projectData, wrapper);
+  console.log(projectData);
+}
+
+function printProjectsAndHours(projectData, wrapper) {
+  for (const key in projectData) {
+    createH2(
+      `${key}: ${projectData[key]} hours<br>`,
+      'yearly-recap-project-and-hours-text',
+      'in-app-text',
+      wrapper,
+      true
+    );
+  }
 }

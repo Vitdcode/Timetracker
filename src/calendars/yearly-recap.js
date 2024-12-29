@@ -51,7 +51,9 @@ function createYearlyRecapCalendars(window) {
         popups[day] = {
           modifier: 'bg-sponsor',
           html: `
+           <div class="timelog-popup">
             ${session} 
+            </div>  
           `,
         };
       }
@@ -102,7 +104,7 @@ function sessionsForEachDay(day) {
   function traverseObj(data) {
     for (const key in data) {
       if (key === metricDate) {
-        session = data[key]['sessions'][0];
+        session = data[key]['sessions'].join('');
       } else if (typeof data[key] === 'object' && key != day) {
         traverseObj(data[key]);
       }

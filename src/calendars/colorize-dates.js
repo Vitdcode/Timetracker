@@ -34,7 +34,7 @@ export function colorizeDatesOnHoursWorked() {
   }
 }
 
-export function colorizeWeekNumsOnHoursWorked() {
+export function colorizeWeekNumsOnHoursWorked(week) {
   const hoursHighest = loadedData['goalHoursPerWeekData']['hoursHighest'];
   const hoursMiddle = loadedData['goalHoursPerWeekData']['hoursMiddle'];
   const hoursLowest = loadedData['goalHoursPerWeekData']['hoursLowest'];
@@ -44,23 +44,23 @@ export function colorizeWeekNumsOnHoursWorked() {
 
   const weekNumsInCalendar = document.querySelectorAll('.vc-week-number');
 
-  weekNumsInCalendar.forEach((week) => {
-    let weekText = week.textContent;
-    if (weekText.length > 2) {
-      weekText = week.firstChild.textContent;
-    }
+  /*   weekNumsInCalendar.forEach((week) => { */
+  let weekText = week.textContent;
+  if (weekText.length > 2) {
+    weekText = week.firstChild.textContent;
+  }
 
-    const weekNumInGdrive = loadedData['calendarData'][new Date().getFullYear()][weekText];
-    if (weekNumInGdrive) {
-      const weeklyHours =
-        loadedData['calendarData'][new Date().getFullYear()][weekText]['weeklyTime']['hours'];
-      if (weeklyHours >= hoursHighest) {
-        week.style.cssText += `background-color: ${highestColor} !important;`;
-      } else if (weeklyHours >= hoursMiddle) {
-        week.style.cssText += `background-color: ${middleColor} !important;`;
-      } else if (weeklyHours <= hoursLowest) {
-        week.style.cssText += `background-color: ${lowestColor} !important;`;
-      }
+  const weekNumInGdrive = loadedData['calendarData'][new Date().getFullYear()][weekText];
+  if (weekNumInGdrive) {
+    const weeklyHours =
+      loadedData['calendarData'][new Date().getFullYear()][weekText]['weeklyTime']['hours'];
+    if (weeklyHours >= hoursHighest) {
+      week.style.cssText += `background-color: ${highestColor} !important;`;
+    } else if (weeklyHours >= hoursMiddle) {
+      week.style.cssText += `background-color: ${middleColor} !important;`;
+    } else if (weeklyHours <= hoursLowest) {
+      week.style.cssText += `background-color: ${lowestColor} !important;`;
     }
-  });
+  }
+  /*   }); */
 }

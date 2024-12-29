@@ -49,8 +49,8 @@ async function initializeApp() {
       settings.insertGoalIntoApp(loadedData['goalHoursPerWeekData']['hoursHighest']);
       evaluateGoal(loadedData['calendarData'][new Date().getFullYear()][[getWeekNumber()]]['weeklyTime']['hours']); //prettier-ignore
     }
-    colorizeWeekNumsOnHoursWorked();
     showHoursUnderCalendarWeeks();
+    /*     colorizeWeekNumsOnHoursWorked(); */
     trackingProjectInAppInfoWindow();
     showYearlyRecapBtn();
     fadeoutAnimation(); //remove loading animation once data is available

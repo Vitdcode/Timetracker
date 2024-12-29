@@ -11,6 +11,7 @@ import {
   convertMetricDateToUs,
   convertUsDateToMetric,
 } from './date-functions';
+import { showHoursUnderCalendarWeeks } from './show-hours-under-calendar-weeks';
 
 export function showYearlyRecapBtn() {
   const calendarWrapper = document.querySelector('#calendar');
@@ -75,6 +76,7 @@ function createYearlyRecapCalendars(window) {
     const calendar = new Calendar(calendars, options);
     calendar.init();
   }
+  showHoursUnderCalendarWeeks();
 }
 
 function selectedDates(month) {

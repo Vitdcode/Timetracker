@@ -30,6 +30,7 @@ export function showYearlyRecapBtn() {
 
 function showYearlyRecap() {
   const window = createDiv('yearly-recap-wrapper', 'window', document.body);
+
   closeWindow(window);
   createH2(
     `Yearly Recap ${new Date().getFullYear()}`,
@@ -37,8 +38,13 @@ function showYearlyRecap() {
     'header',
     window
   );
-  createYearlyRecapCalendars(window);
-  yearlyRecapTextAndReview(window);
+  const calendarsAndReviewWrapper = createDiv(
+    'calendars-and-yearly-review-wrapper',
+    'window',
+    window
+  );
+  createYearlyRecapCalendars(calendarsAndReviewWrapper);
+  yearlyRecapTextAndReview(calendarsAndReviewWrapper);
 }
 
 function createYearlyRecapCalendars(window) {
@@ -130,13 +136,15 @@ function yearlyRecapTextAndReview(window) {
     'wrapper-in-menus-header',
     yearlyTextAndReviewWrapper
   );
+
   createH2(
-    `You have worked ${returnOverallHours()} hours this year. <br> Projects you have worked on this year: <br> ${projectYearlyInfo(yearlyTextAndReviewWrapper)}`,
+    `You have worked ${returnOverallHours()} hours in total <br> Projects you have worked on: <br>`,
     'yearly-statistics-text',
-    'text-in-wrapper',
+    'in-app-text',
     yearlyTextAndReviewWrapper,
     true
   );
+  projectYearlyInfo(yearlyTextAndReviewWrapper);
 }
 
 function projectYearlyInfo(wrapper) {
@@ -158,7 +166,6 @@ function projectYearlyInfo(wrapper) {
 
   returnProjectNameHelperFunction(loadedData['calendarData']);
   printProjectsAndHours(projectData, wrapper);
-  console.log(projectData);
 }
 
 function printProjectsAndHours(projectData, wrapper) {

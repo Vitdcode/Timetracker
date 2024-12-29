@@ -398,6 +398,7 @@ body {
   box-shadow: var(--box-shadow);
   padding-block: 10px;
   gap: 20px;
+  text-align: center;
 }
 
 .form-class {
@@ -526,6 +527,7 @@ input::-webkit-inner-spin-button {
 }
 
 .in-app-text {
+  color: var(--header-white);
   font-size: 1.3rem;
   font-weight: 500;
 }
@@ -571,8 +573,23 @@ input::-webkit-inner-spin-button {
   flex-wrap: wrap;
   gap: 30px;
   margin-top: 50px;
-  justify-content: center;
+  justify-content: space-around;
   padding-bottom: 30px;
   width: 50%;
   border-radius: 16px;
+}
+
+#calendars-and-yearly-review-wrapper {
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  gap: 130px;
+  justify-content: center;
+  align-items: start;
+  width: 90%;
+}
+
+#yearly-text-and-review-wrapper {
+  margin-top: 50px;
+  max-width: 700px;
 }

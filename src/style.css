@@ -398,7 +398,6 @@ body {
   box-shadow: var(--box-shadow);
   padding-block: 10px;
   gap: 20px;
-  text-align: center;
 }
 
 .form-class {
@@ -590,6 +589,22 @@ input::-webkit-inner-spin-button {
 }
 
 #yearly-text-and-review-wrapper {
+  padding-inline: 20px;
   margin-top: 50px;
   max-width: 700px;
+  align-items: start;
+}
+
+#yearly-statistics-header {
+  margin-inline: auto;
+  margin-bottom: 10px;
+}
+
+#yearly-statistics-text-projects {
+  margin-top: 50px;
+}
+
+#yearly-statistics-text-projects,
+#yearly-recap-project-and-hours-text {
+  margin-inline: auto;
 }

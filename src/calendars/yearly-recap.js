@@ -138,8 +138,18 @@ function yearlyRecapTextAndReview(window) {
   );
 
   createH2(
-    `You have worked ${returnOverallHours()} hours in total <br> Projects you have worked on: <br>`,
+    `- You have worked ${returnOverallHours()} hours in total <br>`,
     'yearly-statistics-text',
+    'in-app-text',
+    yearlyTextAndReviewWrapper,
+    true
+  );
+
+  mostActiveWeek(yearlyTextAndReviewWrapper);
+
+  createH2(
+    `Projects you have worked on: <br>`,
+    'yearly-statistics-text-projects',
     'in-app-text',
     yearlyTextAndReviewWrapper,
     true
@@ -178,4 +188,31 @@ function printProjectsAndHours(projectData, wrapper) {
       true
     );
   }
+}
+
+function mostActiveWeek(wrapper) {
+  let hours = 0;
+  let week;
+  function returnHoursForWeekHelperFunction(data, parentKey = null) {
+    for (const key in data) {
+      if (typeof data[key] === 'object' && key != 'weeklyTime') {
+        console.log(key);
+        returnHoursForWeekHelperFunction(data[key], key);
+      } else if (key === 'weeklyTime') {
+        if (hours < data[key]['hours']) {
+          hours = data[key]['hours'];
+          week = parentKey;
+        }
+      }
+    }
+  }
+  returnHoursForWeekHelperFunction(loadedData['calendarData']);
+
+  createH2(
+    `- Your most active week was week ${week} with ${hours} hours <br>`,
+    'most-active-week-text',
+    'in-app-text',
+    wrapper,
+    true
+  );
 }

@@ -20,10 +20,8 @@ export class TimeLogging {
       if (stopwatch.stopwatchRunning || stopwatch.stopwatchPaused) {
         calendar.logTime();
         gdriveStorage.updateHoursInGdriveObject();
-        /* settings.goalsHoursPerWeek += stopwatch.hoursCount; */
         evaluateGoal();
         this.loggedTextPopup();
-        colorizeWeekNumsOnHoursWorked();
         showHoursUnderCalendarWeeks();
         trackingProjectInAppInfoWindow();
         showYearlyRecapBtn();

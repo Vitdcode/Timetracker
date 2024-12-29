@@ -53,18 +53,16 @@ export function convertUsDateToMetric(usDate) {
 
 export function getWeekNumber() {
   const now = new Date();
-  const firstDayOfYear = new Date(now.getFullYear(), 0, 1);
 
-  // Get the day of the week for the first day of the year (0 = Sunday, 6 = Saturday)
-  const firstDayOfWeek = firstDayOfYear.getDay();
+  // Clone the current date and set to Thursday of the same week
+  const thursday = new Date(now);
+  thursday.setDate(now.getDate() + (4 - ((now.getDay() + 6) % 7)));
 
-  // Adjust for Germany's week starting on Monday (0 = Monday, 6 = Sunday)
-  const adjustedFirstDay = (firstDayOfWeek === 0 ? 7 : firstDayOfWeek) - 1;
+  // Calculate the first Thursday of the year
+  const firstThursday = new Date(thursday.getFullYear(), 0, 4);
 
-  // Calculate the difference in days from the first Monday of the year
-  const daysSinceFirstMonday =
-    Math.floor((now - firstDayOfYear) / (24 * 60 * 60 * 1000)) + adjustedFirstDay;
+  // Calculate the difference in days and determine the week number
+  const weekNumber = Math.ceil(((thursday - firstThursday) / (24 * 60 * 60 * 1000) + 1) / 7);
 
-  // Return the week number
-  return Math.ceil(daysSinceFirstMonday / 7);
+  return weekNumber;
 }

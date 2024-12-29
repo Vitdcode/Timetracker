@@ -4,6 +4,7 @@ import {
   getTodayDateInMetricFormat,
   getWeekNumber,
 } from '../calendars/date-functions';
+import { savePopupText } from '../create-elements-functions/create-saved-popup';
 import { settings, stopwatch } from '../main';
 import { saveToGDrive, loadFromGDrive } from './gdrive-service';
 export let loadedData;
@@ -216,9 +217,9 @@ export const gdriveStorage = {
     saveToGDrive(loadedData);
   },
 
-  async updateProjectNameInGdriveObject(projectName) {
+  async updateProjectNameInGdriveObject(projectName, form) {
     loadedData['currentProject'] = projectName;
-    settings.savePopupText(`Project ${projectName} saved in Google Drive`);
+    savePopupText(`Project ${projectName} saved in Google Drive`, form, 'absolute');
     saveToGDrive(loadedData);
   },
 

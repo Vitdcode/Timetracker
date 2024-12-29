@@ -1,5 +1,5 @@
-import { checkAndRemoveElement } from '../../other-functions/check-if-element-exists-and-remove';
-import { returnProjectName } from '../../other-functions/return-gdrive-object-values';
+import { checkAndRemoveElement } from '../other-functions/check-if-element-exists-and-remove';
+import { returnProjectName } from '../other-functions/return-gdrive-object-values';
 import { getTodayDateInMetricFormat, getWeekNumber } from '../calendars/date-functions';
 import { createDiv } from '../create-elements-functions/create-div';
 import { createForm } from '../create-elements-functions/create-form';
@@ -10,23 +10,28 @@ import { createSubmitButton } from '../create-elements-functions/create-submit-b
 import { saveToGDrive } from '../google-drive/gdrive-service';
 import { gdriveStorage, loadedData } from '../google-drive/gdrive-storage-functions';
 import deleteImage from '../images/delete.png';
+import infoImage from '../images/info.png';
 import { settings } from '../main';
+import { popupMouseOver } from '../create-elements-functions/create-popup-mouseover';
 
 export function trackProject(settingsWindow) {
-  /*   const trackProjectWrapper = createDiv('track-project-settings-wrapper', 'wrapper-in-menus');
-  settingsWindow.appendChild(trackProjectWrapper); */
-
   const form = createForm(
     'track-project-form',
-    'wrapper-in-menus',
-    () => gdriveStorage.updateProjectNameInGdriveObject(input.value),
+    'form-class',
+    () => gdriveStorage.updateProjectNameInGdriveObject(input.value, form),
     settingsWindow
   );
-  createH2('Track Project', 'track-project-settings-header', 'wrapper-in-menus-header', form);
+  form.classList.add('wrapper-in-menus'); // for styling purposes
+  const header = createH2(
+    'Track Project',
+    'track-project-settings-header',
+    'wrapper-in-menus-header',
+    form
+  );
   const input = createInput('track-project-input', 'Project Name', form, true);
 
   createProjectNameTextAndDeleteImg(form, input);
-
+  createInformationImg(header);
   const submitBtn = createSubmitButton('Save', 'save-track-project-button', 'button', form);
   submitBtn.addEventListener('click', () => {
     //re-print elements when Project Name changes
@@ -35,6 +40,22 @@ export function trackProject(settingsWindow) {
       createProjectNameTextAndDeleteImg(form, input);
     }, 1);
   });
+}
+
+function createInformationImg(header) {
+  const infoImg = createImg(
+    'info-track-project-img',
+    infoImage,
+    'information icon revealing a popup text',
+    'information-text-element',
+    header
+  );
+  popupMouseOver(
+    'This will create a Project that will be tracked until deleted',
+    infoImg,
+    'relative',
+    true
+  );
 }
 
 function createProjectNameTextAndDeleteImg(form, input) {
@@ -107,7 +128,7 @@ function calculateProjectHours(data, searchString) {
       const value = obj[key];
 
       // Check if the key or value matches the search string
-      if (key === 'project' && value.includes(searchString)) {
+      if (key === 'project' && typeof value === 'string' && value.includes(searchString)) {
         // Add hours from dailyTime
         if (obj.dailyTime && typeof obj.dailyTime.hours === 'number') {
           totalHours += obj.dailyTime.hours;
@@ -122,7 +143,6 @@ function calculateProjectHours(data, searchString) {
   }
 
   traverse(data);
-  console.log(totalHours);
   return totalHours;
 }
 

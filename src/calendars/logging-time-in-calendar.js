@@ -7,6 +7,7 @@ import { trackingProjectInAppInfoWindow } from '../settings/project-tracking';
 import { colorizeWeekNumsOnHoursWorked } from './colorize-dates';
 import { getTodayAsNumberEuroFormat } from './date-functions';
 import { showHoursUnderCalendarWeeks } from './show-hours-under-calendar-weeks';
+import { showYearlyRecapBtn } from './yearly-recap';
 
 export class TimeLogging {
   constructor() {
@@ -25,6 +26,7 @@ export class TimeLogging {
         colorizeWeekNumsOnHoursWorked();
         showHoursUnderCalendarWeeks();
         trackingProjectInAppInfoWindow();
+        showYearlyRecapBtn();
         saveToGDrive(loadedData);
       } else {
         return;

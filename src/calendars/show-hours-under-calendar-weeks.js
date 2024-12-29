@@ -1,4 +1,4 @@
-import { checkAndRemoveElement } from '../../other-functions/check-if-element-exists-and-remove';
+import { checkAndRemoveElement } from '../other-functions/check-if-element-exists-and-remove';
 import { createSpan } from '../create-elements-functions/create-span';
 import { loadedData } from '../google-drive/gdrive-storage-functions';
 

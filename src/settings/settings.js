@@ -1,4 +1,3 @@
-import { getWeekNumber } from '../calendars/date-functions';
 import { closeWindow } from '../create-elements-functions/close-window';
 import { createButton } from '../create-elements-functions/create-button';
 import { createColorPicker } from '../create-elements-functions/create-color-picker';
@@ -17,6 +16,7 @@ import { evaluateGoal } from './evaluations/goal-evaluation';
 import infoImage from '../images/info.png';
 import appIconImage from '../images/app-icon/app-icon-512.png';
 import { trackProject } from './project-tracking';
+import { savePopupText } from '../create-elements-functions/create-saved-popup';
 
 export class Settings {
   constructor() {
@@ -68,18 +68,20 @@ export class Settings {
       this.goalHoursPerWeekWrapper
     );
     const form = createForm('goals-form', 'form-class', () =>
-      this.saveGoalPerWeekInput(goalsInput)
+      this.saveGoalPerWeekInput(goalsInput, form)
     );
     const goalsInput = createInput('goal-hours-per-week', 'Goal hours/week', form, true, 'number');
     createSubmitButton('Save', 'save-goals-per-week-button', 'button', form);
     this.goalHoursPerWeekWrapper.appendChild(form);
   }
 
-  saveGoalPerWeekInput(input) {
+  saveGoalPerWeekInput(input, form) {
     gdriveStorage.updateGoalHoursPerWeek(parseInt(input.value));
 
-    this.savePopupText(
-      `Saved goal ${loadedData['goalHoursPerWeekData']['hoursHighest']} hours/week`
+    savePopupText(
+      `Saved goal ${loadedData['goalHoursPerWeekData']['hoursHighest']} hours/week`,
+      form,
+      'absolute'
     );
     this.insertGoalIntoApp(loadedData['goalHoursPerWeekData']['hoursHighest']);
   }
@@ -87,13 +89,13 @@ export class Settings {
   insertGoalIntoApp(hoursPerWeek) {
     if (hoursPerWeek) {
       const goalInAppWrapper = createDiv('goal-in-app-wrapper', 'info-text-in-app-wrapper');
-      createSpan(
+      const header = createSpan(
         `Goal: ${hoursPerWeek} hours/week`,
         'goal-in-app-text',
         'in-app-text',
         goalInAppWrapper
       );
-      this.deleteGoal(goalInAppWrapper);
+      this.deleteGoal(goalInAppWrapper, header);
       const appHeaderWrapper = document.querySelector('#app-header-settings-wrapper');
       if (document.querySelector('#goal-in-app-wrapper')) {
         document.querySelector('#goal-in-app-wrapper').remove();
@@ -105,8 +107,8 @@ export class Settings {
     }
   }
 
-  deleteGoal(goalInAppWrapper) {
-    const deleteGoalBtn = createButton('X', 'delete-goal-button', 'button', goalInAppWrapper);
+  deleteGoal(goalInAppWrapper, header) {
+    const deleteGoalBtn = createButton('X', 'delete-goal-button', 'button', header);
     popupMouseOver('Delete Goal', deleteGoalBtn, 'absolute');
     deleteGoalBtn.addEventListener('click', () => {
       /*      this.goalsHoursPerWeek = null; */
@@ -213,23 +215,6 @@ export class Settings {
       'button',
       chooseGoalrangesAndColorsForm
     );
-  }
-
-  savePopupText(text) {
-    const saveText = createSpan(text, 'hours-per-week-popup-settings', 'popup-text');
-
-    this.settingsWindow.appendChild(saveText);
-
-    saveText.addEventListener('animationend', (e) => {
-      if (e.animationName === 'fadeOut') {
-        saveText.remove();
-      }
-      setTimeout(() => {
-        if (saveText) {
-          saveText.style.animation = 'fadeOut 200ms ease-out';
-        }
-      }, 2000);
-    });
   }
 
   deleteStoragebtn() {

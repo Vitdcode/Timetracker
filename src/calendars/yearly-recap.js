@@ -145,7 +145,7 @@ function yearlyRecapTextAndReview(window) {
     true
   );
 
-  mostActiveWeek(yearlyTextAndReviewWrapper);
+  mostActiveWeekAndHoursWorkedCurrentYear(yearlyTextAndReviewWrapper);
 
   createH2(
     `Projects you have worked on: <br>`,
@@ -165,10 +165,12 @@ function projectYearlyInfo(wrapper) {
       if (typeof data[key] === 'object') {
         returnProjectNameHelperFunction(data[key]);
       } else if (typeof key === 'string' && key === 'project') {
+        console.log(data[key]);
         if (!projectData[data[key]]) {
           projectData[data[key]] = data['dailyTime']['hours'];
         } else {
-          projectData[data[key]]['hours'] += data['dailyTime']['hours'];
+          console.log(projectData[[data][key]]);
+          projectData[data[key]] += data['dailyTime']['hours'];
         }
       }
     }
@@ -190,29 +192,55 @@ function printProjectsAndHours(projectData, wrapper) {
   }
 }
 
-function mostActiveWeek(wrapper) {
-  let hours = 0;
+function mostActiveWeekAndHoursWorkedCurrentYear(wrapper) {
+  const currentYear = new Date().getFullYear();
+  let hoursActiveWeek = 0;
+  let hoursCurrentYear = 0;
   let week;
   function returnHoursForWeekHelperFunction(data, parentKey = null) {
     for (const key in data) {
       if (typeof data[key] === 'object' && key != 'weeklyTime') {
-        console.log(key);
         returnHoursForWeekHelperFunction(data[key], key);
       } else if (key === 'weeklyTime') {
-        if (hours < data[key]['hours']) {
-          hours = data[key]['hours'];
+        hoursCurrentYear += data[key]['hours'];
+        if (hoursActiveWeek < data[key]['hours']) {
+          hoursActiveWeek = data[key]['hours'];
           week = parentKey;
         }
       }
     }
   }
-  returnHoursForWeekHelperFunction(loadedData['calendarData']);
+  returnHoursForWeekHelperFunction(loadedData['calendarData'][currentYear]);
 
   createH2(
-    `- Your most active week was week ${week} with ${hours} hours <br>`,
+    `- You have worked ${hoursCurrentYear} hours this year <br>`,
+    'hours-worked-this-year-yearly-recap-text',
+    'in-app-text',
+    wrapper,
+    true
+  );
+
+  createH2(
+    `- Your most active week was week ${week} with ${hoursActiveWeek} hours <br>`,
     'most-active-week-text',
     'in-app-text',
     wrapper,
     true
   );
 }
+
+/* function hoursWorkedCurrentYear() {
+  let hours = 0;
+
+  const currentYear = new Date().getFullYear();
+
+  function returnHoursForCurrentYearHelperFunction(data) {
+    for (const key in data) {
+      if (typeof data[key] === 'object') {
+        returnHoursForCurrentYearHelperFunction(data[key]);
+      } else if(key === 'weeklyTime')
+    }
+  }
+
+  returnHoursForCurrentYearHelperFunction(loadedData['calendarData'][currentYear]);
+} */

@@ -1,11 +1,9 @@
 import { createSpan } from '../create-elements-functions/create-span';
 import { saveToGDrive } from '../google-drive/gdrive-service';
 import { gdriveStorage, loadedData } from '../google-drive/gdrive-storage-functions';
-import { calendar, settings, stopwatch } from '../main';
+import { calendar, stopwatch } from '../main';
 import { evaluateGoal } from '../settings/evaluations/goal-evaluation';
 import { trackingProjectInAppInfoWindow } from '../settings/project-tracking';
-import { colorizeWeekNumsOnHoursWorked } from './colorize-dates';
-import { getTodayAsNumberEuroFormat } from './date-functions';
 import { showHoursUnderCalendarWeeks } from './show-hours-under-calendar-weeks';
 import { showYearlyRecapBtn } from './yearly-recap';
 

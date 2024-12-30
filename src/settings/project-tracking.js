@@ -38,6 +38,7 @@ export function trackProject(settingsWindow) {
     setTimeout(() => {
       //workaround to make the text appear after the project has been updated in the Object
       createProjectNameTextAndDeleteImg(form, input);
+      trackingProjectInAppInfoWindow();
     }, 1);
   });
 }

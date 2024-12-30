@@ -4,7 +4,6 @@ export function savePopupText(textContent, relativeElement, position, imageEleme
   if (imageElement) {
     relativeElement = relativeElement.parentElement;
   }
-  console.log('test');
 
   const saveText = createSpan(
     textContent,

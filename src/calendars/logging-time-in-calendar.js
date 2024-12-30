@@ -21,8 +21,9 @@ export class TimeLogging {
         evaluateGoal();
         this.loggedTextPopup();
         showHoursUnderCalendarWeeks();
-        trackingProjectInAppInfoWindow();
         showYearlyRecapBtn();
+        gdriveStorage.updateProjectHours();
+        trackingProjectInAppInfoWindow();
         saveToGDrive(loadedData);
       } else {
         return;

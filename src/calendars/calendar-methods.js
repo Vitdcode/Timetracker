@@ -21,6 +21,7 @@ export class CalendarMethods {
       popups: {},
       selectedDates: [],
       disableToday: true,
+      selectionDatesMode: false,
       selectionMonthsMode: false,
       selectionYearsMode: false,
     };

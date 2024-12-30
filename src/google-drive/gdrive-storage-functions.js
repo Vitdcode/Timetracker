@@ -34,7 +34,7 @@ export const gdriveStorage = {
                 minutes: 0,
               },
               sessions: [],
-              project: [],
+              projects: {},
             },
           },
         },
@@ -58,7 +58,7 @@ export const gdriveStorage = {
               minutes: 0,
             },
             sessions: [],
-            project: [],
+            projects: {},
           },
         },
       };
@@ -80,7 +80,7 @@ export const gdriveStorage = {
             minutes: 0,
           },
           sessions: [],
-          project: [],
+          projects: {},
         },
       };
       saveToGDrive(loadedData);
@@ -96,16 +96,15 @@ export const gdriveStorage = {
           minutes: 0,
         },
       sessions: [],
-      project: [],
+      projects: {},
       } //prettier-ignore
     }
   },
 
   checkIfCurrentProjectExistsInGdrive() {
-    if (!loadedData['currentProject']) {
+    const currentProject = loadedData['currentProject'];
+    if (!currentProject) {
       loadedData['currentProject'] = '';
-    } else if (loadedData['currentProject'] != '') {
-      loadedData['calendarData'][new Date().getFullYear()][[getWeekNumber()]][getTodayDateInMetricFormat()]['project'] = loadedData['currentProject']; //prettier-ignore
     }
   },
 
@@ -231,8 +230,37 @@ export const gdriveStorage = {
 
   async updateProjectNameInGdriveObject(projectName, form) {
     loadedData['currentProject'] = projectName;
+    const currentProjectExists =
+      loadedData['calendarData'][new Date().getFullYear()][[getWeekNumber()]][
+        getTodayDateInMetricFormat()
+      ]['projects'][projectName];
+    if (!currentProjectExists) {
+      loadedData['calendarData'][new Date().getFullYear()][[getWeekNumber()]][
+        getTodayDateInMetricFormat()
+      ]['projects'][projectName] = {
+        hours: 0,
+        minutes: 0,
+      };
+    }
     savePopupText(`Project ${projectName} saved in Google Drive`, form, 'absolute');
     saveToGDrive(loadedData);
+  },
+
+  updateProjectHours() {
+    const currentYear = new Date().getFullYear();
+    const currentWeek = getWeekNumber();
+    const today = getTodayDateInMetricFormat();
+    const currentProject = loadedData['currentProject'];
+
+    const todayData = loadedData['calendarData'][currentYear]?.[currentWeek]?.[today];
+    const projectData = todayData?.['projects']?.[currentProject];
+
+    if (projectData) {
+      projectData.hours += stopwatch.hoursCount;
+      projectData.minutes += stopwatch.secondsCount;
+
+      this.checkIfMinutesAreBiggerThan60(projectData);
+    }
   },
 
   checkIfMinutesAreBiggerThan60(objectData) {

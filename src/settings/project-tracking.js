@@ -112,14 +112,31 @@ function createInformationAboutProject(wrapper) {
     true
   );
   createH2(
-    `${calculateProjectHours(loadedData['calendarData'], returnProjectName())} hours tracked`,
+    `${calculateProjectHours()} hours tracked`,
     'hours-tracked-project',
     'in-app-text',
     wrapper
   );
 }
 
-function calculateProjectHours(data, searchString) {
+function calculateProjectHours() {
+  let hours = 0;
+  const currentProject = loadedData['currentProject'];
+  function traverseObjHelperFunction(data) {
+    for (const key in data) {
+      if (typeof data[key] === 'object' && key != currentProject) {
+        traverseObjHelperFunction(data[key]);
+      } else if (key === currentProject) {
+        hours += data[key]['hours'];
+      }
+    }
+  }
+
+  traverseObjHelperFunction(loadedData['calendarData']);
+  return hours;
+}
+
+/* function calculateProjectHours(data, searchString) {
   let totalHours = 0;
 
   function traverse(obj) {
@@ -145,7 +162,7 @@ function calculateProjectHours(data, searchString) {
 
   traverse(data);
   return totalHours;
-}
+} */
 
 function deleteProject(deleteImg) {
   deleteImg.addEventListener('click', () => {

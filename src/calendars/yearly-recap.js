@@ -166,13 +166,16 @@ function projectYearlyInfo(wrapper) {
 
   function returnProjectNameHelperFunction(data) {
     for (const key in data) {
-      if (typeof data[key] === 'object') {
+      if (typeof data[key] === 'object' && key != 'projects') {
         returnProjectNameHelperFunction(data[key]);
-      } else if (typeof key === 'string' && key === 'project') {
-        if (!projectData[data[key]]) {
-          projectData[data[key]] = data['dailyTime']['hours'];
-        } else {
-          projectData[data[key]] += data['dailyTime']['hours'];
+      } else if (key === 'projects') {
+        const projectsData = data[key];
+        for (const projectKey in projectsData) {
+          if (!projectData[projectKey]) {
+            projectData[projectKey] = projectsData[projectKey]['hours'];
+          } else {
+            projectData[projectKey]['hours'] += projectsData[projectKey]['hours'];
+          }
         }
       }
     }

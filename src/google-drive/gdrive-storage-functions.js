@@ -270,8 +270,8 @@ export const gdriveStorage = {
         this.checkIfMinutesAreBiggerThan60(projectData);
       } else {
         checkifDataExistsInObject();
-        updateProjectNameInGdriveObject(currentProject);
-        updateProjectHours();
+        this.updateProjectNameInGdriveObject(currentProject);
+        this.updateProjectHours();
       }
     }
   },

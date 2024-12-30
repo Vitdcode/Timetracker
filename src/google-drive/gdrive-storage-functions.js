@@ -6,7 +6,7 @@ import {
 } from '../calendars/date-functions';
 import { showHoursUnderCalendarWeeks } from '../calendars/show-hours-under-calendar-weeks';
 import { savePopupText } from '../create-elements-functions/create-saved-popup';
-import { settings, stopwatch } from '../main';
+import { checkifDataExistsInObject, settings, stopwatch } from '../main';
 import { saveToGDrive, loadFromGDrive } from './gdrive-service';
 export let loadedData;
 export const gdriveStorage = {
@@ -246,24 +246,33 @@ export const gdriveStorage = {
         minutes: 0,
       };
     }
-    savePopupText(`Project ${projectName} saved in Google Drive`, form, 'absolute');
-    saveToGDrive(loadedData);
+
+    if (form) {
+      savePopupText(`Project ${projectName} saved in Google Drive`, form, 'absolute');
+      saveToGDrive(loadedData);
+    }
   },
 
   updateProjectHours() {
-    const currentYear = new Date().getFullYear();
-    const currentWeek = getWeekNumber();
-    const today = getTodayDateInMetricFormat();
     const currentProject = loadedData['currentProject'];
+    if (currentProject) {
+      const currentYear = new Date().getFullYear();
+      const currentWeek = getWeekNumber();
+      const today = getTodayDateInMetricFormat();
 
-    const todayData = loadedData['calendarData'][currentYear]?.[currentWeek]?.[today];
-    const projectData = todayData?.['projects']?.[currentProject];
+      const todayData = loadedData['calendarData'][currentYear]?.[currentWeek]?.[today];
+      const projectData = todayData?.['projects']?.[currentProject];
 
-    if (projectData) {
-      projectData.hours += stopwatch.hoursCount;
-      projectData.minutes += stopwatch.minutesCount;
+      if (projectData) {
+        projectData.hours += stopwatch.hoursCount;
+        projectData.minutes += stopwatch.minutesCount;
 
-      this.checkIfMinutesAreBiggerThan60(projectData);
+        this.checkIfMinutesAreBiggerThan60(projectData);
+      } else {
+        checkifDataExistsInObject();
+        updateProjectNameInGdriveObject(currentProject);
+        updateProjectHours();
+      }
     }
   },
 

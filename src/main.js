@@ -36,12 +36,7 @@ async function initializeApp() {
     await gdriveStorage.loadData();
     gdriveStorage.checkIfDataExistsInGdrive();
     if (Object.keys(loadedData).length != 0) {
-      gdriveStorage.checkIfCurrentYearExistsInGdrive();
-      gdriveStorage.checkIfCurrentWeekExistsInGrive();
-      gdriveStorage.checkIfTotalTimedataExistsInGrive();
-      gdriveStorage.checkIfGoalHoursExistInGdrive();
-      gdriveStorage.checkIfCurrentProjectExistsInGdrive();
-      gdriveStorage.checkIfYearReviewExists();
+      checkifDataExistsInObject();
       calendar.options['selectedDates'] = pushSelectedDatesDataFromGdrive();
       calendar.createPopupsOnInit();
       calendar.createCalendar();
@@ -57,6 +52,16 @@ async function initializeApp() {
   } catch (error) {
     console.error('Error during app initialization:', error);
   }
+}
+
+export function checkifDataExistsInObject() {
+  gdriveStorage.checkIfCurrentYearExistsInGdrive();
+  gdriveStorage.checkIfCurrentWeekExistsInGrive();
+  gdriveStorage.checkIfCurrentDateExistsInGdrive();
+  gdriveStorage.checkIfTotalTimedataExistsInGrive();
+  gdriveStorage.checkIfGoalHoursExistInGdrive();
+  gdriveStorage.checkIfCurrentProjectExistsInGdrive();
+  gdriveStorage.checkIfYearReviewExists();
 }
 
 initializeApp();

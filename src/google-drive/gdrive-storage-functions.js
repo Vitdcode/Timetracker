@@ -138,8 +138,9 @@ export const gdriveStorage = {
     }
   },
 
-  async updateYearReview(text) {
+  async updateYearReview(text, form) {
     loadedData['calendarData'][new Date().getFullYear()]['yearReview'] = text;
+    savePopupText('Data saved', form, 'relative');
     saveToGDrive(loadedData);
   },
 

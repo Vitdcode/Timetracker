@@ -239,7 +239,7 @@ function textAreaYearlyReview(wrapper) {
   const form = createForm(
     'textarea-yearly-review-form',
     'form-class',
-    () => gdriveStorage.updateYearReview(textArea.value),
+    () => gdriveStorage.updateYearReview(textArea.value, form),
     wrapper
   );
   const textArea = createTextarea(`textarea-yearly-review`, `Review ${currentYear}`, form);

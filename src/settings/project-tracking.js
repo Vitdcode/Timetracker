@@ -105,7 +105,7 @@ export function trackingProjectInAppInfoWindow() {
 
 function createInformationAboutProject(wrapper) {
   createH2(
-    `Tracking Project: <br> ${returnProjectName()}`,
+    `Tracking Project <br> ${returnProjectName()}`,
     'tracking-project-text-in-app',
     'in-app-text',
     wrapper,

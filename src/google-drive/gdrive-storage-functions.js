@@ -4,6 +4,7 @@ import {
   getTodayDateInMetricFormat,
   getWeekNumber,
 } from '../calendars/date-functions';
+import { showHoursUnderCalendarWeeks } from '../calendars/show-hours-under-calendar-weeks';
 import { savePopupText } from '../create-elements-functions/create-saved-popup';
 import { settings, stopwatch } from '../main';
 import { saveToGDrive, loadFromGDrive } from './gdrive-service';
@@ -182,6 +183,7 @@ export const gdriveStorage = {
   },
 
   async updateGoalHoursPerWeekRangesAndColors(
+    form,
     hoursHighest = loadedData['goalHoursPerWeekData']['hoursHighest']
   ) {
     const highestColor = document.querySelector('#color-picker-highest-goal-range').value;
@@ -223,8 +225,9 @@ export const gdriveStorage = {
       middleColor: middleColor,
       lowestColor: lowestColor,
     };
-    settings.savePopupText('Data saved');
-    colorizeWeekNumsOnHoursWorked();
+    savePopupText('Data saved', form, 'relative');
+    showHoursUnderCalendarWeeks();
+    console.log('test');
     saveToGDrive(loadedData);
   },
 
@@ -257,7 +260,7 @@ export const gdriveStorage = {
 
     if (projectData) {
       projectData.hours += stopwatch.hoursCount;
-      projectData.minutes += stopwatch.secondsCount;
+      projectData.minutes += stopwatch.minutesCount;
 
       this.checkIfMinutesAreBiggerThan60(projectData);
     }

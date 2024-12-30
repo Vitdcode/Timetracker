@@ -129,7 +129,7 @@ export class Settings {
     const chooseGoalrangesAndColorsForm = createForm(
       'goal-ranges-and-colors-form',
       'wrapper-in-menus',
-      () => gdriveStorage.updateGoalHoursPerWeekRangesAndColors(),
+      () => gdriveStorage.updateGoalHoursPerWeekRangesAndColors(chooseGoalrangesAndColorsForm),
       this.settingsWindow
     );
 

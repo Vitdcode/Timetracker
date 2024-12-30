@@ -570,6 +570,11 @@ input::-webkit-inner-spin-button {
   margin-top: 30px;
 }
 
+#statistics-btn {
+  /* for possible use later */
+  display: none;
+}
+
 /* yearly recap window */
 
 #yearly-recap-wrapper {

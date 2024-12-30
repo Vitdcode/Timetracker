@@ -16,6 +16,7 @@ import { returnOverallHours } from '../other-functions/return-gdrive-object-valu
 import { createTextarea } from '../create-elements-functions/create-textarea';
 import { createForm } from '../create-elements-functions/create-form';
 import { createSubmitButton } from '../create-elements-functions/create-submit-button';
+import { createSelectElement } from '../create-elements-functions/create-select';
 
 export function showYearlyRecapBtn() {
   const calendarWrapper = document.querySelector('#calendar');
@@ -33,33 +34,49 @@ export function showYearlyRecapBtn() {
 
 function showYearlyRecap() {
   const window = createDiv('yearly-recap-wrapper', 'window', document.body);
-
+  const yearsArray = returnAllYearsInObject();
   closeWindow(window);
-  createH2(
-    `Yearly Recap ${new Date().getFullYear()}`,
-    'yearly-recap-window-header',
-    'header',
-    window
-  );
+  createH2(`Yearly Recap`, 'yearly-recap-window-header', 'header', window);
+  const selectYear = createSelectElement(yearsArray, 'years-select', window);
   const calendarsAndReviewWrapper = createDiv(
     'calendars-and-yearly-review-wrapper',
     'window',
     window
   );
-  createYearlyRecapCalendars(calendarsAndReviewWrapper);
-  yearlyRecapTextAndReview(calendarsAndReviewWrapper);
-  textAreaYearlyReview(calendarsAndReviewWrapper);
+
+  function updateYearlyRecapData(year = new Date().getFullYear()) {
+    createYearlyRecapCalendars(calendarsAndReviewWrapper, year);
+    yearlyRecapTextAndReview(calendarsAndReviewWrapper, year);
+    textAreaYearlyReview(calendarsAndReviewWrapper, year);
+  }
+
+  updateYearlyRecapData();
+
+  selectYear.addEventListener('change', () => {
+    console.log(selectYear.value);
+    updateYearlyRecapData(selectYear.value);
+  });
 }
 
-function createYearlyRecapCalendars(window) {
+function returnAllYearsInObject() {
+  let years = [];
+  for (const key in loadedData['calendarData']) {
+    years.push(key);
+  }
+
+  return years;
+}
+
+function createYearlyRecapCalendars(window, year) {
+  window.innerHTML = '';
   const calendarsWraper = createDiv('calendars-wrapper-yearly-recap', '', window);
   for (let i = 0; i < 12; i++) {
     const calendars = createDiv(`calendars-wrapper-yearly-recap${i}`, 'calendar', calendarsWraper);
-    const markedDays = selectedDates(i);
+    const markedDays = selectedDates(i, year);
     const popups = {};
 
     for (const day of markedDays) {
-      const session = sessionsForEachDay(day);
+      const session = sessionsForEachDay(day, year);
       if (session) {
         popups[day] = {
           modifier: 'bg-sponsor',
@@ -82,7 +99,7 @@ function createYearlyRecapCalendars(window) {
       selectionMonthsMode: false,
       selectionYearsMode: false,
       selectedMonth: i,
-      selectedYear: new Date().getFullYear(),
+      selectedYear: year,
     };
 
     const calendar = new Calendar(calendars, options);
@@ -91,11 +108,11 @@ function createYearlyRecapCalendars(window) {
   showHoursUnderCalendarWeeks('yearly-recap');
 }
 
-function selectedDates(month) {
+function selectedDates(month, year) {
   let formattedMonthToEuro = convertJsMonthToEuroFormat(month);
   formattedMonthToEuro = formattedMonthToEuro.toString().padStart(2, '0');
   let datesArray = [];
-  const yearData = loadedData['calendarData'][new Date().getFullYear()];
+  const yearData = loadedData['calendarData'][year];
   for (const keyYear in yearData) {
     const week = yearData[keyYear];
     for (const key in week) {
@@ -111,8 +128,8 @@ function selectedDates(month) {
   return datesArray;
 }
 
-function sessionsForEachDay(day) {
-  const yearData = loadedData['calendarData'][new Date().getFullYear()];
+function sessionsForEachDay(day, year) {
+  const yearData = loadedData['calendarData'][year];
   const metricDate = convertUsDateToMetric(day);
   let session;
   function traverseObj(data) {
@@ -128,7 +145,7 @@ function sessionsForEachDay(day) {
   return session;
 }
 
-function yearlyRecapTextAndReview(window) {
+function yearlyRecapTextAndReview(window, year) {
   const yearlyTextAndReviewWrapper = createDiv(
     'yearly-text-and-review-wrapper',
     'wrapper-in-menus',
@@ -140,16 +157,18 @@ function yearlyRecapTextAndReview(window) {
     'wrapper-in-menus-header',
     yearlyTextAndReviewWrapper
   );
-
+  const overAllHours = returnOverallHours();
   createH2(
-    `- You have worked ${returnOverallHours()} hours in total <br>`,
+    `- You have worked ${returnOverallHours()} hours in total, that's around ${Math.floor(overAllHours / 52)} hours per week. <br>
+     You started on the 25th February 2024 <br> 
+     `,
     'yearly-statistics-text',
     'in-app-text',
     yearlyTextAndReviewWrapper,
     true
   );
 
-  mostActiveWeekAndHoursWorkedCurrentYear(yearlyTextAndReviewWrapper);
+  mostActiveWeekAndHoursWorkedCurrentYear(yearlyTextAndReviewWrapper, year);
 
   createH2(
     `Projects you have worked on: <br>`,
@@ -197,8 +216,7 @@ function printProjectsAndHours(projectData, wrapper) {
   }
 }
 
-function mostActiveWeekAndHoursWorkedCurrentYear(wrapper) {
-  const currentYear = new Date().getFullYear();
+function mostActiveWeekAndHoursWorkedCurrentYear(wrapper, year) {
   let hoursActiveWeek = 0;
   let hoursCurrentYear = 0;
   let week;
@@ -215,7 +233,7 @@ function mostActiveWeekAndHoursWorkedCurrentYear(wrapper) {
       }
     }
   }
-  returnHoursForWeekHelperFunction(loadedData['calendarData'][currentYear]);
+  returnHoursForWeekHelperFunction(loadedData['calendarData'][year]);
 
   createH2(
     `- You have worked ${hoursCurrentYear} hours this year <br>`,
@@ -234,15 +252,14 @@ function mostActiveWeekAndHoursWorkedCurrentYear(wrapper) {
   );
 }
 
-function textAreaYearlyReview(wrapper) {
-  const currentYear = new Date().getFullYear();
+function textAreaYearlyReview(wrapper, year) {
   const form = createForm(
     'textarea-yearly-review-form',
     'form-class',
     () => gdriveStorage.updateYearReview(textArea.value, form),
     wrapper
   );
-  const textArea = createTextarea(`textarea-yearly-review`, `Review ${currentYear}`, form);
+  const textArea = createTextarea(`textarea-yearly-review`, `Review ${year}`, form);
   createSubmitButton('Save', 'save-yearly-review-button', 'button', form);
-  textArea.value = loadedData['calendarData'][currentYear]['yearReview'];
+  textArea.value = loadedData['calendarData'][year]['yearReview'];
 }

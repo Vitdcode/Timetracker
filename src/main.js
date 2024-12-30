@@ -3,7 +3,7 @@ import { Stopwatch } from './Stopwatch/stopwatch.js';
 import { Settings } from './settings/settings.js';
 import { CalendarMethods } from './calendars/calendar-methods.js';
 import { TimeLogging } from './calendars/logging-time-in-calendar.js';
-import { initializeDriveStorage } from './google-drive/gdrive-service.js';
+import { initializeDriveStorage, saveToGDrive } from './google-drive/gdrive-service.js';
 import { gdriveStorage, loadedData } from './google-drive/gdrive-storage-functions.js';
 import { pushSelectedDatesDataFromGdrive } from './calendars/calendar-data-from-gdrive.js';
 import { statisticsMenuBtnListener } from './statistics-menu/create-statistics-menu.js';

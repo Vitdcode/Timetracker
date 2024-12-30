@@ -112,7 +112,7 @@ export const gdriveStorage = {
   checkIfTotalTimedataExistsInGrive() {
     if (!loadedData['totalTime']) {
       loadedData['totalTime'] = {
-        hours: 0,
+        hours: 1331,
         minutes: 0,
       };
     }

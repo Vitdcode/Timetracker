@@ -158,9 +158,11 @@ function yearlyRecapTextAndReview(window, year) {
     yearlyTextAndReviewWrapper
   );
   const overAllHours = returnOverallHours();
+
   createH2(
-    `- You have worked ${returnOverallHours()} hours in total, that's around ${Math.floor(overAllHours / 52)} hours per week. <br>
-     You started on the 25th February 2024 <br> 
+    `-You started on the 25th February 2024 <br>  
+    - You have worked ${returnOverallHours()} hours in total, that's around ${Math.floor(overAllHours / 52)} hours per week. <br>
+     
      `,
     'yearly-statistics-text',
     'in-app-text',
@@ -168,7 +170,7 @@ function yearlyRecapTextAndReview(window, year) {
     true
   );
 
-  mostActiveWeekAndHoursWorkedCurrentYear(yearlyTextAndReviewWrapper, year);
+  statsCurrentYear(yearlyTextAndReviewWrapper, year);
 
   createH2(
     `Projects you have worked on: <br>`,
@@ -216,10 +218,13 @@ function printProjectsAndHours(projectData, wrapper) {
   }
 }
 
-function mostActiveWeekAndHoursWorkedCurrentYear(wrapper, year) {
+function statsCurrentYear(wrapper, year) {
   let hoursActiveWeek = 0;
   let hoursCurrentYear = 0;
+  const goalCompletedAmountWeeks = goalCompleted();
+  const goal = loadedData['goalHoursPerWeekData']?.['hoursHighest'];
   let week;
+
   function returnHoursForWeekHelperFunction(data, parentKey = null) {
     for (const key in data) {
       if (typeof data[key] === 'object' && key != 'weeklyTime') {
@@ -237,6 +242,14 @@ function mostActiveWeekAndHoursWorkedCurrentYear(wrapper, year) {
 
   createH2(
     `- You have worked ${hoursCurrentYear} hours this year <br>`,
+    'hours-worked-this-year-yearly-recap-text',
+    'in-app-text',
+    wrapper,
+    true
+  );
+
+  createH2(
+    `- You completed the goal of ${goal} hours on ${goalCompletedAmountWeeks} / 52 weeks<br>`,
     'hours-worked-this-year-yearly-recap-text',
     'in-app-text',
     wrapper,
@@ -262,4 +275,22 @@ function textAreaYearlyReview(wrapper, year) {
   const textArea = createTextarea(`textarea-yearly-review`, `Review ${year}`, form);
   createSubmitButton('Save', 'save-yearly-review-button', 'button', form);
   textArea.value = loadedData['calendarData'][year]['yearReview'];
+}
+
+function goalCompleted() {
+  //returns the amount of weeks where the goal set in settings is met
+  let amountWeeks = 0;
+  const goal = loadedData?.['goalHoursPerWeekData']?.['hoursHighest'];
+  function findWeeksWhereGoalCompletedHelperFunction(data) {
+    for (const key in data) {
+      if (key != 'weeklyTime' && typeof data[key] === 'object') {
+        findWeeksWhereGoalCompletedHelperFunction(data[key]);
+      } else if (key === 'weeklyTime' && data[key]['hours'] >= goal) {
+        amountWeeks += 1;
+      }
+    }
+  }
+
+  findWeeksWhereGoalCompletedHelperFunction(loadedData['calendarData']);
+  return amountWeeks;
 }

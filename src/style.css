@@ -452,6 +452,10 @@ input::-webkit-inner-spin-button {
   background-color: rgba(255, 255, 255, 0.075);
 }
 
+#information-popup-hour-ranges {
+  top: 30%;
+}
+
 #choose-goal-ranges-header {
   text-align: center;
   width: 80%;
@@ -532,13 +536,19 @@ input::-webkit-inner-spin-button {
   box-shadow: var(--box-shadow);
   padding: 5px;
   border-radius: 16px;
+  text-align: center;
+}
+
+#goal-in-app-text {
+  background-color: rgba(111, 255, 248, 0.452);
+  padding: 5px;
+  border-radius: 16px;
 }
 
 .in-app-text {
   color: var(--header-white);
   font-size: 1.3rem;
   font-weight: 500;
-  /*  text-align: center; */
 }
 
 #delete-goal-button {

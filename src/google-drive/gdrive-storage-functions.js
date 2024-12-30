@@ -131,6 +131,18 @@ export const gdriveStorage = {
     }
   },
 
+  checkIfYearReviewExists() {
+    const currentYearReview = loadedData['calendarData'][new Date().getFullYear()]['yearReview'];
+    if (!currentYearReview) {
+      loadedData['calendarData'][new Date().getFullYear()]['yearReview'] = '';
+    }
+  },
+
+  async updateYearReview(text) {
+    loadedData['calendarData'][new Date().getFullYear()]['yearReview'] = text;
+    saveToGDrive(loadedData);
+  },
+
   updateTodayDateEuroEntries(entry) {
     this.checkIfCurrentYearExistsInGdrive();
     this.checkIfCurrentWeekExistsInGrive();

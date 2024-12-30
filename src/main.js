@@ -41,6 +41,7 @@ async function initializeApp() {
       gdriveStorage.checkIfTotalTimedataExistsInGrive();
       gdriveStorage.checkIfGoalHoursExistInGdrive();
       gdriveStorage.checkIfCurrentProjectExistsInGdrive();
+      gdriveStorage.checkIfYearReviewExists();
       calendar.options['selectedDates'] = pushSelectedDatesDataFromGdrive();
       calendar.createPopupsOnInit();
       calendar.createCalendar();
@@ -50,7 +51,6 @@ async function initializeApp() {
       evaluateGoal(loadedData['calendarData'][new Date().getFullYear()][[getWeekNumber()]]['weeklyTime']['hours']); //prettier-ignore
     }
     showHoursUnderCalendarWeeks();
-    /*     colorizeWeekNumsOnHoursWorked(); */
     trackingProjectInAppInfoWindow();
     showYearlyRecapBtn();
     fadeoutAnimation(); //remove loading animation once data is available

@@ -5,7 +5,7 @@ import { createDiv } from '../create-elements-functions/create-div';
 import { createButton } from '../create-elements-functions/create-button';
 import { closeWindow } from '../create-elements-functions/close-window';
 import { createH2 } from '../create-elements-functions/create-h-elements';
-import { loadedData } from '../google-drive/gdrive-storage-functions';
+import { gdriveStorage, loadedData } from '../google-drive/gdrive-storage-functions';
 import {
   convertJsMonthToEuroFormat,
   convertMetricDateToUs,
@@ -13,6 +13,9 @@ import {
 } from './date-functions';
 import { showHoursUnderCalendarWeeks } from './show-hours-under-calendar-weeks';
 import { returnOverallHours } from '../other-functions/return-gdrive-object-values';
+import { createTextarea } from '../create-elements-functions/create-textarea';
+import { createForm } from '../create-elements-functions/create-form';
+import { createSubmitButton } from '../create-elements-functions/create-submit-button';
 
 export function showYearlyRecapBtn() {
   const calendarWrapper = document.querySelector('#calendar');
@@ -45,6 +48,7 @@ function showYearlyRecap() {
   );
   createYearlyRecapCalendars(calendarsAndReviewWrapper);
   yearlyRecapTextAndReview(calendarsAndReviewWrapper);
+  textAreaYearlyReview(calendarsAndReviewWrapper);
 }
 
 function createYearlyRecapCalendars(window) {
@@ -92,10 +96,10 @@ function selectedDates(month) {
   formattedMonthToEuro = formattedMonthToEuro.toString().padStart(2, '0');
   let datesArray = [];
   const yearData = loadedData['calendarData'][new Date().getFullYear()];
-  for (const key in yearData) {
-    const week = yearData[key];
+  for (const keyYear in yearData) {
+    const week = yearData[keyYear];
     for (const key in week) {
-      if (key != 'weeklyTime') {
+      if (key != 'weeklyTime' && keyYear != 'yearReview') {
         const keyDateSplit = key.split('.')[1]; // returns just the day date ex. 24
         if (keyDateSplit.includes(formattedMonthToEuro)) {
           const usDate = convertMetricDateToUs(key);
@@ -165,11 +169,9 @@ function projectYearlyInfo(wrapper) {
       if (typeof data[key] === 'object') {
         returnProjectNameHelperFunction(data[key]);
       } else if (typeof key === 'string' && key === 'project') {
-        console.log(data[key]);
         if (!projectData[data[key]]) {
           projectData[data[key]] = data['dailyTime']['hours'];
         } else {
-          console.log(projectData[[data][key]]);
           projectData[data[key]] += data['dailyTime']['hours'];
         }
       }
@@ -229,18 +231,15 @@ function mostActiveWeekAndHoursWorkedCurrentYear(wrapper) {
   );
 }
 
-/* function hoursWorkedCurrentYear() {
-  let hours = 0;
-
+function textAreaYearlyReview(wrapper) {
   const currentYear = new Date().getFullYear();
-
-  function returnHoursForCurrentYearHelperFunction(data) {
-    for (const key in data) {
-      if (typeof data[key] === 'object') {
-        returnHoursForCurrentYearHelperFunction(data[key]);
-      } else if(key === 'weeklyTime')
-    }
-  }
-
-  returnHoursForCurrentYearHelperFunction(loadedData['calendarData'][currentYear]);
-} */
+  const form = createForm(
+    'textarea-yearly-review-form',
+    'form-class',
+    () => gdriveStorage.updateYearReview(textArea.value),
+    wrapper
+  );
+  const textArea = createTextarea(`textarea-yearly-review`, `Review ${currentYear}`, form);
+  createSubmitButton('Save', 'save-yearly-review-button', 'button', form);
+  textArea.value = loadedData['calendarData'][currentYear]['yearReview'];
+}

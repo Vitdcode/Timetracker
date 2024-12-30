@@ -74,7 +74,7 @@ export class CalendarMethods {
     if (Object.keys(sessionData).length != 0) {
       for (const week in loadedData['calendarData'][new Date().getFullYear()]) {
         for (const date in loadedData['calendarData'][new Date().getFullYear()][week]) {
-          if (date != 'weeklyTime') {
+          if (date != 'weeklyTime' && week != 'yearReview') {
             if (!this.options.popups[convertMetricDateToUs(date)]) {
               this.options.popups[convertMetricDateToUs(date)] = {
                 modifier: 'bg-sponsor',

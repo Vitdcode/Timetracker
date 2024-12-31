@@ -10,7 +10,7 @@ export function createSelectElement(options, selectId, wrapper) {
     opt.textContent = option; // Set the display text
     select.appendChild(opt);
   });
-
+  select.value = new Date().getFullYear();
   // Append the <select> element to the wrapper
   if (wrapper) {
     wrapper.appendChild(select);

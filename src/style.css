@@ -312,10 +312,12 @@ body {
   border-radius: 16px !important;
   background-color: rgba(255, 255, 255, 0.116) !important;
   color: white !important;
+  box-shadow: var(--box-shadow);
 }
 
 .vc-date__btn[aria-selected='true'] {
   background-color: rgba(28, 147, 216, 0.788) !important;
+  box-shadow: var(--box-shadow);
 }
 
 .vc-week-numbers__content {
@@ -331,6 +333,7 @@ body {
   display: flex;
   flex-direction: column;
   border-radius: 6px;
+  color: rgb(241, 241, 241) !important;
 }
 
 #hours-under-week {

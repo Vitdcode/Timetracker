@@ -387,7 +387,7 @@ body {
   position: relative;
   width: 80%;
   text-align: center;
-  font-size: 1.4rem;
+  font-size: 1.3rem;
   color: var(--header-white);
 }
 
@@ -582,8 +582,8 @@ input::-webkit-inner-spin-button {
 
 .in-app-text {
   color: var(--header-white);
-  font-size: 1.3rem;
-  font-weight: 500;
+  font-size: 1.2rem;
+  font-weight: 400;
 }
 
 #delete-goal-button {
@@ -649,6 +649,7 @@ input::-webkit-inner-spin-button {
 
 #yearly-text-and-review-wrapper {
   width: 90%;
+  line-height: 2;
   padding-inline: 20px;
   margin-top: 50px;
   margin-bottom: 50px;
@@ -663,6 +664,10 @@ input::-webkit-inner-spin-button {
   align-items: start;
 }
 
+#yearly-text-and-review-wrapper h2 {
+  margin-left: 10px;
+}
+
 #textarea-yearly-review {
   height: 400px;
   width: 90%;
@@ -670,22 +675,23 @@ input::-webkit-inner-spin-button {
   max-width: 700px;
   grid-column: 2/3;
   grid-row: 2/3;
-  padding: 20px;
+  padding: 1rem;
   resize: none;
-  background-color: rgba(255, 255, 255, 0.877);
+  background-color: rgba(255, 255, 255, 0.925);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  line-height: 1.6;
   border-radius: 16px;
   box-shadow: var(--box-shadow);
   font-size: 1.2rem;
-  color: rgb(54, 54, 54);
+  color: rgba(24, 24, 24, 0.747);
   transition:
     box-shadow 0.3s ease,
     border-color 0.3s ease;
 }
 
 #textarea-yearly-review:focus {
-  box-shadow:
-    0 6px 12px rgba(0, 0, 0, 0.3),
-    0 3px 6px rgba(0, 0, 0, 0.2);
+  border-color: rgba(255, 255, 255, 0.068);
+  box-shadow: 0 0 0 2px rgba(29, 29, 29, 0.2);
   outline: none;
 }
 
@@ -694,18 +700,22 @@ label[for='textarea-yearly-review'] {
   font-size: 1.3rem;
 }
 
-#yearly-statistics-header {
-  margin-inline: auto;
+#yearly-statistics-header,
+#yearly-statistics {
   margin-bottom: 10px;
+  font-weight: 400;
+  text-align: start;
 }
 
-#yearly-statistics-text-projects {
-  margin-top: 50px;
-}
-
-#yearly-statistics-text-projects,
 #yearly-recap-project-and-hours-text {
   margin-inline: auto;
+}
+
+.seperation-line {
+  width: 97%;
+  height: 1px;
+  margin-inline: auto;
+  background-color: rgba(150, 150, 150, 0.473);
 }
 
 #years-select {
@@ -726,16 +736,33 @@ label[for='textarea-yearly-review'] {
   width: 20%;
 }
 
+#project-wrapper-statistics {
+  margin-inline: auto;
+  width: 96%;
+  padding-inline: 10px;
+  display: flex;
+  justify-content: space-around;
+  background-color: rgba(87, 69, 95, 0.349);
+  border-radius: 16px;
+  box-shadow: var(--box-shadow);
+}
+
 /* Progress bar */
 
-#progress-bar-and-checkmark-wrapper {
+#progress-bar-and-checkmark-wrapper,
+#progress-bar-and-checkmark-wrapper-week-statistics {
   position: relative;
   display: flex;
   align-items: center;
-  width: 93%;
+  width: 92%;
 }
 
-#checkmark {
+#progress-bar-and-checkmark-wrapper-week-statistics {
+  margin-left: 13px;
+}
+
+#checkmark,
+#checkmark-weeks-statistics {
   position: absolute;
   right: 1%;
   display: flex;
@@ -750,7 +777,14 @@ label[for='textarea-yearly-review'] {
   transition-duration: 200ms;
 }
 
-#progress-bar-wrapper {
+#checkmark-weeks-statistics {
+  right: 0;
+  height: 50px;
+  width: 50px;
+}
+
+#progress-bar-wrapper,
+#progress-bar-and-checkmark-wrapper-week-statistics {
   width: 93%;
   height: 12px;
   background-color: rgba(168, 213, 219, 0.103);
@@ -758,8 +792,14 @@ label[for='textarea-yearly-review'] {
   box-shadow: var(--box-shadow);
 }
 
-#progress-bar {
+#progress-bar-and-checkmark-wrapper-week-statistics {
+  width: 95%;
+}
+
+#progress-bar,
+#progress-bar-weeks-statistics {
   background-color: rgb(41, 144, 157);
+  width: 100%;
   height: 100%;
   border-radius: 16px;
   transition-duration: 200ms;

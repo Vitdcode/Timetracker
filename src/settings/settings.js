@@ -17,7 +17,7 @@ import infoImage from '../images/info.png';
 import appIconImage from '../images/app-icon/app-icon-512.png';
 import { trackProject } from './project-tracking';
 import { savePopupText } from '../create-elements-functions/create-saved-popup';
-import { progressBar, progressBarWithCheckmark } from '../other-functions/progress-bar';
+import { progressBarWithCheckmark } from '../other-functions/progress-bar';
 import { returnWeeklyHours } from '../other-functions/return-gdrive-object-values';
 
 export class Settings {
@@ -115,7 +115,6 @@ export class Settings {
     const deleteGoalBtn = createButton('X', 'delete-goal-button', 'button', header);
     popupMouseOver('Delete Goal', deleteGoalBtn, 'absolute');
     deleteGoalBtn.addEventListener('click', () => {
-      /*      this.goalsHoursPerWeek = null; */
       const gdriveHoursPerWeek = loadedData['goalHoursPerWeekData']['hoursHighest'];
       if (gdriveHoursPerWeek) {
         loadedData['goalHoursPerWeekData']['hoursHighest'] = 0;

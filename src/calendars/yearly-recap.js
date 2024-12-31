@@ -1,4 +1,3 @@
-import { calendar } from '../main';
 import { Calendar } from 'vanilla-calendar-pro';
 import 'vanilla-calendar-pro/styles/index.css';
 import { createDiv } from '../create-elements-functions/create-div';
@@ -17,6 +16,8 @@ import { createTextarea } from '../create-elements-functions/create-textarea';
 import { createForm } from '../create-elements-functions/create-form';
 import { createSubmitButton } from '../create-elements-functions/create-submit-button';
 import { createSelectElement } from '../create-elements-functions/create-select';
+import { seperationLine } from '../create-elements-functions/create-seperation-line';
+import { progressBarWithCheckmark } from '../other-functions/progress-bar';
 
 export function showYearlyRecapBtn() {
   const calendarWrapper = document.querySelector('#calendar');
@@ -152,7 +153,7 @@ function yearlyRecapTextAndReview(window, year) {
     window
   );
   createH2(
-    'Statistics',
+    'Overall statistics',
     'yearly-statistics-header',
     'wrapper-in-menus-header',
     yearlyTextAndReviewWrapper
@@ -160,8 +161,8 @@ function yearlyRecapTextAndReview(window, year) {
   const overAllHours = returnOverallHours();
 
   createH2(
-    `- You started on the 25th February 2024 <br>  
-    - You have worked ${returnOverallHours()} hours in total, that's around ${Math.floor(overAllHours / 52)} hours per week. <br>
+    `📅   You started on the 25th February 2024 <br>
+     🕑   ${returnOverallHours()} hours total <br>
      
      `,
     'yearly-statistics-text',
@@ -170,10 +171,12 @@ function yearlyRecapTextAndReview(window, year) {
     true
   );
 
+  seperationLine('seperation-statistics-1', yearlyTextAndReviewWrapper);
+
   statsCurrentYear(yearlyTextAndReviewWrapper, year);
 
   createH2(
-    `Projects you have worked on this year: <br>`,
+    `Projects ${year}<br>`,
     'yearly-statistics-text-projects',
     'in-app-text',
     yearlyTextAndReviewWrapper,
@@ -208,12 +211,19 @@ function projectYearlyInfo(wrapper) {
 
 function printProjectsAndHours(projectData, wrapper) {
   for (const key in projectData) {
+    const projectWrapper = createDiv(
+      'project-wrapper-statistics',
+      'project-wrapper-statistics',
+      wrapper
+    );
+
+    createH2(`${key}`, 'yearly-recap-project-and-hours-text', 'in-app-text', projectWrapper);
+
     createH2(
-      `${key}: ${projectData[key]} hours<br>`,
-      'yearly-recap-project-and-hours-text',
+      `${projectData[key]} hours / ${(projectData[key] / 24).toFixed(1)} days`,
+      'project-hours-statistics',
       'in-app-text',
-      wrapper,
-      true
+      projectWrapper
     );
   }
 }
@@ -240,8 +250,10 @@ function statsCurrentYear(wrapper, year) {
   }
   returnHoursForWeekHelperFunction(loadedData['calendarData'][year]);
 
+  createH2(`Year ${year} statistics`, 'yearly-statistics', 'wrapper-in-menus-header', wrapper);
+
   createH2(
-    `- You have worked ${hoursCurrentYear} hours this year <br>`,
+    `🕑   ${hoursCurrentYear} hours this year (≈ ${(hoursCurrentYear / 52).toFixed(1)} hours per week)<br>`,
     'hours-worked-this-year-yearly-recap-text',
     'in-app-text',
     wrapper,
@@ -249,20 +261,31 @@ function statsCurrentYear(wrapper, year) {
   );
 
   createH2(
-    `- You completed the goal of ${goal} hours on ${goalCompletedAmountWeeks} / 52 weeks<br>`,
+    `🎯  Completed ${goal} hour goal on ${goalCompletedAmountWeeks} / 52 weeks<br>`,
     'hours-worked-this-year-yearly-recap-text',
     'in-app-text',
     wrapper,
     true
   );
 
+  progressBarWithCheckmark(
+    goal,
+    goalCompletedAmountWeeks,
+    wrapper,
+    'progress-bar-weeks-statistics',
+    'checkmark-weeks-statistics',
+    'progress-bar-and-checkmark-wrapper-week-statistics'
+  );
+
   createH2(
-    `- Your most active week was week ${week} with ${hoursActiveWeek} hours <br>`,
+    `🏅  Most active: Week ${week} (${hoursActiveWeek} hours) <br>`,
     'most-active-week-text',
     'in-app-text',
     wrapper,
     true
   );
+
+  seperationLine('seperation-statistics-2', wrapper);
 }
 
 function textAreaYearlyReview(wrapper, year) {

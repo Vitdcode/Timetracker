@@ -8,9 +8,16 @@ export function progressBar(goalValue, currentValue, wrapper) {
   progressBar.style.width = `${progressBarWidth}%`;
 }
 
-export function progressBarWithCheckmark(goalValue, currentValue, wrapper) {
+export function progressBarWithCheckmark(
+  goalValue,
+  currentValue,
+  wrapper,
+  idNameBar = 'progress-bar',
+  idNameCheckmark = 'checkmark',
+  idNameWrapper = 'progress-bar-and-checkmark-wrapper'
+) {
   const progressBarAndCheckMarkWrapper = createDiv(
-    'progress-bar-and-checkmark-wrapper',
+    idNameWrapper,
     'progress-bar-and-checkmark-wrapper',
     wrapper
   );
@@ -19,8 +26,8 @@ export function progressBarWithCheckmark(goalValue, currentValue, wrapper) {
     'progress-bar-wrapper',
     progressBarAndCheckMarkWrapper
   );
-  const progressBar = createDiv('progress-bar', 'progress-bar', progressBarWrapper);
-  const checkmark = createSpan('✓', 'checkmark', 'checkmark', progressBarAndCheckMarkWrapper);
+  const progressBar = createDiv(idNameBar, 'progress-bar', progressBarWrapper);
+  const checkmark = createSpan('✓', idNameCheckmark, 'checkmark', progressBarAndCheckMarkWrapper);
   /*   let progressBarWidth = (100 / goalValue) * currentValue;
   progressBarWidth = Math.min(progressBarWidth, 100);
   progressBar.style.width = `${progressBarWidth}%`;
@@ -36,8 +43,8 @@ export function progressBarWithCheckmark(goalValue, currentValue, wrapper) {
 export function updateProgressBar(
   goalValue,
   currentValue,
-  progressBar = document.querySelector('#progress-bar'),
-  checkmark = document.querySelector('#checkmark')
+  progressBar = document.querySelector('.progress-bar'),
+  checkmark = document.querySelector('.checkmark')
 ) {
   let progressBarWidth = (100 / goalValue) * currentValue;
   progressBarWidth = Math.min(progressBarWidth, 100);

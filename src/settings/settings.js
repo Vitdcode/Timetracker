@@ -17,6 +17,8 @@ import infoImage from '../images/info.png';
 import appIconImage from '../images/app-icon/app-icon-512.png';
 import { trackProject } from './project-tracking';
 import { savePopupText } from '../create-elements-functions/create-saved-popup';
+import { progressBar, progressBarWithCheckmark } from '../other-functions/progress-bar';
+import { returnWeeklyHours } from '../other-functions/return-gdrive-object-values';
 
 export class Settings {
   constructor() {
@@ -96,6 +98,8 @@ export class Settings {
         goalInAppWrapper
       );
       this.deleteGoal(goalInAppWrapper, header);
+      /* progressBar(hoursPerWeek, returnWeeklyHours(), goalInAppWrapper); */
+      progressBarWithCheckmark(hoursPerWeek, returnWeeklyHours(), goalInAppWrapper);
       const appHeaderWrapper = document.querySelector('#app-header-settings-wrapper');
       if (document.querySelector('#goal-in-app-wrapper')) {
         document.querySelector('#goal-in-app-wrapper').remove();

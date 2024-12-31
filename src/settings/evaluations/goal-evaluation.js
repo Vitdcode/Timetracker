@@ -2,11 +2,12 @@ import { getWeekNumber } from '../../calendars/date-functions';
 import { createSpan } from '../../create-elements-functions/create-span';
 import { loadedData } from '../../google-drive/gdrive-storage-functions';
 import { settings, timeLog } from '../../main';
+import { returnWeeklyHours } from '../../other-functions/return-gdrive-object-values';
 
 let sumHours = 0;
 export function evaluateGoal() {
   if (document.querySelector('#goal-in-app-text')) {
-    const weeklyHoursCompleted = loadedData['calendarData'][new Date().getFullYear()][[getWeekNumber()]]['weeklyTime']['hours']; //prettier-ignore
+    const weeklyHoursCompleted = returnWeeklyHours();
     const hoursLeftUntilGoal =
       loadedData['goalHoursPerWeekData']['hoursHighest'] - weeklyHoursCompleted;
     /*     sumHours += hoursCompleted; */

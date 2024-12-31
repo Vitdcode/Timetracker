@@ -207,17 +207,17 @@ body {
   width: 105px;
   padding-block: 15px;
   border-radius: 16px;
-  background-color: rgb(72, 149, 163);
+  background-color: rgba(52, 218, 218, 0.384);
   transition-duration: 100ms;
 }
 
 .button:hover {
   cursor: pointer;
-  background-color: rgb(113, 211, 211);
+  background-color: rgba(52, 218, 218, 0.555);
 }
 
 .button:active {
-  background-color: rgb(146, 223, 223);
+  background-color: rgba(52, 218, 218, 0.63);
 }
 
 #app-header-settings-wrapper {
@@ -267,7 +267,7 @@ body {
   margin-inline: auto;
   margin-top: 20px;
   height: 50px;
-  width: 130px;
+  width: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -717,4 +717,47 @@ label[for='textarea-yearly-review'] {
 #years-select:hover {
   cursor: pointer;
   background-color: rgba(255, 255, 255, 0.171);
+}
+
+#save-yearly-review-button {
+  width: 20%;
+}
+
+/* Progress bar */
+
+#progress-bar-and-checkmark-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 93%;
+}
+
+#checkmark {
+  position: absolute;
+  right: 1%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 30px;
+  width: 30px;
+  color: white;
+  background-color: rgb(87, 137, 160);
+  box-shadow: var(--box-shadow);
+  border-radius: 100%;
+  transition-duration: 200ms;
+}
+
+#progress-bar-wrapper {
+  width: 93%;
+  height: 12px;
+  background-color: rgba(168, 213, 219, 0.103);
+  border-radius: 16px;
+  box-shadow: var(--box-shadow);
+}
+
+#progress-bar {
+  background-color: rgb(41, 144, 157);
+  height: 100%;
+  border-radius: 16px;
+  transition-duration: 200ms;
 }

@@ -2,6 +2,8 @@ import { createSpan } from '../create-elements-functions/create-span';
 import { saveToGDrive } from '../google-drive/gdrive-service';
 import { gdriveStorage, loadedData } from '../google-drive/gdrive-storage-functions';
 import { calendar, stopwatch } from '../main';
+import { updateProgressBar } from '../other-functions/progress-bar';
+import { returnGoalHours, returnWeeklyHours } from '../other-functions/return-gdrive-object-values';
 import { evaluateGoal } from '../settings/evaluations/goal-evaluation';
 import { trackingProjectInAppInfoWindow } from '../settings/project-tracking';
 import { showHoursUnderCalendarWeeks } from './show-hours-under-calendar-weeks';
@@ -24,6 +26,7 @@ export class TimeLogging {
         showYearlyRecapBtn();
         gdriveStorage.updateProjectHours();
         trackingProjectInAppInfoWindow();
+        updateProgressBar(returnGoalHours(), returnWeeklyHours());
         saveToGDrive(loadedData);
       } else {
         return;

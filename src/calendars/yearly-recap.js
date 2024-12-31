@@ -152,7 +152,7 @@ function yearlyRecapTextAndReview(window, year) {
     window
   );
   createH2(
-    'Statistics for the year',
+    'Statistics',
     'yearly-statistics-header',
     'wrapper-in-menus-header',
     yearlyTextAndReviewWrapper
@@ -160,7 +160,7 @@ function yearlyRecapTextAndReview(window, year) {
   const overAllHours = returnOverallHours();
 
   createH2(
-    `-You started on the 25th February 2024 <br>  
+    `- You started on the 25th February 2024 <br>  
     - You have worked ${returnOverallHours()} hours in total, that's around ${Math.floor(overAllHours / 52)} hours per week. <br>
      
      `,
@@ -173,7 +173,7 @@ function yearlyRecapTextAndReview(window, year) {
   statsCurrentYear(yearlyTextAndReviewWrapper, year);
 
   createH2(
-    `Projects you have worked on: <br>`,
+    `Projects you have worked on this year: <br>`,
     'yearly-statistics-text-projects',
     'in-app-text',
     yearlyTextAndReviewWrapper,
@@ -191,7 +191,6 @@ function projectYearlyInfo(wrapper) {
         returnProjectNameHelperFunction(data[key]);
       } else if (key === 'projects') {
         const projectsData = data[key];
-        console.log(projectData);
         for (const projectKey in projectsData) {
           if (!projectData[projectKey]) {
             projectData[projectKey] = projectsData[projectKey]['hours'];

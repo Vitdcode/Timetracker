@@ -202,22 +202,24 @@ body {
   font-family: var(--font-poppins);
   font-size: 1rem;
   font-weight: 500;
-  color: rgb(51, 51, 51);
+  /*  color: rgb(51, 51, 51); */
+  color: rgb(255, 255, 255);
   width: 105px;
   padding-block: 15px;
   border-radius: 16px;
-  background-color: rgb(138, 221, 131);
-  border: 3px solid rgb(255, 255, 255);
+  background-color: rgb(72, 149, 163);
+  /*   background-color: rgb(138, 221, 131); */
+  /*   border: 3px solid rgb(255, 255, 255); */
   transition-duration: 100ms;
 }
 
 .button:hover {
   cursor: pointer;
-  background-color: rgb(115, 216, 108);
+  background-color: rgb(113, 211, 211);
 }
 
 .button:active {
-  background-color: rgb(156, 214, 151);
+  background-color: rgb(146, 223, 223);
 }
 
 #app-header-settings-wrapper {
@@ -227,6 +229,7 @@ body {
   flex-direction: column;
   align-items: center;
   background-color: rgba(84, 95, 125, 0.233);
+  border: 1px solid rgba(255, 255, 255, 0.055);
   border-radius: 16px;
   margin-top: 10px;
   padding: 10px;
@@ -254,10 +257,11 @@ body {
 /* calendar */
 
 #calendar {
-  margin-top: 100px;
-  width: 340px;
+  margin-top: 80px;
+  width: 370px;
+  height: 420px;
   background-color: rgba(84, 95, 125, 0.233);
-  /*   background-color: rgba(167, 245, 255, 0.089); */
+  border: 1px solid rgba(255, 255, 255, 0.055);
   box-shadow: var(--box-shadow);
 }
 
@@ -528,6 +532,7 @@ input::-webkit-inner-spin-button {
   color: var(--header-white);
   padding: 10px;
   background-color: rgba(84, 95, 125, 0.233);
+  border: 1px solid rgba(255, 255, 255, 0.055);
   box-shadow: var(--box-shadow);
 }
 
@@ -561,7 +566,7 @@ input::-webkit-inner-spin-button {
   height: 30px;
   width: 32px;
   border-radius: 100%;
-  color: rgb(156, 201, 189);
+  color: rgba(236, 98, 74, 0.685);
   font-size: 1.5rem;
   background-color: rgba(84, 95, 125, 0.233);
   border: 1px solid rgba(255, 255, 255, 0.137);

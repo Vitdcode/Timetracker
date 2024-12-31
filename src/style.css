@@ -106,7 +106,7 @@ body {
 .cloud-image {
   position: absolute;
   right: 2%;
-  bottom: 5%;
+  top: 7%;
   height: 40px;
   width: 40px;
 }
@@ -208,8 +208,6 @@ body {
   padding-block: 15px;
   border-radius: 16px;
   background-color: rgb(72, 149, 163);
-  /*   background-color: rgb(138, 221, 131); */
-  /*   border: 3px solid rgb(255, 255, 255); */
   transition-duration: 100ms;
 }
 
@@ -536,18 +534,47 @@ input::-webkit-inner-spin-button {
   box-shadow: var(--box-shadow);
 }
 
+#current-project-tracking-in-app-wrapper {
+  align-items: start;
+}
+
 #tracking-project-text-in-app {
-  background-color: rgba(111, 255, 248, 0.452);
+  background-color: rgba(15, 114, 109, 0.452);
+  color: rgba(29, 219, 207, 0.959);
   box-shadow: var(--box-shadow);
   padding: 5px;
-  border-radius: 16px;
-  text-align: center;
+  border-radius: 10px;
+  font-size: 1.15rem;
+  font-weight: 400;
+  align-items: start;
+}
+
+#hours-tracked-project {
+  font-size: 1rem;
+  margin-left: 5px;
 }
 
 #goal-in-app-text {
-  background-color: rgba(111, 255, 248, 0.452);
-  padding: 5px;
-  border-radius: 16px;
+  font-size: 1rem;
+  background-color: rgba(15, 114, 109, 0.452);
+  color: rgba(29, 219, 207, 0.959);
+  padding: 9px;
+  border-radius: 10px;
+  box-shadow: var(--box-shadow);
+}
+
+#goal-evaluation-text {
+  font-size: 1.15rem;
+  margin-left: 5px;
+}
+
+#goal-evaluation-text-sum-hours {
+  font-size: 0.9rem;
+  margin-left: 5px;
+}
+
+#goal-in-app-wrapper {
+  align-items: start !important;
 }
 
 .in-app-text {
@@ -566,10 +593,9 @@ input::-webkit-inner-spin-button {
   height: 30px;
   width: 32px;
   border-radius: 100%;
-  color: rgba(236, 98, 74, 0.685);
+  color: rgb(145, 64, 64);
   font-size: 1.5rem;
-  background-color: rgba(84, 95, 125, 0.233);
-  border: 1px solid rgba(255, 255, 255, 0.137);
+  background-color: rgba(255, 255, 255, 0);
   font-weight: 400;
 }
 

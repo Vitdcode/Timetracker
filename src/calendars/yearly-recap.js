@@ -191,11 +191,12 @@ function projectYearlyInfo(wrapper) {
         returnProjectNameHelperFunction(data[key]);
       } else if (key === 'projects') {
         const projectsData = data[key];
+        console.log(projectData);
         for (const projectKey in projectsData) {
           if (!projectData[projectKey]) {
             projectData[projectKey] = projectsData[projectKey]['hours'];
           } else {
-            projectData[projectKey]['hours'] += projectsData[projectKey]['hours'];
+            projectData[projectKey] += projectsData[projectKey]['hours'];
           }
         }
       }

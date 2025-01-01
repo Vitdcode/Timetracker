@@ -29,11 +29,11 @@ stopwatch.resetStopWatchBtn();
 settings.settingsImgButton();
 timeLog.logTimeBtnEventListener();
 statisticsMenuBtnListener();
-
 async function initializeApp() {
   try {
     await initializeDriveStorage();
     await gdriveStorage.loadData();
+
     gdriveStorage.checkIfDataExistsInGdrive();
     if (Object.keys(loadedData).length != 0) {
       checkifDataExistsInObject();

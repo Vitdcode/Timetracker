@@ -189,6 +189,9 @@ async function findOrCreateFile(folderId) {
 }
 
 async function saveToGDrive(data) {
+  if (!data) {
+    return;
+  }
   try {
     await ensureValidToken();
     uploadStatus.showCloudUploadImg();

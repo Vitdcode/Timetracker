@@ -204,8 +204,8 @@ function projectYearlyInfo(wrapper) {
       }
     }
   }
-
-  returnProjectNameHelperFunction(loadedData['calendarData']);
+  const yearSelected = document.querySelector('#years-select').value;
+  returnProjectNameHelperFunction(loadedData?.['calendarData']?.[yearSelected]);
   printProjectsAndHours(projectData, wrapper);
 }
 

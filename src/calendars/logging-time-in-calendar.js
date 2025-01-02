@@ -15,8 +15,8 @@ export class TimeLogging {
     this.mainWrapperSelector = document.querySelector('.main-wrapper');
   }
 
-  logTimeBtnEventListener() {
-    this.logTimeButtonSelector.addEventListener('click', () => {
+  async logTimeBtnEventListener() {
+    this.logTimeButtonSelector.addEventListener('click', async () => {
       if (stopwatch.stopwatchRunning || stopwatch.stopwatchPaused) {
         calendar.logTime();
         gdriveStorage.updateHoursInGdriveObject();
@@ -27,7 +27,13 @@ export class TimeLogging {
         gdriveStorage.updateProjectHours();
         trackingProjectInAppInfoWindow();
         updateProgressBar(returnGoalHours(), returnWeeklyHours());
-        saveToGDrive(loadedData);
+        try {
+          await saveToGDrive(loadedData);
+          stopwatch.reset();
+        } catch (error) {
+          console.error('Error saving to Google Drive:', error);
+          // Don't reset stopwatch if save fails
+        }
       } else {
         return;
       }

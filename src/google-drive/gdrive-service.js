@@ -190,6 +190,7 @@ async function findOrCreateFile(folderId) {
 
 async function saveToGDrive(data) {
   if (!data) {
+    console.log('No data has been passed to the function saveToGdrive... Exiting function');
     return;
   }
   try {

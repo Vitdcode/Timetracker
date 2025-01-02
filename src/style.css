@@ -301,7 +301,8 @@ body {
 
 .vc-date__popup {
   max-height: 400px;
-  overflow: auto;
+  overflow-y: auto;
+  overflow-x: hidden;
   padding: 10px !important;
   display: flex;
   left: 0 !important;

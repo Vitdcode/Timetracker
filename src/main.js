@@ -32,7 +32,6 @@ timeLog.logTimeBtnEventListener();
 statisticsMenuBtnListener();
 async function initializeApp() {
   try {
-    console.log('test hot');
     await initializeDriveStorage();
     await gdriveStorage.loadData();
     gdriveStorage.checkIfDataExistsInGdrive();

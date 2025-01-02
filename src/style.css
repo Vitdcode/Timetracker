@@ -10,6 +10,7 @@ body {
   background-color: rgb(27, 52, 82);
   display: flex;
   justify-content: center;
+  overflow-x: hidden;
 }
 
 * {
@@ -148,7 +149,7 @@ body {
 .stopwatch-wrapper {
   display: flex;
   flex-direction: column;
-  margin-top: 50px;
+  margin-top: 20px;
   gap: 20px;
   align-items: center;
 }
@@ -256,7 +257,7 @@ body {
 /* calendar */
 
 #calendar {
-  margin-top: 80px;
+  margin-top: 40px;
   width: 370px;
   height: 420px;
   background-color: rgba(84, 95, 125, 0.233);

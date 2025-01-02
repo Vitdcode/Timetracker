@@ -19,6 +19,7 @@ import { showHoursUnderCalendarWeeks } from './calendars/show-hours-under-calend
 import { trackingProjectInAppInfoWindow } from './settings/project-tracking.js';
 import { showYearlyRecapBtn } from './calendars/yearly-recap.js';
 createLoadingAnimation();
+
 export const stopwatch = new Stopwatch();
 export const calendar = new CalendarMethods();
 export const settings = new Settings();
@@ -31,9 +32,9 @@ timeLog.logTimeBtnEventListener();
 statisticsMenuBtnListener();
 async function initializeApp() {
   try {
+    console.log('test hot');
     await initializeDriveStorage();
     await gdriveStorage.loadData();
-
     gdriveStorage.checkIfDataExistsInGdrive();
     if (Object.keys(loadedData).length != 0) {
       checkifDataExistsInObject();

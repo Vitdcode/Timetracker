@@ -114,13 +114,16 @@ function selectedDates(month, year) {
   formattedMonthToEuro = formattedMonthToEuro.toString().padStart(2, '0');
   let datesArray = [];
   const yearData = loadedData['calendarData'][year];
-  for (const keyYear in yearData) {
-    const week = yearData[keyYear];
-    for (const key in week) {
-      if (key != 'weeklyTime' && keyYear != 'yearReview') {
-        const keyDateSplit = key.split('.')[1]; // returns just the day date ex. 24
-        if (keyDateSplit.includes(formattedMonthToEuro)) {
-          const usDate = convertMetricDateToUs(key);
+  for (const week in yearData) {
+    const weekObject = yearData[week];
+    for (const date in weekObject) {
+      if (date != 'weeklyTime' && week != 'yearReview') {
+        const dateSplit = date.split('.')[1]; // returns just the day date ex. 24
+        if (
+          dateSplit.includes(formattedMonthToEuro) &&
+          loadedData['calendarData'][year][week][date]['sessions'] != ''
+        ) {
+          const usDate = convertMetricDateToUs(date);
           datesArray.push(usDate);
         }
       }

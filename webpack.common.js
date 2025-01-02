@@ -26,6 +26,7 @@ module.exports = {
   ],
   devServer: {
     headers: {
+      'Cross-Origin-Opener-Policy': 'same-origin-allow-popups',
       'Content-Security-Policy':
         "default-src 'self'; " +
         "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://apis.google.com https://accounts.google.com https://www.gstatic.com; " +
@@ -33,7 +34,7 @@ module.exports = {
         "font-src 'self' https://fonts.gstatic.com; " +
         'frame-src https://accounts.google.com https://content.googleapis.com; ' +
         "img-src 'self' data: https:; " +
-        "connect-src 'self' https://accounts.google.com https://www.googleapis.com https://apis.google.com",
+        "connect-src 'self' ws: wss: https://accounts.google.com https://www.googleapis.com https://apis.google.com",
     },
   },
   module: {

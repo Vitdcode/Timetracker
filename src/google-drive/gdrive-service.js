@@ -222,7 +222,6 @@ async function loadFromGDrive() {
     await authenticate();
     const folderId = await findOrCreateFolder();
     const fileId = await findOrCreateFile(folderId);
-
     // Get file content
     const response = await gapi.client.drive.files.get({
       fileId: fileId,

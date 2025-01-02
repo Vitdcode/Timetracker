@@ -70,17 +70,24 @@ export class CalendarMethods {
 
   createPopupsOnInit() {
     const sessionData =
-      loadedData['calendarData'][new Date().getFullYear()][getWeekNumber()][getTodayDateInMetricFormat()]['sessions']; //prettier-ignore
-
+      loadedData['calendarData'][new Date().getFullYear()]; //prettier-ignore
     if (Object.keys(sessionData).length != 0) {
       for (const week in loadedData['calendarData'][new Date().getFullYear()]) {
         for (const date in loadedData['calendarData'][new Date().getFullYear()][week]) {
           if (date != 'weeklyTime' && week != 'yearReview') {
-            if (!this.options.popups[convertMetricDateToUs(date)]) {
+            if (
+              !this.options.popups[convertMetricDateToUs(date)] &&
+              loadedData['calendarData'][new Date().getFullYear()][week][date]['sessions'] != ''
+            ) {
               this.options.popups[convertMetricDateToUs(date)] = {
                 modifier: 'bg-sponsor',
                 html: `
         <div class="timelog-popup">
+            <h3 class = "popup-daily-time">      
+              ${loadedData['calendarData'][new Date().getFullYear()][week][date]['dailyTime']['hours']} hours 
+              ${loadedData['calendarData'][new Date().getFullYear()][week][date]['dailyTime']['minutes']} minutes
+              <br>
+            </h3>  
           ${loadedData['calendarData'][new Date().getFullYear()][week][date]['sessions'].join('')} 
         </div>
       `,

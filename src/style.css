@@ -287,10 +287,16 @@ body {
 }
 
 .timelog-popup h3 {
-  background-color: rgba(255, 255, 255, 0.041);
+  background-color: rgba(90, 185, 149, 0.041);
+  /*   background-color: rgba(255, 255, 255, 0.041); */
   border-radius: 16px;
+  margin-bottom: 10px;
   padding: 10px;
   box-shadow: var(--box-shadow);
+}
+
+.popup-daily-time {
+  text-align: center;
 }
 
 .vc-date__popup {

@@ -6,9 +6,13 @@ export function pushSelectedDatesDataFromGdrive() {
   let selectedDates = [];
   const gdriveData = loadedData['calendarData'][new Date().getFullYear()];
   if (gdriveData) {
-    for (let week in gdriveData) {
-      for (let date in loadedData['calendarData'][new Date().getFullYear()][week]) {
-        selectedDates.push(convertMetricDateToUs(date));
+    for (const week in gdriveData) {
+      for (const date in loadedData['calendarData'][new Date().getFullYear()][week]) {
+        if (
+          loadedData['calendarData'][new Date().getFullYear()][week] &&
+          loadedData['calendarData'][new Date().getFullYear()][week][date]['sessions'] != ''
+        )
+          selectedDates.push(convertMetricDateToUs(date));
       }
     }
 

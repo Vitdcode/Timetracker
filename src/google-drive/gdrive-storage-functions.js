@@ -228,7 +228,6 @@ export const gdriveStorage = {
     };
     savePopupText('Data saved', form, 'relative');
     showHoursUnderCalendarWeeks();
-    console.log('test');
     saveToGDrive(loadedData);
   },
 

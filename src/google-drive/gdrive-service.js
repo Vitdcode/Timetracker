@@ -104,6 +104,11 @@ async function authenticate() {
   return new Promise((resolve, reject) => {
     const handleTokenResponse = async (response) => {
       if (response.error !== undefined) {
+        // If silent token refresh fails, try interactive
+        if (response.error === 'immediate_failed') {
+          tokenClient.requestAccessToken({ prompt: 'select_account' });
+          return;
+        }
         reject(response);
         return;
       }
@@ -115,19 +120,13 @@ async function authenticate() {
 
     tokenClient.callback = handleTokenResponse;
 
-    if (accessToken) {
-      // Try silent refresh first
-      try {
-        tokenClient.requestAccessToken({ prompt: 'none' });
-      } catch (err) {
-        // If silent refresh fails, trigger interactive login
-        console.log('Silent refresh failed, requesting user interaction');
-        tokenClient.requestAccessToken({ prompt: 'consent' });
-      }
-    } else {
-      // No existing token, request interactive login directly
-      console.log('No existing token, requesting user interaction');
-      tokenClient.requestAccessToken({ prompt: 'consent' });
+    // Try silent token refresh first
+    try {
+      tokenClient.requestAccessToken({ prompt: '' });
+    } catch (err) {
+      // If silent refresh fails, then request with account selection
+      console.log('Silent refresh failed, requesting user interaction');
+      tokenClient.requestAccessToken({ prompt: 'select_account' });
     }
   });
 }

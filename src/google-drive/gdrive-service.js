@@ -17,7 +17,7 @@ async function initGoogleDrive() {
     tokenClient = google.accounts.oauth2.initTokenClient({
       client_id: CLIENT_ID,
       scope: SCOPES.join(' '),
-      callback: '', // Will be defined later
+      callback: '', // Will be defined in authenticate()
     });
 
     // Load and init the Google API client
@@ -26,7 +26,7 @@ async function initGoogleDrive() {
       script.src = 'https://apis.google.com/js/api.js';
       script.onload = async () => {
         try {
-          await new Promise((res) => gapi.load('client', res));
+          await new Promise((res) => gapi.load('client', { callback: res }));
           await gapi.client.init({});
           await gapi.client.load('drive', 'v3');
           resolve();
@@ -38,6 +38,9 @@ async function initGoogleDrive() {
       document.head.appendChild(script);
     });
 
+    // Try initial authentication
+    await authenticate();
+
     console.log('Google Drive initialized successfully');
   } catch (error) {
     console.error('Detailed initialization error:', error);
@@ -45,10 +48,24 @@ async function initGoogleDrive() {
   }
 }
 
+async function retryOperation(operation, maxRetries = 3) {
+  for (let i = 0; i < maxRetries; i++) {
+    try {
+      return await operation();
+    } catch (error) {
+      if (error.error === 'interaction_required' || error.error_subtype === 'access_denied') {
+        await authenticate();
+        continue;
+      }
+      if (i === maxRetries - 1) throw error;
+    }
+  }
+}
+
 let accessToken = null;
 let tokenExpiry = null;
 
-async function authenticate() {
+/* async function authenticate() {
   // If we have a valid token, use it
   if (accessToken && tokenExpiry && Date.now() < tokenExpiry) {
     return;
@@ -76,34 +93,56 @@ async function authenticate() {
       reject(err);
     }
   });
+} */
+
+async function authenticate() {
+  // If we have a valid token, use it
+  if (accessToken && tokenExpiry && Date.now() < tokenExpiry) {
+    return;
+  }
+
+  return new Promise((resolve, reject) => {
+    const handleTokenResponse = async (response) => {
+      if (response.error !== undefined) {
+        reject(response);
+        return;
+      }
+      accessToken = response.access_token;
+      tokenExpiry = Date.now() + response.expires_in * 1000;
+      await gapi.client.setToken(response);
+      resolve(response);
+    };
+
+    tokenClient.callback = handleTokenResponse;
+
+    if (accessToken) {
+      // Try silent refresh first
+      try {
+        tokenClient.requestAccessToken({ prompt: 'none' });
+      } catch (err) {
+        // If silent refresh fails, trigger interactive login
+        console.log('Silent refresh failed, requesting user interaction');
+        tokenClient.requestAccessToken({ prompt: 'consent' });
+      }
+    } else {
+      // No existing token, request interactive login directly
+      console.log('No existing token, requesting user interaction');
+      tokenClient.requestAccessToken({ prompt: 'consent' });
+    }
+  });
 }
 
 async function ensureValidToken() {
-  if (!accessToken || !tokenExpiry || Date.now() >= tokenExpiry - 60000) {
+  try {
+    if (!accessToken || !tokenExpiry || Date.now() >= tokenExpiry - 60000) {
+      await authenticate();
+    }
+  } catch (error) {
+    console.error('Token validation failed:', error);
+    // Force a new interactive login
     await authenticate();
   }
 }
-
-/* function waitForGapi() {
-  return new Promise((resolve, reject) => {
-    if (window.gapi) {
-      resolve();
-    } else {
-      const timeoutId = setTimeout(() => {
-        reject(new Error('Timeout waiting for gapi'));
-      }, 10000); // 10 second timeout
-
-      window.addEventListener('load', () => {
-        clearTimeout(timeoutId);
-        if (window.gapi) {
-          resolve();
-        } else {
-          reject(new Error('gapi not loaded'));
-        }
-      });
-    }
-  });
-} */
 
 async function waitForGoogleAPI() {
   return new Promise((resolve, reject) => {
@@ -193,28 +232,22 @@ async function saveToGDrive(data) {
     console.log('No data has been passed to the function saveToGdrive... Exiting function');
     return;
   }
-  try {
-    await ensureValidToken();
+
+  await retryOperation(async () => {
     uploadStatus.showCloudUploadImg();
-    await authenticate();
     const folderId = await findOrCreateFolder();
     const fileId = await findOrCreateFile(folderId);
 
-    // Update file content
     await gapi.client.request({
       path: `/upload/drive/v3/files/${fileId}`,
       method: 'PATCH',
-      params: {
-        uploadType: 'media',
-      },
+      params: { uploadType: 'media' },
       body: JSON.stringify(data),
     });
+
     uploadStatus.showCloudUploadFinishedimg();
     console.log('Data saved successfully');
-  } catch (error) {
-    console.error('Error saving data:', error);
-    throw error;
-  }
+  });
 }
 
 async function loadFromGDrive() {

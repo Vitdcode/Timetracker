@@ -26,10 +26,10 @@ export class TimeLogging {
         showYearlyRecapBtn();
         gdriveStorage.updateProjectHours();
         trackingProjectInAppInfoWindow();
-        updateProgressBar(returnGoalHours(), returnWeeklyHours());
         try {
           await saveToGDrive(loadedData);
           stopwatch.reset();
+          updateProgressBar(returnGoalHours(), returnWeeklyHours());
         } catch (error) {
           console.error('Error saving to Google Drive:', error);
           // Don't reset stopwatch if save fails
